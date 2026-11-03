@@ -1165,7 +1165,9 @@ a.btn{text-decoration:none}
   .dc-sec-h{padding-top:14px}
   .dc-h{margin-bottom:10px}
   .dc-scroll,.dc-scroll:not(.dc-three){grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(46vw,200px);overflow-x:auto;scroll-snap-type:x mandatory;column-gap:10px;margin:0 -14px;padding:0 14px 6px;scrollbar-width:thin}
-  .dc-scroll>.dc-card{scroll-snap-align:start}
+  /* Phone cards size independently, so off-screen content doesn't push their actions down. */
+  .dc-scroll{grid-template-rows:auto;align-items:start}
+  .dc-scroll>.dc-card{grid-row:auto;display:flex;scroll-snap-align:start}
   .dc-sec-h h2{font-size:21px}
   .dc-card .lc-open .cover{width:80px}
   .dc-acts .btn{font-size:12px;padding:6px 6px}
