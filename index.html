@@ -1479,7 +1479,7 @@ function diffEvents(){
     if(v.w&&v.w!==o.w)post('battle',v.w==='me'?'won':'announced the champion of',b.name,v.w==='me'?'Champion':`${nameOf(v.w)} won`)});
 }
 const PALETTES=[["sage","Default"],["sage-green","Sage"],["ocean","Ocean Blue"],["rose","Rose"],["lavender","Lavender"],["meadow","Meadow Green and Tan"],["slate","Slate"],["plum","Plum"],["amber","Amber"],["espresso","Espresso"],["forest","Forest"],["terracotta","Terracotta"],["teal","Teal"],["paper-ink","Paper and Ink"],["ivory-ink","Ivory and Ink"],["blueprint","Blueprint"]];
-const HFONTS=[['source','Source Serif 4','Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700'],['fraunces','Fraunces','Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700'],['lora','Lora','Lora:wght@500;600;700'],['newsreader','Newsreader','Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700'],['caslon','Libre Caslon Text','Libre+Caslon+Text:wght@400;700'],['literata','Literata','Literata:opsz,wght@7..72,500;7..72,600;7..72,700']];
+const HFONTS=[['source','Source Serif 4','Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700'],['fraunces','Fraunces','Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700'],['lora','Lora','Lora:wght@500;600;700'],['newsreader','Newsreader','Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700'],['caslon','Libre Caslon Text','Libre+Caslon+Text:wght@400;700'],['literata','Literata','Literata:opsz,wght@7..72,500;7..72,600;7..72,700'],['sourcesans','Source Sans 3','Source+Sans+3:wght@400;500;600;700','sans'],['manrope','Manrope','Manrope:wght@400;500;600;700','sans']];
 const BFONTS=[['inter','Inter','Inter:wght@400;500;600;700'],['sourcesans','Source Sans 3','Source+Sans+3:wght@400;500;600;700'],['nunito','Nunito Sans','Nunito+Sans:wght@400;600;700'],['work','Work Sans','Work+Sans:wght@400;500;600;700'],['atkinson','Atkinson Hyperlegible','Atkinson+Hyperlegible:wght@400;700']];
 function loadFont(q){const id='gf-'+q.split(':')[0];if(document.getElementById(id))return;const l=document.createElement('link');l.id=id;l.rel='stylesheet';l.href=`https://fonts.googleapis.com/css2?family=${q}&display=swap`;document.head.appendChild(l)}
 function applyPrefs(){
@@ -1487,7 +1487,7 @@ function applyPrefs(){
   if(pal==='sage')delete r.dataset.palette;else r.dataset.palette=pal;
   const h=HFONTS.find(x=>x[0]===(S.settings.hfont||'source'))||HFONTS[0],b=BFONTS.find(x=>x[0]===(S.settings.bfont||'inter'))||BFONTS[0];
   loadFont(h[2]);loadFont(b[2]);
-  r.style.setProperty('--serif',`"${h[1]}",Georgia,"Times New Roman",serif`);
+  r.style.setProperty('--serif',`"${h[1]}",${h[3]==='sans'?'system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif':'Georgia,"Times New Roman",serif'}`);
   r.style.setProperty('--sans',`"${b[1]}",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif`);
 }
 
