@@ -1,0 +1,7 @@
+# Keep the notes and developer tools off the published site.
+exclude:
+  - README.md
+  - AGENTS.md
+  - LATER.md
+  - plans
+  - tools
