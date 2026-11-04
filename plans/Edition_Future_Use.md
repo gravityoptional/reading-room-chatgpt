@@ -5,7 +5,7 @@ James approved keeping the optional Edition field on November 4, 2026, so reader
 ## Current behavior
 
 - Each owned copy and each individual reading record can have an optional free-text `edition` label, such as Illustrated, Revised, or 25th Anniversary. To Read stores an intended edition; Currently Reading, Paused, Finished, and Did Not Finish store the edition for that reading.
-- Both Add a Book (search or Add It Yourself) and Book → Copies collect copy editions. Add a Book, Start Reading, Log Reading, and Edit Reading can record reading editions without requiring ownership. My Reading and History → Rereads display the labels.
+- Both Add a Book (search or Add It Yourself) and Book → Copies collect copy editions. Edit My Copy is available from the quiet Edit link in Copies, Your Copies in Edit Book, and a selected owned copy in reading setup; it updates copy format, edition, and sharing without rewriting past readings. Add a Book, Start Reading, Log Reading, and Edit Reading can record reading editions without requiring ownership. My Reading and History → Rereads display the labels.
 - Selecting an owned copy fills its edition; adding an owned copy and a reading together can use the copy’s edition without asking twice. A reading stores an independent label snapshot plus optional `editionCopyId`. Changing/removing a copy must not rewrite past readings, and a reread can choose a different edition. Existing readings are left unset rather than backfilled by guessing.
 - It is separate from reading format and copy format. Two copies of the same format are legitimate: the warning offers View Existing Copies or Add Another Copy.
 - Edition text currently does not select a cover or change page counts, ISBN, language, publisher, or reading history.
