@@ -1230,6 +1230,7 @@ a.btn{text-decoration:none}
 #logForm .new-actions .link-btn{padding:4px 6px}
 #logForm .new-scope{font-size:12px;line-height:1.4;margin-top:0}
 .reading-edition{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;min-width:0}.reading-edition .inp{min-width:0;box-sizing:border-box}.reading-edition-details{min-width:0}.reading-edition [hidden]{display:none}.reading-edition-details summary{max-width:100%;overflow-wrap:anywhere}
+.save-warning{padding:12px;margin-bottom:14px;border:2px solid var(--red);border-radius:10px;background:var(--surface);color:var(--text);font-size:13px;line-height:1.5;display:grid;gap:8px}.save-warning .btn{justify-self:start}.save-warning[role=alert]{position:relative;z-index:100}
 </style>
 </head>
 <body>
@@ -1414,6 +1415,7 @@ let S;
 try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null}
 if(!S||S.v!==6)S=seed();
 /* Fill in anything the saved or freshly seeded data is missing. Runs on load and again after Restore Sample Data or the new-member view, which replace S. */
+let saveFailed=false;
 function prepState(){
 S.me.admin=true;
 S.settings.hideAct=S.settings.hideAct||[];
@@ -1453,7 +1455,15 @@ S.notifs.forEach(n=>{if(!n.link){n.link=({n1:{type:'lib'},n2:{type:'ch',id:'f1'}
 if(!S.wantSeeded){S.wantSeeded=true;if(!S.books.some(b=>b.status==='want'))S.books.push(...seed().books.filter(b=>b.status==='want'))}
 }
 prepState();
-function save(){try{diffEvents()}catch(e){}try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function showSaveFailure(){
+  document.querySelectorAll('.save-warning').forEach(e=>e.remove());if(!saveFailed)return;
+  const host=[...document.querySelectorAll('dialog[open]')].pop()?.querySelector('.dlg')||document.body;
+  const box=document.createElement('div');box.className='save-warning';box.setAttribute('role','alert');
+  box.innerHTML='<div><b>Changes haven’t been saved.</b> This browser could not save your data. Your changes are only in this open page. Keep it open and try again before refreshing or closing.</div><button type="button" class="btn btn-ghost sm" data-act="retrySave">Try Saving Again</button>';host.prepend(box);
+}
+function save(){try{diffEvents()}catch(e){}try{localStorage.setItem(KEY,JSON.stringify(S));saveFailed=false;document.querySelectorAll('.save-warning').forEach(e=>e.remove());return true}catch(e){saveFailed=true;const t=document.getElementById('toast');if(t){if(t.hidePopover){if(t.matches(':popover-open'))t.hidePopover()}else t.hidden=true}queueMicrotask(showSaveFailure);return false}}
+window.addEventListener('beforeunload',e=>{if(saveFailed){e.preventDefault();e.returnValue=''}});
+document.addEventListener('click',()=>{if(saveFailed)queueMicrotask(showSaveFailure)},true);
 /* Prototype tool: pretend other members did a few things, so Group Activity, reactions, and notifications can be tried without other accounts. */
 /* Prototype tools for Request to Borrow, since the other members are sample people. */
 function simBorrowIn(){
@@ -3249,6 +3259,7 @@ function adSave(){adCaptureDetail();const d=ad.detail;if(!d)return;const er=m=>{
     if(active&&d.started)r.started=d.started;
     if(d.status==='finished'){r.pos=r.total;if(d.finished)r.finished=d.finished;else{r.readIt=true;r.markedOn=today()}if(d.rating)r.rating=+d.rating}
     if(d.status==='dnf'){if(d.stopped)r.dnfOn=d.stopped;if(d.reasons.length)r.dnfWhy=[...d.reasons]}
+    if(pos!==null&&active)r.progressBase={pos:r.pos,date:today(),excluded:[]};
     S.books.push(r);if(d.status==='want'&&d.queue)(S.upNext=S.upNext||[]).push(r.id);ad.lastStatus=d.status;ad.lastFormat=d.format;
   }else if(!locked)ad.lastStatus='none';
   if(d.own){copy={id:'c'+uid(),titleId:t.id,owner:'me',format:d.copyFormat,edition:d.edition.trim(),loanTo:null};if(S.settings.solo||!d.share)copy.private=true;S.copies.push(copy);if(!copy.private)post('library','added a book to the group library:',t.title)}
@@ -3492,7 +3503,14 @@ function openSess(id){
   draftAttach(sessForm,'sess:'+id,'changes');
   sessDlg.showModal();
 }
-function syncPos(b){if(!b||!['reading','paused'].includes(b.status))return;const last=S.sessions.filter(x=>x.bookId===b.id&&x.end!=null).sort((a,c)=>a.date.localeCompare(c.date)).pop();b.pos=last?last.end:0}
+function ensureProgressBase(b,date){
+  if(!b||b.progressBase)return;
+  const ranges=S.sessions.filter(x=>x.bookId===b.id&&x.start!=null&&x.end!=null).sort((a,c)=>a.date.localeCompare(c.date));
+  b.progressBase=ranges.length?{pos:ranges[0].start,date:ranges[0].from||ranges[0].date,excluded:[]}:{pos:b.pos||0,date:b.pos>0&&S.books.includes(b)?today():date||today(),excluded:[]};
+}
+function syncPos(b){if(!b||!['reading','paused'].includes(b.status))return;ensureProgressBase(b);const base=b.progressBase;
+  const last=S.sessions.filter(x=>x.bookId===b.id&&x.end!=null&&x.date>=base.date&&!(base.excluded||[]).includes(x.id)).sort((a,c)=>a.date.localeCompare(c.date)).pop();b.pos=last?last.end:base.pos;
+}
 sessForm.addEventListener('submit',e=>{
   e.preventDefault();const x=S.sessions.find(y=>y.id===sessForm.dataset.id),b=book(x.bookId),audio=b?.format==='audio',f=Object.fromEntries(new FormData(sessForm)),er=m=>document.getElementById('seErr').textContent=m;
   const num=v=>String(v??'').trim()===''?null:audio?parsePos(v):(/^\d+$/.test(String(v).trim())?+v:NaN);
@@ -3508,6 +3526,7 @@ sessForm.addEventListener('submit',e=>{
   if(isCU(x)&&(!f.from||f.from>=f.date))return er('The first day must be before the last day.');
   {const nD=isCU(x)?daysIn(f.from,f.date):1,other=isCU(x)?0:S.sessions.filter(y=>y!==x&&y.date===f.date&&!isCU(y)).reduce((a,y)=>a+(y.minutes||0),0);
    if(other+(mn||0)>DAY_MAX*nD)return er(isCU(x)?`${nD} days can’t hold more than ${nD*24} hours.`:`${f.date===today()?'Today':fmtDate(f.date)} can’t hold more than 24 hours.${other?` Other sessions that day already have ${fmtMin(other)}.`:''}`)}
+  ensureProgressBase(b);
   if(isCU(x))x.from=f.from;
   Object.assign(x,{date:f.date,start:st,end:en,pages,minutes:mn,note:f.note||''});
   x.est=null;if(!audio&&pages&&mn==null&&S.settings.estimate){const pc=pace(x.bookId);if(pc)x.est=Math.round(pages/pc)}else if(audio&&en!=null&&mn==null&&S.settings.estimate)x.est=en-st;
@@ -3997,7 +4016,7 @@ function syncRoute(){
 window.addEventListener('popstate',()=>{readRoute();closeMenus();render();window.scrollTo(0,0)});
 function render(){
   if(view==='discover'){view='library';lib.tab='discover'}// Discover is a Library tab
-  syncRoute();queueMicrotask(()=>tabEdges());
+  syncRoute();queueMicrotask(()=>{tabEdges();if(saveFailed)showSaveFailure()});
   if(!S.seen){try{S.seen=evSnap()}catch(e){}}
   document.querySelectorAll('[data-go]').forEach(b=>{if(b.closest('.nav,.bnav'))b.setAttribute('aria-current',b.dataset.go===view?'page':'false')});
   const m=document.getElementById('main');
@@ -4063,7 +4082,7 @@ function openLog(bookId,focus,preMin){
   drawLog(b,focus,preMin);
   logDlg.showModal();
   const f=focus==='minutes'?'minutes':'end';
-  setTimeout(()=>logForm.querySelector(`[name=${f}]`)?.focus(),30);
+  logForm.querySelector(`[name=${f}]`)?.focus();
 }
 let pendingNew=null;
 const findB=id=>book(id)||(pendingNew&&pendingNew.id===id?pendingNew:null);
@@ -4295,6 +4314,7 @@ logForm.addEventListener('submit',e=>{
      const what=[totM/nD>DAY_ASK_MIN?fmtMin(fromD?totM/nD:totM):'',totP/nD>DAY_ASK_PAGES?`${Math.round(fromD?totP/nD:totP)} pages`:''].filter(Boolean).join(' and ');
      const q=timer?`The timer ran for ${fmtMin(minutes)}. Did it keep going after you stopped reading?`:fromD?`That’s about ${what} a day for ${nD} days. Is that right?`:`That’s ${what} of reading ${on}. Is that right?`;
      return logAsk(`<p class="small"><b>${q}</b></p><div class="log-ask-b"><button type="button" class="btn btn-primary sm" data-act="logYes">Yes, Save It</button><button type="button" class="btn btn-ghost sm" data-act="logFix">Let Me Fix It</button>${fromD?'':spreadBtn}</div>`)}}
+  ensureProgressBase(b,fromD||f.date);
   const before=goalState(f.date),skBefore=streak();
   const isNew=!S.books.includes(b),wasWant=isNew||b.status==='want';
   if(isNew){S.books.push(b);pendingNew=null}
@@ -4309,9 +4329,10 @@ logForm.addEventListener('submit',e=>{
     S.sessions.push({id:uid(),bookId:b.id,date:f.date,from:fromD||undefined,start:range?start:null,end:range?end:null,pages,minutes,est,note:f.note||'',with:withIds.length?withIds:undefined});
     if(withIds.length){extraSub=`Also counted for ${withIds.map(nameOf).join(' and ')}.`;if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'together',text:`read together with ${withIds.map(nameOf).join(' and ')}`,book:b.title,ts:Date.now(),r:{}})}
   }
-  if(range)b.pos=end;
+  if(range){if(!['reading','paused'].includes(b.status))b.pos=end;else syncPos(b)}
   if(finished){b.status='finished';b.finished=f.date;b.pos=b.total}
   else{b.status=f.status;if(f.status==='paused')b.pausedOn=today();if(f.status==='dnf'){b.dnfOn=f.date;if(selBook===b.id)selBook=null}}
+  if(range)syncPos(b);
   const started=wasWant&&b.status==='reading';
   if(started){selBook=b.id;if((S.upNext||[]).includes(b.id))b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,f.date)>=365)b.rescued=f.date}
   if(started){const re=S.books.some(x=>x!==b&&x.titleId===b.titleId&&x.status==='finished');post(re?'reread':'started',re?'started rereading':'started a new book',b.title)}
@@ -4379,16 +4400,17 @@ function statusPicker(b){
 }
 function openEdit(id){
   const b=book(id);if(!b)return;const audio=b.format==='audio';
-  editForm.dataset.id=id;
-  editForm.innerHTML=`<div class="dlg-h">${cover(b,58)}<div style="flex:1"><h2 id="editTitle">Edit Book</h2><div class="muted small">${esc(b.title)}</div></div><button type="button" class="icon-btn x" data-act="closeEdit" aria-label="Close">${ic('x')}</button></div>
+  editForm.dataset.id=id;const hasSessions=S.sessions.some(x=>x.bookId===id);
+  editForm.innerHTML=`<div class="dlg-h">${cover(b,58)}<div style="flex:1"><h2 id="editTitle">Edit Reading</h2><div class="muted small">${esc(b.title)}</div></div><button type="button" class="icon-btn x" data-act="closeEdit" aria-label="Close">${ic('x')}</button></div>
   <div class="form">
     <label class="f">Title<input class="inp" name="title" value="${esc(b.title)}"></label>
     <label class="f">Author<input class="inp" name="author" value="${esc(b.author)}"></label>
     ${readingEditionFields(b,'editReading')}
-    <div class="f2"><label class="f">Format<select class="inp" name="format">${['want','finished','dnf'].includes(b.status)&&!S.sessions.some(x=>x.bookId===b.id)?`<option value="unknown" ${b.format==='unknown'?'selected':''}>Not Specified</option>`:''}<option value="print" ${b.format==='print'||b.format==='ebook'?'selected':''}>Book or Ebook</option><option value="audio" ${audio?'selected':''}>Audiobook</option></select></label>
+    <div class="f2"><label class="f">Format<select class="inp" name="format" ${hasSessions?'disabled':''}>${['want','finished','dnf'].includes(b.status)&&!S.sessions.some(x=>x.bookId===b.id)?`<option value="unknown" ${b.format==='unknown'?'selected':''}>Not Specified</option>`:''}<option value="print" ${b.format==='print'||b.format==='ebook'?'selected':''}>Book or Ebook</option><option value="audio" ${audio?'selected':''}>Audiobook</option></select></label>
     <label class="f"><span id="eTotalL">${audio?'Length (h:mm)':'Number of Pages'}</span><input class="inp" name="total" value="${audio?fmtPos(b.total):b.total}"></label></div>
     <div class="f2"><label class="f"><span id="ePosL">${audio?'Current Position (h:mm)':'Current Page'}</span><input class="inp" name="pos" value="${audio?fmtPos(b.pos):b.pos}"></label>
     <label class="f">Started On<input class="inp" type="date" name="started" value="${b.started||''}" max="${today()}"></label></div>
+    ${hasSessions?'<p class="xs muted">Reading format is fixed because this reading has logged sessions. This protects the page or audio positions in your history.</p>':''}
     ${seriesFields(b)}
     ${statusPicker(b)}
     <div class="err" id="editErr" role="alert"></div>
@@ -4398,13 +4420,16 @@ function openEdit(id){
 }
 editForm.addEventListener('input',e=>{if(e.target.name==='format'){const a=e.target.value==='audio';document.getElementById('eTotalL').textContent=a?'Length (h:mm)':'Number of Pages';document.getElementById('ePosL').textContent=a?'Current Position (h:mm)':'Current Page'}});
 editForm.addEventListener('submit',e=>{
-  e.preventDefault();const f=Object.fromEntries(new FormData(editForm)),b=book(editForm.dataset.id),a=f.format==='audio';
+  e.preventDefault();const f=Object.fromEntries(new FormData(editForm)),b=book(editForm.dataset.id);f.format=f.format||b.format;const a=f.format==='audio';
   const num=v=>a?parsePos(v):(/^\d+$/.test(String(v).trim())?+v:NaN);
   const tot=num(f.total),pos=num(f.pos),er=m=>document.getElementById('editErr').textContent=m;
   if(!f.title.trim())return er('Enter a title.');
+  if(b.format==='ebook'&&f.format==='print')f.format='ebook';
+  if(S.sessions.some(x=>x.bookId===b.id)&&f.format!==b.format)return er('This reading has logged sessions. Keep its format to protect their page or audio positions.');
   if(f.format!=='unknown'&&(!tot||isNaN(tot)||tot<=0))return er(a?'Enter the length as h:mm, for example 6:45.':'Enter the number of pages.');
   if(pos==null||isNaN(pos)||pos<0)return er(a?'Enter the position as h:mm.':'Enter the current page.');
   if(pos>tot)return er(a?'The position can’t be past the end.':'The current page can’t be past the last page.');
+  if(pos!==b.pos||f.format!==b.format)b.progressBase={pos:f.format==='unknown'?0:pos,date:today(),excluded:S.sessions.filter(x=>x.bookId===b.id).map(x=>x.id)};
   Object.assign(b,{title:f.title.trim(),author:f.author.trim()||'Unknown author',format:f.format,total:f.format==='unknown'?0:tot,pos:f.format==='unknown'?0:pos,started:f.started||b.started});
   saveReadingEdition(b,readEdition(editForm,'editReading'));
   const tt=titleById(b.titleId);if(tt){tt.title=b.title;tt.author=b.author;if(['print','ebook'].includes(b.format))tt.pages=b.total;const sn=(f.series||'').trim();tt.series=sn||undefined;tt.seriesNo=sn&&String(f.seriesNo||'').trim()!==''&&!isNaN(+f.seriesNo)?+f.seriesNo:undefined;if(sn&&/^\d+$/.test(String(f.seriesLen||'').trim()))(S.seriesLen=S.seriesLen||{})[sn]=+f.seriesLen}
@@ -4433,7 +4458,7 @@ const restoreTo=snap=>()=>{S=JSON.parse(snap);save();refreshLib()};
 const showT=t=>{if(t.showPopover){if(t.matches(':popover-open'))t.hidePopover();t.showPopover()}else t.hidden=false};
 const hideT=t=>{if(t.hidePopover){if(t.matches(':popover-open'))t.hidePopover()}else t.hidden=true};
 let extraSub='';
-function toast(m,undo,sub,cele){if(extraSub){sub=sub?`${sub} ${extraSub}`:extraSub;extraSub=''}const t=document.getElementById('toast');
+function toast(m,undo,sub,cele){if(saveFailed){showSaveFailure();return;}if(extraSub){sub=sub?`${sub} ${extraSub}`:extraSub;extraSub=''}const t=document.getElementById('toast');
   // While a window is open, the browser blocks taps and clicks on everything outside it, so the message goes inside
   // that window, where its Undo still works.
   const host=[...document.querySelectorAll('dialog[open]')].pop()||document.body;if(t.parentNode!==host){hideT(t);host.appendChild(t)}
@@ -4461,6 +4486,7 @@ document.addEventListener('click',e=>{
   if(!a){if(!e.target.closest('.menu'))closeMenus();return}
   const id=a.dataset.book;
   switch(a.dataset.act){
+    case 'retrySave':if(save())toast('Changes saved.');break;
     case 'log':openLog(id,a.dataset.focus);break;
     case 'setStatus':{const b=book(a.dataset.book),v=a.dataset.v,snap=snapshot(),has=S.sessions.some(x=>x.bookId===b.id&&(x.pages||x.minutes||x.est)),prev=b.status;
       if(b.format==='unknown'&&['reading','paused'].includes(v)){if(editDlg.open)editDlg.close();if(bookDlg.open)bookDlg.close();drawLog(b,null,null,v);logDlg.showModal();break}
@@ -4501,7 +4527,7 @@ document.addEventListener('click',e=>{
     case 'sessEdit':openSess(a.dataset.id);break;
     case 'closeSess':sessDlg.close();break;
     case 'cancelSess':{const id=sessForm.dataset.id;draftCancel(sessForm,sessDlg,()=>openSess(id),'changes');break}
-    case 'sessDel':{sessForm.dataset.done='1';draftClear(sessForm.dataset.dkey);const snap=snapshot(),x=S.sessions.find(y=>y.id===sessForm.dataset.id);S.sessions=S.sessions.filter(y=>y!==x);syncPos(book(x.bookId));save();sessDlg.close();render();toast('Session deleted.',restoreTo(snap),'Your book itself wasn’t changed.');break}
+    case 'sessDel':{sessForm.dataset.done='1';draftClear(sessForm.dataset.dkey);const snap=snapshot(),x=S.sessions.find(y=>y.id===sessForm.dataset.id);ensureProgressBase(book(x.bookId));S.sessions=S.sessions.filter(y=>y!==x);syncPos(book(x.bookId));save();sessDlg.close();render();toast('Session deleted.',restoreTo(snap),'Your book itself wasn’t changed.');break}
     case 'upAdd':{S.upNext=S.upNext||[];if(upList().length>=10){toast('Your Reading Queue holds 10 books. Remove one first.');break}if(!S.upNext.includes(a.dataset.id))S.upNext.push(a.dataset.id);save();refreshLib();toast(`Added ${book(a.dataset.id).title} to your Reading Queue.`);break}
     case 'upRm':{S.upNext=(S.upNext||[]).filter(x=>x!==a.dataset.id);save();refreshLib();break}
     case 'upMove':{const L=upList().map(b=>b.id),i=L.indexOf(a.dataset.id),j=i+(+a.dataset.v);if(j<0||j>=L.length)break;[L[i],L[j]]=[L[j],L[i]];S.upNext=L;save();refreshLib();break}
