@@ -564,7 +564,7 @@ button.cal-d{border:0;font:inherit;color:inherit;cursor:pointer;position:relativ
 #shDlg{width:min(480px,calc(100vw - 24px))}#shBody{display:grid;gap:12px}#shBody .dlg-h{margin-bottom:0}
 .sh-nudge{display:flex;gap:12px 14px;align-items:center;flex-wrap:wrap;border:1px solid color-mix(in srgb,var(--primary) 35%,var(--border));background:var(--primary-light);border-radius:14px;padding:14px 16px;margin:0 0 14px}
 .sh-nudge .t{flex:1 1 240px}.sh-nudge .t b{display:block;font-family:var(--serif);font-size:17px}.sh-nudge .t span{font-size:13px;color:var(--text-2)}.sh-nudge .a{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.inp[hidden]{display:none}.genre-other{margin-top:6px}
+.inp[hidden]{display:none}
 .min-hint{margin:-2px 0 -10px;line-height:1.2}.min-hint:empty{display:none}.f3:has(.min-hint){align-items:start}.cf-warn{color:var(--warn,#9a5b00)}.cf-warn:empty{display:none}.log-ask{border:1px solid var(--border);background:var(--surface-2,var(--surface));border-radius:12px;padding:10px 12px;display:grid;gap:8px}.log-ask p{margin:0}.log-ask-b{display:flex;flex-wrap:wrap;gap:8px}.cu-dates{margin-bottom:6px}.timer-actions{align-items:flex-start}.timer-actions>.btn,.hero2-acts .timer-actions>.btn{flex:0 0 auto}.timer-redo .link-btn{white-space:nowrap}.ta-main{flex:1;min-width:0;display:grid;gap:4px}.ta-main .btn-primary{width:100%}.timer-redo{display:flex;gap:6px;align-items:center;justify-content:center}
 .timer-pill{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:8;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 6px 6px 14px;box-shadow:0 10px 30px rgba(15,23,42,.18);font-variant-numeric:tabular-nums;font-weight:600}
 .timer-pill .tp-t{font-weight:400;color:var(--text-2);max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -2187,7 +2187,7 @@ function libTitles(){
     if(f.format!=='all'&&!cs.some(c=>c.format===f.format))return false;
     if(f.avail==='available'&&avail(t.id)?.t!=='Available')return false;
     if(f.avail==='loan'&&!cs.some(c=>c.loanTo))return false;
-    if(f.genre!=='all'&&t.genre!==f.genre)return false;
+    if(f.genre!=='all'&&genreKey(t.genre)!==genreKey(f.genre))return false;
     if(lib.tab==='family'&&f.status!=='any'){const r=myReading(t.id);if(f.status==='none'?!!r:r?.status!==f.status)return false}
     return true;
   });
@@ -2260,13 +2260,18 @@ shDlg.addEventListener('cancel',e=>e.preventDefault());
 function shareNudge(){if(S.settings.solo||S.settings.shareNudgeOff||Date.now()-(S.settings.shareNudgeAt||0)<30*864e5)return '';
   const mine=S.copies.filter(c=>c.owner==='me');if(!mine.length||mine.some(c=>!c.private))return '';const n=new Set(mine.map(c=>c.titleId)).size;
   return `<div class="sh-nudge" role="region" aria-label="Share your books"><div class="t"><b>Your ${n} book${n===1?' is':'s are'} private</b><span>Share a few so your family has something to browse and borrow. You choose which.</span></div><div class="a"><button class="btn btn-primary" data-act="shareStart">Choose Books to Share</button><button class="btn btn-ghost" data-act="shNudge" data-v="later">Not Now</button><button class="link-btn sm" data-act="shNudge" data-v="off">Don’t Show Again</button></div></div>`}
-/* Genre: a real list (common genres plus any already in the library) with None and Other…; Other shows a box to
-   type one. The value saved is always the hidden-or-shown text box, so saving code reads it as before. */
-const GENRES=['Biography','Business','Children’s','Classics','Fantasy','Fiction','Graphic Novel','Historical Fiction','History','Horror','Humor','Memoir','Mystery','Nonfiction','Poetry','Religion','Romance','Science','Science Fiction','Self-Help','Thriller','Young Adult'];
-function genrePick(attr,cur){cur=(cur||'').trim();const list=[...new Set([...GENRES,...S.titles.map(t=>t.genre).filter(Boolean)])].sort((a,b)=>a.localeCompare(b)),known=!cur||list.includes(cur);
-  return `<select class="inp" data-genre-sel><option value="">None</option>${list.map(g=>`<option ${g===cur?'selected':''}>${esc(g)}</option>`).join('')}<option value="__other" ${known?'':'selected'}>Other…</option></select><input class="inp genre-other" ${attr} value="${esc(cur)}" ${known?'hidden':''} placeholder="Type a genre" aria-label="Other genre" autocomplete="off">`}
-document.addEventListener('change',e=>{const g=e.target.closest?.('[data-genre-sel]');if(!g)return;const inp=g.nextElementSibling;
-  if(g.value==='__other'){inp.hidden=false;inp.value='';inp.focus()}else{inp.hidden=true;inp.value=g.value}});
+/* One editable genre field: native suggestions allow selection or a custom value. */
+const GENRE_GROUPS={
+  fiction:['Fantasy','Fiction','Historical Fiction','Horror','Mystery','Romance','Science Fiction','Thriller'],
+  nonfiction:['Biography','Business','History','Memoir','Nonfiction','Religion','Science','Self-Help'],
+  either:['Classics','Children’s','Young Adult','Graphic Novel','Poetry','Humor']
+};
+const GENRES=Object.values(GENRE_GROUPS).flat().sort((a,b)=>a.localeCompare(b));
+const genreKey=g=>String(g||'').trim().replace(/\s+/g,' ').replace(/[’‘]/g,"'").toLowerCase();
+function genreClass(g){const key=genreKey(g);return Object.keys(GENRE_GROUPS).find(k=>GENRE_GROUPS[k].some(x=>genreKey(x)===key))||'unknown'}
+function genreValue(g){const value=String(g||'').trim().replace(/\s+/g,' '),key=genreKey(value);return [...GENRES,...S.titles.map(t=>t.genre).filter(Boolean)].find(x=>genreKey(x)===key)||value}
+function genrePick(attr,cur){const id=attr.includes('amGenre')?'addGenreOptions':'editGenreOptions',seen=new Set(),list=[...GENRES,...S.titles.map(t=>t.genre).filter(Boolean)].map(genreValue).filter(g=>{const k=genreKey(g);if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.localeCompare(b));
+  return `<input class="inp" ${attr} list="${id}" value="${esc(cur||'')}" placeholder="Search or type a genre" autocomplete="off" aria-describedby="${id}Hint"><datalist id="${id}">${list.map(g=>`<option value="${esc(g)}">`).join('')}</datalist><span class="xs muted" id="${id}Hint">Choose a suggestion or type your own. Leave blank if unsure.</span>`}
 function libEmpty(){
   if(lib.q.trim()||nFilters())return `<div class="empty">${ic('search')}<h3>No Books Found</h3><p>Try a different search or clear your filters.</p><button class="btn btn-ghost" data-act="libClear">Clear Filters</button></div>`;
   if(lib.tab==='mybooks'&&lib.mb!=='all')return `<div class="empty">${ic('book')}<h3>No Books Here Yet</h3><p>Books with this status will show up here.</p></div>`;
@@ -3128,7 +3133,7 @@ titleForm.addEventListener('submit',e=>{
   if(len&&(!sn||!/^\d+$/.test(len)||+len<=0))return er(sn?'Enter how many books are in the series as a whole number.':'Add a series name to go with the series length.');
   if(te.bad)return er('The cover image didn’t load. Choose a different one, or use the generated cover.');
   const old=t.title;
-  Object.assign(t,{title,author,pages:pages?+pages:undefined,isbn:isbn||undefined,genre:v('tGenre'),series:sn||undefined,seriesNo:sn&&no?+no:undefined});
+  Object.assign(t,{title,author,pages:pages?+pages:undefined,isbn:isbn||undefined,genre:genreValue(v('tGenre')),series:sn||undefined,seriesNo:sn&&no?+no:undefined});
   if(sn&&len)(S.seriesLen=S.seriesLen||{})[sn]=+len;
   {const d=v('tDesc');if(d!==(t.descText||'')){if(d){t.descText=d;t.descBy='me'}else{delete t.descText;delete t.descBy}}}
   if(te.touched){if(te.cover){t.cover=te.cover;t.coverPicked=true;delete t.noAutoCover}else{delete t.cover;t.noAutoCover=true}}
@@ -3312,7 +3317,7 @@ function addManual(mode){
   if(!title)return er('Enter the book’s title.');
   if(!/^\d+$/.test(pages)||+pages<=0)return er('Enter the number of pages.');
   if(S.titles.some(t=>t.title.toLowerCase()===title.toLowerCase()))return er('That title is already in Reading Room. Use Search to find it.');
-  const t={id:'t'+uid(),title,author:v('amAuthor')||'Unknown author',pages:+pages,genre:v('amGenre'),c:hashStr(title)%COVERS.length,added:Date.now()};
+  const t={id:'t'+uid(),title,author:v('amAuthor')||'Unknown author',pages:+pages,genre:genreValue(v('amGenre')),c:hashStr(title)%COVERS.length,added:Date.now()};
   S.titles.push(t);
   if(mode==='own'){const sh=!S.settings.solo&&ad.share!==false;const nc={id:'c'+uid(),titleId:t.id,owner:'me',format:v('amFmt'),where:'',loanTo:null,private:!sh||undefined};S.copies.push(nc);setTimeout(()=>shareAsk(nc.id),0);if(sh)post('library','added a book to the group library:',title);toast(`Added ${title} to My Collection.`)}
   else{S.books.push({id:'r'+uid(),titleId:t.id,title,author:t.author,format:'print',total:t.pages,pos:0,status:'want',c:t.c,wantSince:today()});toast(`Added ${title} to your To Read list.`)}
@@ -3443,7 +3448,7 @@ const isMine=c=>c.mode==='personal'?c.creator==='me':(c.participants||[]).includ
 const daysBetween=(a,b)=>Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5);
 const ordinal=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
 function ruleOk(c,tid){const r=c.rule||'all';if(r==='none')return false;if(r==='all')return true;const t=titleById(tid);if(!t)return false;
-  if(r==='author')return t.author.toLowerCase().includes((c.ruleVal||'').trim().toLowerCase());if(r==='genre')return t.genre===c.ruleVal;return true}
+  if(r==='author')return t.author.toLowerCase().includes((c.ruleVal||'').trim().toLowerCase());if(r==='genre')return genreKey(t.genre)===genreKey(c.ruleVal);return true}
 const inWin=(c,d)=>!!d&&d<=today()&&(!c.end||d<=c.end)&&(c.countPrior||!c.start||d>=c.start);
 const titleOfSession=x=>book(x.bookId)?.titleId;
 function contrib(c){
@@ -3980,8 +3985,7 @@ const findB=id=>book(id)||(pendingNew&&pendingNew.id===id?pendingNew:null);
    an unsaved entry keeps the prompt it had. The field's label stays "Add a Note"; the prompt is only a hint. */
 const NP_GEN=['What stayed with you?','What surprised you?','A line worth remembering?','How did this part feel?','What are you wondering about?','What made you pause?','A thought to come back to?','Tell a friend about this part?','Did anything change your mind?','What would you ask the author?','What did this remind you of?','Something you’d underline?','Who did this make you think of?','What will you remember tomorrow?','A word or idea you looked up?'],
   NP_STORY=['What do you think happens next?','Who are you rooting for?'],NP_NONFIC=['What idea will you try?','Anything you disagreed with?'],
-  NP_REREAD=['What did you notice this time?'],NP_FIN=['How did it end for you?','Who should read this next?','Will you remember this one?','What will stay with you?'],
-  NP_NONFIC_GENRES=['Nonfiction','Memoir','Science','Religion','History'];
+  NP_REREAD=['What did you notice this time?'],NP_FIN=['How did it end for you?','Who should read this next?','Will you remember this one?','What will stay with you?'];
 function npPick(pool,seenKey){const seen=S[seenKey]=(S[seenKey]||[]).filter(x=>pool.includes(x));let left=pool.filter(x=>!seen.includes(x));
   if(!left.length){S[seenKey]=seen.slice(-1);left=pool.filter(x=>!S[seenKey].includes(x))}const p=left[Math.floor(Math.random()*left.length)];S[seenKey].push(p);return p}
 /* Separate shuffled decks: stories, nonfiction, general (no genre on record), and finishing. A reread adds its
@@ -3992,7 +3996,7 @@ function notePromptSet(b,dk,hadDraft){
   const last=keep[dk];let np,fin;
   if(hadDraft&&last){np=last.np;fin=last.fin}
   else{const g=(titleById(b.titleId)?.genre||b.genre||'').trim(),re=S.books.some(x=>x!==b&&b.titleId&&x.titleId===b.titleId&&x.status==='finished'),
-      deck=!g?'general':NP_NONFIC_GENRES.includes(g)?'nonfic':'story',R=re?NP_REREAD:[];
+      deck=genreClass(g)==='fiction'?'story':genreClass(g)==='nonfiction'?'nonfic':'general',R=re?NP_REREAD:[];
     np=npPick([...NP_GEN,...(deck==='nonfic'?NP_NONFIC:deck==='story'?NP_STORY:[]),...R],'npSeen_'+deck);fin=npPick([...NP_FIN,...R],'npSeen_fin');keep[dk]={np,fin};save()}
   logForm.dataset.np=np;logForm.dataset.npf=fin;const n=logForm.querySelector('[name=note]');if(n){n.placeholder=logForm.status?.value==='finished'?fin:np;requestAnimationFrame(()=>noteFit(n))}noteHint()}
 /* Every multi-line box starts at its own height (its rows), grows with its text up to its limit (max-height), and
