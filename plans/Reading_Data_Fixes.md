@@ -12,13 +12,19 @@ Previously lost data cannot be recreated from an absent record. These changes pr
 
 Browser checks cover failed writes, suppressed success feedback, retries and reload persistence, session-save retries without duplicates, UI and submit protection for session units, legacy and new baselines, backdated entries, manual corrections, and phone/desktop layouts at 320/390/1280. Existing edition, draft, reread, session logging, and persistence checks also passed.
 
-## Remaining priorities — proposals, not implemented
+## Follow-up fixes — completed after James’s approval
 
-1. Protect outstanding loans when removing a copy (audit 8).
-2. Add a discoverable Edit Copy action for owned copies: copy format, edition, and sharing. A clickable Owned by You label may be a secondary shortcut, not the only indication. Edit Book can link to Your Copies without mixing shared catalog changes with copy-specific changes.
-3. Reject empty sessions that currently earn reading days/streaks (audit 5).
-4. Honor a selected queued book when there are no active readings (audit 4).
-5. Correct date editing: allow clearing Started On, reject future dates, and provide an explicit way to correct a finished reading’s finish date (audit 6 plus editor coverage review).
-6. Keep title/author corrections consistent across read-throughs and the shared catalog (audit 7).
+1. Copies with loans, holds, or pending requests cannot be removed. Their format also remains protected until those commitments are resolved.
+2. The shared Edit My Copy form is available through a quiet Edit link beside Owned by You, the Your Copies section of Edit Book, and the selected copy in Start Reading, Add a Book, Log Reading, or Edit Reading. It edits copy format, optional edition, and sharing. It preserves unsaved parent fields and saved reading-edition snapshots. Selecting a copy for a new reading supplies its edition; editing that copy during setup refreshes that pending value when it has not been independently changed.
+3. Empty sessions are rejected in logging and session editing. Status-only starts/finishes remain possible without creating a fake session; genuine minutes-only or listening progress remains valid.
+4. Start Reading honors an explicitly selected queued/To Read book even when there are no active books.
+5. Started On can be cleared; future/invalid dates and finish-before-start dates are rejected. Finished On is editable for finished readings and can be cleared to Finished, date unknown. Changing those dates does not rewrite session dates.
+6. Shared title/author corrections from either editor update the catalog, all read-throughs, and matching activity references consistently. Both editors reject collisions with another book’s title and author. Reading editions and individual progress/history stay independent.
 
-Edit Book is for shared catalog information. Edit Reading is for a personal reading’s status, edition, progress, and dates. Edit Copy should own changes to a particular owned copy, preserving earlier reading edition snapshots. Structured edition selection remains outside this patch.
+## Editing scope and future persistence
+
+Edit Book handles shared catalog information. Edit Reading handles a personal read-through’s status, edition, progress, and dates. Edit My Copy handles a particular owned copy. Copy edits never rewrite previously saved reading-edition labels.
+
+The confirmed-save, persistent-warning, and retry behavior is also required when storage moves to a server. Its persistence implementation must then await a confirmed server write and handle network/server failures; the current synchronous browser-storage implementation is not a complete future server adapter.
+
+Structured edition selection and the rest of the deferred roadmap remain outside this patch.

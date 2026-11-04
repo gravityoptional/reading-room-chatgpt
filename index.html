@@ -1231,6 +1231,7 @@ a.btn{text-decoration:none}
 #logForm .new-scope{font-size:12px;line-height:1.4;margin-top:0}
 .reading-edition{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;min-width:0}.reading-edition .inp{min-width:0;box-sizing:border-box}.reading-edition-details{min-width:0}.reading-edition [hidden]{display:none}.reading-edition-details summary{max-width:100%;overflow-wrap:anywhere}
 .save-warning{padding:12px;margin-bottom:14px;border:2px solid var(--red);border-radius:10px;background:var(--surface);color:var(--text);font-size:13px;line-height:1.5;display:grid;gap:8px}.save-warning .btn{justify-self:start}.save-warning[role=alert]{position:sticky;top:0;z-index:100}
+.link-btn.copy-edit-link{padding:0 2px;vertical-align:baseline;font-size:12px}.copy-access{display:grid;gap:8px}.copy-access-row{display:flex;justify-content:space-between;align-items:center;gap:12px;overflow-wrap:anywhere}.copy-access-row>span{min-width:0}
 </style>
 </head>
 <body>
@@ -1276,6 +1277,7 @@ a.btn{text-decoration:none}
 <dialog id="recDlg" aria-labelledby="rpTitle"><div class="dlg" id="recBody"></div></dialog>
 <dialog id="nextDlg" aria-labelledby="nxTitle"><div class="dlg" id="nextBody"></div></dialog>
 <dialog id="dnfDlg" aria-labelledby="dnfT"><div class="dlg" id="dnfBody"></div></dialog>
+<dialog id="copyEditDlg" aria-labelledby="copyEditTitle"><form class="dlg" id="copyEditForm" method="dialog" novalidate></form></dialog>
 <dialog id="sessDlg" aria-labelledby="seTitle"><form class="dlg" id="sessForm" method="dialog" novalidate></form></dialog>
 <div id="pill"></div>
 <div class="toast" id="toast" role="status" popover="manual"></div>
@@ -2967,7 +2969,7 @@ function copyRow(c){
   else if(mine&&ph)act=c.loanTo?`<button class="btn btn-ghost sm" data-act="cpReturn" data-id="${c.id}">Mark Returned</button>`
     :bd.lend===c.id?`<span class="lend"><select class="inp sm" id="lendTo" aria-label="Lend to">${Object.entries(S.members).map(([k,m])=>`<option value="${k}">${esc(m.name)}</option>`).join('')}</select><button class="btn btn-primary sm" data-act="cpLendGo" data-id="${c.id}">Lend</button><button class="link-btn sm" data-act="cpLend" data-id="">Cancel</button></span>`
     :`<button class="btn btn-ghost sm" data-act="cpLend" data-id="${c.id}">Mark Loaned</button>`;
-  return `<div class="copy"><span class="avatar" style="background:${colorOf(c.owner)}">${initOf(c.owner)}</span><div class="cp-main"><div class="small"><b>${FMT[c.format]}</b>${c.edition?` · ${esc(c.edition)}`:''}${c.where?` · ${esc(c.where)}`:''}</div><div class="xs muted">Owned by ${nameOf(c.owner)}</div></div>
+  return `<div class="copy"><span class="avatar" style="background:${colorOf(c.owner)}">${initOf(c.owner)}</span><div class="cp-main"><div class="small"><b>${FMT[c.format]}</b>${c.edition?` · ${esc(c.edition)}`:''}${c.where?` · ${esc(c.where)}`:''}</div><div class="xs muted">Owned by ${nameOf(c.owner)}${mine?` · <button type="button" class="link-btn sm copy-edit-link" data-act="cpEdit" data-id="${c.id}" aria-label="Edit ${esc(FMT[c.format])} copy${c.edition?' — '+esc(c.edition):''}">Edit</button>`:''}</div></div>
   <span class="avail ${ph?(c.loanTo||hold?'loan':'ok'):''}">${ph?(c.loanTo?(c.loanTo==='me'?'On loan to you':`On loan to ${nameOf(c.loanTo)}`):hold?(hold.from==='me'?'On hold for you':`On hold for ${nameOf(hold.from)} — awaiting pickup`):'Available'):'Digital'}</span>
   <span class="cp-act">${act}${mine&&!S.settings.solo?`<button class="link-btn sm cp-share" data-act="cpShare" data-id="${c.id}" aria-pressed="${!c.private}" title="Show this copy in the ${esc(GN())} Library">${c.private?`${ic('lock')}Only Me`:`${ic('users')}Shared`}</button>`:''}${mine?`<button class="link-btn sm" data-act="cpRemove" data-id="${c.id}">Remove</button>`:''}</span></div>${bd.reqNote===c.id&&!mine&&!mr?`<div class="req-in req-compose"><label class="f"><span>Note to ${esc(nameOf(c.owner))} <span class="sub">(optional)</span></span><textarea class="inp" id="reqNoteTx" rows="2" maxlength="200" data-count="200" aria-describedby="reqNoteCount" placeholder="When you could pick it up, or why you'd like to read it"></textarea>${charCount('reqNoteCount',0,200)}</label><span class="req-btns"><button class="btn btn-ghost sm" data-act="reqNoteOpen" data-id="">Cancel</button><button class="btn btn-primary sm" data-act="reqBorrow" data-id="${c.id}">${free?'Send Request':'Join the Waiting Line'}</button></span></div>`:''}${incoming.map((r,i)=>`<div class="req-in"><span class="small">${free?'':`<span class="xs muted">${ordinal(i+1)} in line · </span>`}<b>${esc(nameOf(r.from))}</b> asked to borrow this ${ago(r.ts)}.${r.note?`<span class="req-msg">“${esc(r.note)}”</span>`:''}</span>${replyBtns(r,free)}</div>`).join('')}`;
 }
@@ -2976,7 +2978,7 @@ function readingEditionFields(b,prefix,includeNew=false){
   const copies=(S.copies||[]).filter(c=>c.titleId===b.titleId&&c.owner==='me');
   const selected=b.editionCopyId==='__new'&&includeNew?'__new':copies.some(c=>c.id===b.editionCopyId)?b.editionCopyId:'';
   const useNew=selected==='__new',opt='<span class="sub">(optional)</span>';
-  return `<div class="reading-edition" data-edition-prefix="${prefix}">${copies.length||includeNew?`<label class="f"><span>Copy for This Reading ${opt}</span><select class="inp" id="${prefix}Copy" name="${prefix}Copy" data-edition-copy><option value="">Other or Not Specified</option>${includeNew?`<option value="__new" ${useNew?'selected':''}>Copy I’m Adding</option>`:''}${copies.map((c,i)=>`<option value="${esc(c.id)}" ${selected===c.id?'selected':''}>${esc(FMT[c.format])} · ${esc(c.edition||'Copy '+(i+1))}</option>`).join('')}</select></label>`:''}<label class="f" data-edition-label ${useNew?'hidden':''}><span>Edition ${opt}</span><input class="inp" id="${prefix}Edition" name="${prefix}Edition" value="${esc(b.edition||'')}" maxlength="200" placeholder="e.g. Illustrated, revised, or a translation"></label>${includeNew?`<p class="xs muted ad-help" data-edition-new ${useNew?'':'hidden'}>Uses the edition entered under I Own a Copy below.</p>`:''}</div>`;
+  return `<div class="reading-edition" data-edition-prefix="${prefix}">${copies.length||includeNew?`<label class="f"><span>Copy for This Reading ${opt}</span><select class="inp" id="${prefix}Copy" name="${prefix}Copy" data-edition-copy><option value="">Other or Not Specified</option>${includeNew?`<option value="__new" ${useNew?'selected':''}>Copy I’m Adding</option>`:''}${copies.map((c,i)=>`<option value="${esc(c.id)}" ${selected===c.id?'selected':''}>${esc(FMT[c.format])} · ${esc(c.edition||'Copy '+(i+1))}</option>`).join('')}</select></label><button type="button" class="link-btn sm" data-act="editReadingCopy" ${selected&&selected!=='__new'?'':'hidden'}>Edit My Copy</button>`:''}<label class="f" data-edition-label ${useNew?'hidden':''}><span>Edition ${opt}</span><input class="inp" id="${prefix}Edition" name="${prefix}Edition" value="${esc(b.edition||'')}" maxlength="200" placeholder="e.g. Illustrated, revised, or a translation"></label>${includeNew?`<p class="xs muted ad-help" data-edition-new ${useNew?'':'hidden'}>Uses the edition entered under I Own a Copy below.</p>`:''}</div>`;
 }
 function readEdition(root,prefix){return {edition:root.querySelector('#'+prefix+'Edition')?.value.trim()||'',editionCopyId:root.querySelector('#'+prefix+'Copy')?.value||''}}
 function saveReadingEdition(b,v){
@@ -2989,8 +2991,33 @@ document.addEventListener('change',e=>{
   const wrap=e.target.closest('.reading-edition'),useNew=e.target.value==='__new',c=S.copies.find(c=>c.id===e.target.value);
   wrap.querySelector('[data-edition-label]').hidden=useNew;
   const hint=wrap.querySelector('[data-edition-new]');if(hint)hint.hidden=!useNew;
+  const edit=wrap.querySelector('[data-act=editReadingCopy]');if(edit)edit.hidden=!c;
   if(c)wrap.querySelector('input').value=c.edition||'';
 });
+
+/* One copy editor is used from Copies, Edit Book, and reading setup. */
+const copyEditDlg=document.getElementById('copyEditDlg'),copyEditForm=document.getElementById('copyEditForm');
+let copyEditOpener=null;
+const copyHasCommitment=c=>!!c.loanTo||(S.loanReqs||[]).some(r=>r.copyId===c.id&&['pending','approved','loaned'].includes(r.status));
+function copyAccess(tid){const cs=copiesOf(tid).filter(c=>c.owner==='me');return `<div class="section-t">Your Copies</div><p class="xs muted">Edit your copy’s format, edition, or sharing here. Earlier reading editions stay unchanged.</p><div class="copy-access">${cs.length?cs.map(c=>`<div class="copy-access-row"><span class="small">${esc(FMT[c.format])}${c.edition?' · '+esc(c.edition):''}</span><button type="button" class="link-btn sm" data-act="cpEdit" data-id="${c.id}" aria-label="Edit ${esc(FMT[c.format])} copy${c.edition?' — '+esc(c.edition):''}">Edit</button></div>`).join(''):'<span class="xs muted">No owned copies recorded.</span>'}</div>`}
+function openCopyEdit(id,opener){const c=S.copies.find(c=>c.id===id&&c.owner==='me');if(!c)return;copyEditOpener=opener||document.activeElement;copyEditForm.dataset.id=id;copyEditForm.dataset.originalEdition=c.edition||'';
+  copyEditForm.innerHTML=`<div class="dlg-h"><div><h2 id="copyEditTitle">Edit My Copy</h2><p class="small muted">${esc(titleById(c.titleId)?.title||'Book')}</p></div><button type="button" class="icon-btn x" data-act="cpEditClose" aria-label="Close">${ic('x')}</button></div><div class="form"><label class="f">Copy Format<select class="inp" name="copyFormat" ${copyHasCommitment(c)?'disabled':''}>${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${c.format===k?'selected':''}>${l}</option>`).join('')}</select></label>${copyHasCommitment(c)?'<p class="xs muted">Resolve the loan, hold, or requests before changing this copy’s format or removing it.</p>':''}<label class="f"><span>Edition <span class="sub">(optional)</span></span><input class="inp" name="copyEdition" maxlength="200" value="${esc(c.edition||'')}" placeholder="e.g. Illustrated or revised"></label>${S.settings.solo?'':`<label class="chk"><input type="checkbox" name="copyShared" ${c.private?'':'checked'}> Show this copy in the ${esc(GN())} Library</label>`}<p class="xs muted">Changes apply to this copy. Your earlier readings keep their saved editions.</p><div id="copyEditError" class="err" role="alert"></div><div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="cpEditClose">Cancel</button><button type="submit" class="btn btn-primary">Save Copy</button></div></div>`;
+  copyEditDlg.showModal();copyEditForm.querySelector('[name=copyEdition]')?.focus();
+}
+copyEditForm.addEventListener('submit',e=>{e.preventDefault();const c=S.copies.find(c=>c.id===copyEditForm.dataset.id&&c.owner==='me');if(!c)return;const f=new FormData(copyEditForm),format=f.get('copyFormat')||c.format,oldEdition=copyEditForm.dataset.originalEdition||'',wasPrivate=!!c.private;
+  if(!FMT[format])return;
+  if(format!==c.format&&copyHasCommitment(c)){document.getElementById('copyEditError').textContent='Resolve this copy’s loan, hold, or requests before changing its format.';return}
+  c.format=format;c.edition=String(f.get('copyEdition')||'').trim();if(!S.settings.solo)c.private=!f.has('copyShared')||undefined;
+  if(wasPrivate&&!c.private)post('library','shared a copy of:',titleById(c.titleId)?.title);
+  if(!save())return;
+  document.querySelectorAll('.reading-edition').forEach(w=>{const select=w.querySelector('select'),option=select&&[...select.options].find(o=>o.value===c.id);if(option)option.textContent=FMT[c.format]+' · '+(c.edition||'Copy');if(select?.value===c.id){const prefix=w.dataset.editionPrefix,input=w.querySelector('input');if(input?.value===oldEdition&&(prefix==='adReading'||prefix==='startReading'&&['want','new'].includes(formatPick?.b?.status)))input.value=c.edition}});
+  const access=document.getElementById('teCopies');if(access&&titleDlg.open)access.innerHTML=copyAccess(c.titleId);
+  copyEditDlg.close();render();if(bookDlg.open)renderBD();toast('Saved your copy.');
+});
+copyEditDlg.addEventListener('close',()=>{if(copyEditOpener?.isConnected)copyEditOpener.focus()});
+function bookIdentityTaken(id,title,author){return S.titles.some(t=>t.id!==id&&olKey(t.title)===olKey(title)&&olKey(t.author)===olKey(author))}
+function updateBookIdentity(t,title,author,old=t.title){t.title=title;t.author=author;S.books.filter(b=>b.titleId===t.id).forEach(b=>{b.title=title;b.author=author});if(old!==title)S.activity.forEach(a=>{if(a.book===old)a.book=title})}
+function validReadingDate(d){return !d||/^\d{4}-\d{2}-\d{2}$/.test(d)&&!isNaN(Date.parse(d+'T00:00:00Z'))&&new Date(d+'T00:00:00Z').toISOString().slice(0,10)===d&&d<=today()}
 
 /* Your latest rating of a book, if any. */
 const myRating=tid=>S.books.filter(b=>b.titleId===tid&&b.status==='finished'&&b.rating).map(b=>b.rating).pop()||0;
@@ -3103,6 +3130,8 @@ function openTitleEdit(id){
   const genres=[...new Set(S.titles.map(x=>x.genre).filter(Boolean))].sort(),series=[...new Set(S.titles.map(x=>x.series).filter(Boolean))].sort();
   titleForm.innerHTML=`<div class="dlg-h"><div style="flex:1;min-width:0"><h2 id="teTitle">Edit Book</h2><div class="muted small">Changes apply to everyone${S.settings.solo?'':` in the ${esc(GN())} Library`} and to every reading of this book.</div></div><button type="button" class="icon-btn x" data-act="teClose" aria-label="Close">${ic('x')}</button></div>
   <div class="form">
+    <section id="teCopies">${copyAccess(t.id)}</section>
+    <div class="section-t">Book Details</div>
     <label class="f">Title<input class="inp" name="tTitle" value="${esc(t.title)}" autocomplete="off"></label>
     <label class="f">Author<input class="inp" name="tAuthor" value="${esc(t.author==='Unknown author'?'':t.author)}" placeholder="Unknown author" autocomplete="off"></label>
     <div class="f2"><label class="f"><span>Number of Pages <span class="sub">(if known)</span></span><input class="inp" name="tPages" inputmode="numeric" value="${t.pages||''}"></label>
@@ -3177,7 +3206,7 @@ titleForm.addEventListener('submit',e=>{
   const v=n=>(titleForm.querySelector(`[name=${n}]`)?.value||'').trim(),er=m=>{document.getElementById('teErr').textContent=m};
   const title=v('tTitle'),author=v('tAuthor')||'Unknown author',pages=v('tPages'),isbn=v('tIsbn').replace(/[-\s]/g,'').toUpperCase(),sn=v('tSeries'),no=v('tSeriesNo'),len=v('tSeriesLen');
   if(!title)return er('Enter a title.');
-  if(S.titles.some(x=>x!==t&&x.title.toLowerCase()===title.toLowerCase()&&x.author.toLowerCase()===author.toLowerCase()))return er('Another book in Reading Room already has this title and author.');
+  if(bookIdentityTaken(t.id,title,author))return er('Another book in Reading Room already has this title and author.');
   if(pages&&!(/^\d+$/.test(pages)&&+pages>0))return er('Enter the number of pages as a whole number, or leave it blank.');
   const mine=S.books.filter(b=>b.titleId===t.id);
   const past=pages&&mine.find(b=>b.format!=='audio'&&b.pos>+pages);
@@ -3192,8 +3221,8 @@ titleForm.addEventListener('submit',e=>{
   {const d=v('tDesc');if(d!==(t.descText||'')){if(d){t.descText=d;t.descBy='me'}else{delete t.descText;delete t.descBy}}}
   if(te.touched){if(te.cover){t.cover=te.cover;t.coverPicked=true;delete t.noAutoCover}else{delete t.cover;t.noAutoCover=true}}
   else if(!t.cover&&!t.noAutoCover&&old!==title){delete t.coverTried;setTimeout(coverFill,500)}
-  mine.forEach(b=>{b.title=title;b.author=author;if(['print','ebook'].includes(b.format)&&pages)b.total=+pages});
-  if(old!==title)S.activity.forEach(a=>{if(a.book===old)a.book=title});
+  updateBookIdentity(t,title,author,old);
+  mine.forEach(b=>{if(['print','ebook'].includes(b.format)&&pages)b.total=+pages});
   save();titleDlg.close();render();if(bookDlg.open)renderBD();toast(`Saved changes to ${title}.`);
 });
 
@@ -3521,7 +3550,7 @@ sessForm.addEventListener('submit',e=>{
   if(b&&en!=null&&en>b.total)return er(audio?`This audiobook is ${fmtPos(b.total)} long.`:`This book has ${b.total} pages.`);
   if(mn!=null&&mn<=0)return er('Minutes must be above zero.');
   const pages=audio?0:(en!=null?en-st:(po||0));
-  if(!pages&&mn==null&&en==null)return er('A session needs pages, minutes, or both.');
+  if(!pages&&mn==null&&!(audio&&en>st))return er('A session needs pages, minutes, or listening progress.');
   if(!f.date||f.date>today())return er('Choose a date that isn’t in the future.');
   if(isCU(x)&&(!f.from||f.from>=f.date))return er('The first day must be before the last day.');
   {const nD=isCU(x)?daysIn(f.from,f.date):1,other=isCU(x)?0:S.sessions.filter(y=>y!==x&&y.date===f.date&&!isCU(y)).reduce((a,y)=>a+(y.minutes||0),0);
@@ -4074,7 +4103,7 @@ function renderHeader(){
 const logDlg=document.getElementById('logDlg'),logForm=document.getElementById('logForm');
 function openLog(bookId,focus,preMin){
   let list=S.books.filter(b=>b.status==='reading'||b.status==='paused');
-  if(!list.length){drawNew();logDlg.showModal();setTimeout(()=>document.getElementById('newQ')?.focus(),30);return}
+  if(!list.length&&!(bookId&&book(bookId))){drawNew();logDlg.showModal();setTimeout(()=>document.getElementById('newQ')?.focus(),30);return}
   let b=bookId?book(bookId):null;
   if(!b&&focus==='audio'){b=list.find(x=>x.format==='audio');if(!b){toast('You have no audiobooks in progress.');return}}
   if(!b)b=currentSel()||list[0];
@@ -4297,11 +4326,11 @@ logForm.addEventListener('submit',e=>{
   if((hasStart&&isNaN(start))||(hasEnd&&isNaN(end)))return err(audio?'Enter positions as h:mm, for example 3:10.':'Pages must be whole numbers.');
   if(minutes!=null&&isNaN(minutes))return err('Enter minutes (90) or hours and minutes (1:30).');
   if(minutes!=null&&minutes<=0)return err('Minutes must be above zero.');
-  const range=hasEnd;
+  const range=hasEnd&&end>start;
   const fromD=logForm.cu.checked?f.from:null;
   if(logForm.cu.checked){if(!fromD)return err('Choose the first day this covers.');if(fromD>=f.date)return err('The first day must be before the last day.')}
-  if(range&&end<start)return err(`The ${audio?'end position':'ending page'} must be after the ${audio?'start position':'starting page'}.`);
-  if(range&&end>b.total)return err(audio?`This audiobook is ${fmtPos(b.total)} long.`:`This book has ${b.total} pages.`);
+  if(hasEnd&&end<start)return err(`The ${audio?'end position':'ending page'} must be after the ${audio?'start position':'starting page'}.`);
+  if(hasEnd&&end>b.total)return err(audio?`This audiobook is ${fmtPos(b.total)} long.`:`This book has ${b.total} pages.`);
   const finished=logForm.finished.checked||f.status==='finished';
   const statusChanged=finished||f.status!==b.status;
   if(!range&&minutes==null&&!statusChanged)return err('Enter pages, minutes, or both.');
@@ -4410,6 +4439,7 @@ function openEdit(id){
     <label class="f"><span id="eTotalL">${audio?'Length (h:mm)':'Number of Pages'}</span><input class="inp" name="total" value="${audio?fmtPos(b.total):b.total}"></label></div>
     <div class="f2"><label class="f"><span id="ePosL">${audio?'Current Position (h:mm)':'Current Page'}</span><input class="inp" name="pos" value="${audio?fmtPos(b.pos):b.pos}"></label>
     <label class="f">Started On<input class="inp" type="date" name="started" value="${b.started||''}" max="${today()}"></label></div>
+    ${b.status==='finished'?`<label class="f"><span>Finished On <span class="sub">(optional)</span></span><input class="inp" type="date" name="finished" value="${b.finished||''}" max="${today()}"></label><p class="xs muted">Leave blank if the finish date is unknown.</p>`:''}
     ${hasSessions?'<p class="xs muted">Reading format is fixed because this reading has logged sessions. This protects the page or audio positions in your history.</p>':''}
     ${seriesFields(b)}
     ${statusPicker(b)}
@@ -4424,15 +4454,19 @@ editForm.addEventListener('submit',e=>{
   const num=v=>a?parsePos(v):(/^\d+$/.test(String(v).trim())?+v:NaN);
   const tot=num(f.total),pos=num(f.pos),er=m=>document.getElementById('editErr').textContent=m;
   if(!f.title.trim())return er('Enter a title.');
+  if(bookIdentityTaken(b.titleId,f.title.trim(),f.author.trim()||'Unknown author'))return er('Another book already has this title and author.');
+  if(!validReadingDate(f.started)||!validReadingDate(f.finished))return er('Choose valid dates that are not in the future.');
+  if(f.started&&f.finished&&f.finished<f.started)return er('The finish date cannot be before the start date.');
   if(b.format==='ebook'&&f.format==='print')f.format='ebook';
   if(S.sessions.some(x=>x.bookId===b.id)&&f.format!==b.format)return er('This reading has logged sessions. Keep its format to protect their page or audio positions.');
   if(f.format!=='unknown'&&(!tot||isNaN(tot)||tot<=0))return er(a?'Enter the length as h:mm, for example 6:45.':'Enter the number of pages.');
   if(pos==null||isNaN(pos)||pos<0)return er(a?'Enter the position as h:mm.':'Enter the current page.');
   if(pos>tot)return er(a?'The position can’t be past the end.':'The current page can’t be past the last page.');
   if(pos!==b.pos||f.format!==b.format)b.progressBase={pos:f.format==='unknown'?0:pos,date:today(),excluded:S.sessions.filter(x=>x.bookId===b.id).map(x=>x.id)};
-  Object.assign(b,{title:f.title.trim(),author:f.author.trim()||'Unknown author',format:f.format,total:f.format==='unknown'?0:tot,pos:f.format==='unknown'?0:pos,started:f.started||b.started});
+  Object.assign(b,{title:f.title.trim(),author:f.author.trim()||'Unknown author',format:f.format,total:f.format==='unknown'?0:tot,pos:f.format==='unknown'?0:pos,started:f.started||undefined});
+  if(b.status==='finished'){if(f.finished){b.finished=f.finished;delete b.readIt;delete b.markedOn}else{delete b.finished;b.readIt=true;b.markedOn=b.markedOn||today()}}
   saveReadingEdition(b,readEdition(editForm,'editReading'));
-  const tt=titleById(b.titleId);if(tt){tt.title=b.title;tt.author=b.author;if(['print','ebook'].includes(b.format))tt.pages=b.total;const sn=(f.series||'').trim();tt.series=sn||undefined;tt.seriesNo=sn&&String(f.seriesNo||'').trim()!==''&&!isNaN(+f.seriesNo)?+f.seriesNo:undefined;if(sn&&/^\d+$/.test(String(f.seriesLen||'').trim()))(S.seriesLen=S.seriesLen||{})[sn]=+f.seriesLen}
+  const tt=titleById(b.titleId);if(tt){updateBookIdentity(tt,b.title,b.author);if(['print','ebook'].includes(b.format))tt.pages=b.total;const sn=(f.series||'').trim();tt.series=sn||undefined;tt.seriesNo=sn&&String(f.seriesNo||'').trim()!==''&&!isNaN(+f.seriesNo)?+f.seriesNo:undefined;if(sn&&/^\d+$/.test(String(f.seriesLen||'').trim()))(S.seriesLen=S.seriesLen||{})[sn]=+f.seriesLen}
   save();editDlg.close();render();toast(`Saved changes to ${b.title}.`);
 });
 /* Tabs: Left/Right (and Home/End) move between tabs and switch to them; only the selected tab is a Tab-key stop.
@@ -4707,7 +4741,10 @@ document.addEventListener('click',e=>{
     case 'cpLend':bd.lend=a.dataset.id||null;renderBD();break;
     case 'cpLendGo':{const c=S.copies.find(x=>x.id===a.dataset.id);lendCopy(c,document.getElementById('lendTo').value);bd.lend=null;save();renderBD();toast(`Marked as loaned to ${nameOf(c.loanTo)}.`);break}
     case 'cpReturn':{const c=S.copies.find(x=>x.id===a.dataset.id),w=c.loanTo;c.loanTo=null;(S.loanReqs||[]).filter(r=>r.copyId===c.id&&r.status==='loaned').forEach(r=>{r.status='returned'});post('loan',`got ${titleById(c.titleId)?.title||'a book'} back from ${nameOf(w)}`);save();renderBD();toast(`Marked as returned by ${nameOf(w)}.`);break}
-    case 'cpRemove':{const snap=snapshot();S.copies=S.copies.filter(x=>x.id!==a.dataset.id);save();renderBD();toast('Removed your copy.',restoreTo(snap));break}
+    case 'cpEdit':openCopyEdit(a.dataset.id,a);break;
+    case 'editReadingCopy':{const id=a.closest('.reading-edition')?.querySelector('select')?.value;if(id&&id!=='__new')openCopyEdit(id,a);break}
+    case 'cpEditClose':copyEditDlg.close();break;
+    case 'cpRemove':{const c=S.copies.find(c=>c.id===a.dataset.id&&c.owner==='me');if(!c)break;if(copyHasCommitment(c)){toast('Resolve this copy’s loan, hold, or requests before removing it.');break}const snap=snapshot();S.copies=S.copies.filter(x=>x.id!==a.dataset.id);save();renderBD();toast('Removed your copy.',restoreTo(snap));break}
     case 'rate':{const r=book(a.dataset.id),v=+a.dataset.v;r.rating=r.rating===v?0:v;save();
       const rb=a.closest('[data-rbox]');if(rb){const id=rb.dataset.rbox;rb.outerHTML=recRateOpt(titleById(r.titleId),id);document.getElementById(id)?.focus();break}renderBD();if(nextDlg.open){renderNextDlg();nextBody.querySelector(`[data-act=rate][data-v="${v}"]`)?.focus()}break}
     case 'bdLog':{if(bookDlg.open)bookDlg.close();if(chDlg.open)chDlg.close();if(nextDlg.open)nextDlg.close();openLog(a.dataset.id);break}
