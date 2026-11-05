@@ -12,7 +12,7 @@
   --bg:#FAF7EE; --surface:#FDFAF0; --surface-alt:#F4F0E6; --card:#FDFAF0;
   --primary:#2E7D52; --primary-hover:#256746; --primary-light:#E8F4EC; --on-primary:#FFFFFF;
   --secondary:#6B7280; --text:#1F2937; --text-2:#6B7280; --border:#E6DCC6;
-  --orange:#F97316; --green:#2E7D52; --red:#EF4444; --blue:#3B82F6; --purple:#8B5CF6;
+  --orange:#F97316; --badge:#C2410C; --badge-ink:#FFFFFF; --green:#2E7D52; --red:#EF4444; --blue:#3B82F6; --purple:#8B5CF6;
   --track:#EDE8DA; --shadow:0 1px 2px rgba(31,41,55,.05);
   --hero-scene:linear-gradient(135deg,#E8DCBC 0%,#C9C49A 38%,#9DB084 64%,#56705A 100%); --hero-a:#F1EAD8; --hero-b:#E6DCC4; --shelf:#D8C9A8;
   --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
@@ -27,7 +27,7 @@
     --bg:#0F172A; --surface:#1E293B; --surface-alt:#334155; --card:#1E293B;
     --primary:#34D399; --primary-hover:#10B981; --primary-light:#064E3B; --on-primary:#06281B;
     --secondary:#94A3B8; --text:#F8FAFC; --text-2:#94A3B8; --border:#334155;
-    --orange:#FB923C; --green:#34D399; --track:#334155; --shadow:none;
+    --orange:#FB923C; --badge:#FB923C; --badge-ink:#0F172A; --green:#34D399; --track:#334155; --shadow:none;
     --hero-scene:linear-gradient(135deg,#2C4538,#1C3030 50%,#172638); --hero-a:#1E293B; --hero-b:#16213A; --shelf:#475569; color-scheme:dark;
   }
 }
@@ -35,7 +35,7 @@
   --bg:#0F172A; --surface:#1E293B; --surface-alt:#334155; --card:#1E293B;
   --primary:#34D399; --primary-hover:#10B981; --primary-light:#064E3B; --on-primary:#06281B;
   --secondary:#94A3B8; --text:#F8FAFC; --text-2:#94A3B8; --border:#334155;
-  --orange:#FB923C; --green:#34D399; --track:#334155; --shadow:none;
+  --orange:#FB923C; --badge:#FB923C; --badge-ink:#0F172A; --green:#34D399; --track:#334155; --shadow:none;
   --hero-scene:linear-gradient(135deg,#2C4538,#1C3030 50%,#172638); --hero-a:#1E293B; --hero-b:#16213A; --shelf:#475569; color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:inherit}
@@ -63,7 +63,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .top-right{margin-left:auto;display:flex;align-items:center;gap:10px;position:relative}
 .icon-btn{position:relative;border:0;background:none;padding:8px;border-radius:999px;color:var(--text-2);display:grid;place-items:center}
 .icon-btn:hover{background:var(--surface-alt);color:var(--text)}
-.badge-dot{position:absolute;top:3px;right:2px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:var(--orange);color:#fff;font-size:10px;font-weight:700;line-height:16px;text-align:center}
+/* Unread count: 10 px numbers need 4.5:1, so deeper orange with white in light, the usual orange with dark numbers in dark (audit 18). */
+.badge-dot{position:absolute;top:3px;right:2px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:var(--badge);color:var(--badge-ink);font-size:10px;font-weight:700;line-height:16px;text-align:center}
 .me-btn{display:flex;align-items:center;gap:8px;border:0;background:none;padding:4px 8px 4px 4px;border-radius:999px;font-size:14px;font-weight:500}
 .me-btn:hover{background:var(--surface-alt)}
 .avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;flex:none}
@@ -571,8 +572,11 @@ button.cal-d{border:0;font:inherit;color:inherit;cursor:pointer;position:relativ
 .gt-seg+.gt-seg span{border-left:1px solid var(--border)}.gt-seg input:checked+span{background:var(--primary-light);color:var(--primary);font-weight:600}.gt-seg input:focus-visible+span{outline:2px solid var(--primary);outline-offset:-3px}
 .gt-combo{position:relative}.gt-combo .inp{padding-right:40px}.gt-tog{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--text-2);padding:8px;cursor:pointer;display:flex}.gt-tog svg.i{width:16px;height:16px}
 .gt-list{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:30;margin:0;padding:4px;list-style:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 30px rgba(15,23,42,.18);max-height:228px;overflow-y:auto}
+.gt-list.gt-up{top:auto;bottom:calc(100% + 4px);box-shadow:0 -10px 30px rgba(15,23,42,.18)}
 .gt-list li{padding:9px 10px;border-radius:7px;cursor:pointer;font-size:15px}.gt-list li[aria-selected=true]{background:var(--primary-light);color:var(--primary)}.gt-list li.gt-cur{font-weight:600}.gt-list li.gt-cur::after{content:"  ✓"}.gt-list .gt-use{font-style:italic}.gt-list .gt-none{color:var(--text-2);cursor:default}
 .gt-msg{color:var(--red,#B42318)}.gt-msg:empty{display:none}.gt-bad .gt-combo .inp{border-color:var(--red,#B42318)}
+/* Placeholder text (examples and prompts inside boxes) is quieter than what people type: italic, 14 px, secondary color. */
+.inp::placeholder,input.search::placeholder,.search input::placeholder{font-style:italic;font-size:14px;color:var(--text-2);opacity:1}
 .min-hint{margin:-2px 0 -10px;line-height:1.2}.min-hint:empty{display:none}.f3:has(.min-hint){align-items:start}.cf-warn{color:var(--warn,#9a5b00)}.cf-warn:empty{display:none}.log-ask{border:1px solid var(--border);background:var(--surface-2,var(--surface));border-radius:12px;padding:10px 12px;display:grid;gap:8px}.log-ask p{margin:0}.log-ask-b{display:flex;flex-wrap:wrap;gap:8px}.cu-dates{margin-bottom:6px}.timer-actions{align-items:flex-start}.timer-actions>.btn,.hero2-acts .timer-actions>.btn{flex:0 0 auto}.timer-redo .link-btn{white-space:nowrap}.ta-main{flex:1;min-width:0;display:grid;gap:4px}.ta-main .btn-primary{width:100%}.timer-redo{display:flex;gap:6px;align-items:center;justify-content:center}
 .timer-pill{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:8;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 6px 6px 14px;box-shadow:0 10px 30px rgba(15,23,42,.18);font-variant-numeric:tabular-nums;font-weight:600}
 .timer-pill .tp-t{font-weight:400;color:var(--text-2);max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -902,6 +906,7 @@ main section.card .card-h .ico{display:none}
 @media (max-width:720px){.sel-bar{bottom:calc(72px + env(safe-area-inset-bottom,0px))}}
 .req-st{font-size:12px;color:var(--text-2)}.req-st.ok{color:var(--primary);font-weight:600}
 .req-msg{display:block;margin-top:3px;font-style:italic;color:var(--text-2)}.notif p.req-msg{margin:2px 0 0;font-size:13px}
+.beta-tag{background:#EAB308!important;color:#1F2937!important}
 .gpt-tag{background:#2563EB!important}
 .next-tag{font:600 11px/1 Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--accent,#F97316);border-radius:999px;padding:4px 8px;vertical-align:middle}
 .req-back{font-size:13px;color:var(--text);font-style:italic}
@@ -1249,7 +1254,7 @@ a.btn{text-decoration:none}
 @media(max-width:359px){
   .top-in{padding:10px;gap:6px}
   .brand{font-size:17px;gap:5px}
-  .gpt-tag{font-size:8px;padding:3px 5px}
+  .next-tag{font-size:8px;padding:3px 5px}
   .top-right{gap:3px}
   .top-right .icon-btn{padding:5px}
   .grp-btn{padding:5px;width:30px}
@@ -1484,7 +1489,7 @@ function genreConflict(type,g){const c=genreClass(g);return type&&(c==='fiction'
 function genreField(p,genre,type){type=type||'';
   return `<div class="f gt" data-gt="${p}"><span class="fl" id="${p}TypeL">Type <span class="sub">(optional)</span></span>
   <div class="gt-type" role="radiogroup" aria-labelledby="${p}TypeL">${[['fiction','Fiction'],['nonfiction','Nonfiction'],['','Not Set']].map(([v,l])=>`<label class="gt-seg"><input type="radio" name="${p}TypeR" value="${v}" ${type===v?'checked':''}><span>${l}</span></label>`).join('')}</div>
-  <input type="hidden" id="${p}Type" name="${p}Type" value="${esc(type)}">
+  <input type="hidden" id="${p}Type" name="${p}Type" value="${type}">
   <label class="fl" for="${p}Genre" id="${p}GenreL" style="margin-top:4px">Genre <span class="sub">(optional)</span></label>
   <div class="gt-combo"><input class="inp" id="${p}Genre" name="${p}Genre" role="combobox" aria-expanded="false" aria-controls="${p}GenreList" aria-autocomplete="list" aria-describedby="${p}GenreMsg" autocomplete="off" value="${esc(genre||'')}" placeholder="Search or type a genre"><button type="button" class="gt-tog" tabindex="-1" aria-hidden="true" data-gt-tog>${ic('chev')}</button>
   <ul class="gt-list" id="${p}GenreList" role="listbox" aria-labelledby="${p}GenreL" hidden></ul></div>
@@ -1494,12 +1499,17 @@ function gtItems(root,q){const {type}=gtParts(root),t=type.value,all=genreAll();
   let items=t?all.filter(g=>{const c=genreClass(g);return c===t||c==='either'||c==='unknown'}):all;
   if(q!=null){const k=genreKey(q);items=items.filter(g=>genreKey(g).includes(k));if(k&&!all.some(g=>genreKey(g)===k))items.push({use:q.trim().replace(/\s+/g,' ')})}
   return items}
-function gtPosition(root){const {list}=gtParts(root),box=root.querySelector('.gt-combo').getBoundingClientRect(),dlg=root.closest('dialog')?.getBoundingClientRect(),v=window.visualViewport,top=Math.max(dlg?.top||0,v?.offsetTop||0),bottom=Math.min(dlg?.bottom||innerHeight,(v?.offsetTop||0)+(v?.height||innerHeight)),above=box.top-top-8,below=bottom-box.bottom-8,up=below<180&&above>below;list.style.top=up?'auto':'calc(100% + 4px)';list.style.bottom=up?'calc(100% + 4px)':'auto';list.style.maxHeight=Math.max(24,Math.min(228,up?above:below))+'px';}
-window.addEventListener('resize',()=>document.querySelectorAll('[data-gt]').forEach(r=>{if(!gtParts(r).list.hidden)gtPosition(r)}));
-window.visualViewport?.addEventListener('resize',()=>document.querySelectorAll('[data-gt]').forEach(r=>{if(!gtParts(r).list.hidden)gtPosition(r)}));
 function gtOpen(root,q){const {inp,list}=gtParts(root),items=gtItems(root,q),cur=genreKey(inp.value),id=list.id;
   list.innerHTML=items.length?items.map((g,i)=>typeof g==='string'?`<li role="option" id="${id}-${i}" data-v="${esc(g)}" aria-selected="false" class="${genreKey(g)===cur?'gt-cur':''}">${esc(g)}</li>`:`<li role="option" id="${id}-${i}" data-v="${esc(g.use)}" aria-selected="false" class="gt-use">Use “${esc(g.use)}”</li>`).join(''):'<li class="gt-none" aria-disabled="true">No matching genres</li>';
-  list.hidden=false;gtPosition(root);inp.setAttribute('aria-expanded','true');const c=list.querySelector('.gt-cur');if(c&&q==null){gtAct(root,c);c.scrollIntoView({block:'nearest'})}else inp.removeAttribute('aria-activedescendant')}
+  const was=!list.hidden;list.hidden=false;inp.setAttribute('aria-expanded','true');gtPlace(root,was);const c=list.querySelector('.gt-cur');if(c&&q==null){gtAct(root,c);list.scrollTop=Math.max(0,c.offsetTop-(list.clientHeight-c.offsetHeight)/2)}else inp.removeAttribute('aria-activedescendant')}
+/* Opens the list below the field, or above it when there's more room there, so it stays inside the window (or the
+   screen, above a phone keyboard) without making the window scroll. The list's height shrinks to the room it has.
+   While it stays open (typing narrows it), it keeps its side, so it doesn't jump. */
+function gtPlace(root,keep){const {inp,list}=gtParts(root),r=inp.getBoundingClientRect(),vv=window.visualViewport,box=inp.closest('dialog[open]')?.getBoundingClientRect();
+  const top=Math.max(box?box.top:0,vv?vv.offsetTop:0)+8,bottom=Math.min(box?box.bottom:innerHeight,vv?vv.offsetTop+vv.height:innerHeight)-8;
+  const below=bottom-r.bottom-4,above=r.top-top-4;list.style.maxHeight='';const want=Math.min(list.scrollHeight+2,228),up=keep?list.classList.contains('gt-up'):below<want&&above>below;
+  list.classList.toggle('gt-up',up);list.style.maxHeight=Math.max(96,Math.min(228,Math.floor(up?above:below)))+'px'}
+window.visualViewport?.addEventListener('resize',()=>document.querySelectorAll('[data-gt]').forEach(r=>{if(!gtParts(r).list.hidden)gtPlace(r)}));
 function gtClose(root){const {inp,list}=gtParts(root);list.hidden=true;inp.setAttribute('aria-expanded','false');inp.removeAttribute('aria-activedescendant')}
 function gtAct(root,li){const {inp,list}=gtParts(root);list.querySelectorAll('[aria-selected=true]').forEach(x=>x.setAttribute('aria-selected','false'));if(!li)return;li.setAttribute('aria-selected','true');inp.setAttribute('aria-activedescendant',li.id);li.scrollIntoView({block:'nearest'})}
 function gtCheck(root){const {inp,type,msg}=gtParts(root);msg.textContent=genreConflict(type.value,inp.value);root.classList.toggle('gt-bad',!!msg.textContent)}
@@ -1507,6 +1517,8 @@ function gtPick(root,v){const {inp,type}=gtParts(root);inp.value=genreValue(v);g
   const c=genreClass(inp.value);if(!type.value&&(c==='fiction'||c==='nonfiction')){type.value=c;root.querySelector(`input[type=radio][value="${c}"]`).checked=true}// a clearly typed genre fills in Type (shown, and changeable)
   gtCheck(root)}
 document.addEventListener('focusin',e=>{const r=e.target.closest?.('[data-gt]');if(r&&e.target.getAttribute('role')==='combobox')gtOpen(r)});
+/* Clicking or tapping the field while it already has focus (after a pick, or after Esc) opens the list again. */
+document.addEventListener('click',e=>{const inp=e.target.closest?.('[data-gt] [role=combobox]');if(!inp)return;const r=inp.closest('[data-gt]');if(gtParts(r).list.hidden)gtOpen(r)});
 document.addEventListener('input',e=>{const r=e.target.closest?.('[data-gt]');if(!r)return;if(e.target.getAttribute('role')==='combobox'){gtOpen(r,e.target.value);gtCheck(r)}
   else if(e.target.type==='radio'){gtParts(r).type.value=e.target.value;gtCheck(r);if(!gtParts(r).list.hidden)gtOpen(r)}});
 document.addEventListener('keydown',e=>{const r=e.target.closest?.('[data-gt]');if(!r||e.target.getAttribute('role')!=='combobox')return;const {inp,list}=gtParts(r),opts=[...list.querySelectorAll('[role=option]')];
@@ -1514,7 +1526,7 @@ document.addEventListener('keydown',e=>{const r=e.target.closest?.('[data-gt]');
   if(e.key==='Enter'&&!list.hidden){const a=opts.find(x=>x.getAttribute('aria-selected')==='true');if(a){e.preventDefault();gtPick(r,a.dataset.v)}else gtClose(r);return}
   if(e.key==='Escape'&&!list.hidden){e.preventDefault();e.stopPropagation();gtClose(r)}
   if(e.key==='Tab')gtClose(r)},true);
-document.addEventListener('pointerdown',e=>{const root=e.target.closest?.('[data-gt]');if(root&&e.target.getAttribute('role')==='combobox'){if(gtParts(root).list.hidden)gtOpen(root);return;}const li=e.target.closest?.('.gt-list [role=option]');if(li){e.preventDefault();gtPick(li.closest('[data-gt]'),li.dataset.v);return}
+document.addEventListener('pointerdown',e=>{const li=e.target.closest?.('.gt-list [role=option]');if(li){e.preventDefault();gtPick(li.closest('[data-gt]'),li.dataset.v);return}
   const tg=e.target.closest?.('[data-gt-tog]');if(tg){e.preventDefault();const r=tg.closest('[data-gt]'),{inp,list}=gtParts(r);if(list.hidden){inp.focus();gtOpen(r)}else gtClose(r);return}
   document.querySelectorAll('[data-gt]').forEach(r=>{if(!r.contains(e.target))gtClose(r)})},true);
 document.addEventListener('focusout',e=>{const r=e.target.closest?.('[data-gt]');if(r&&!r.contains(e.relatedTarget))setTimeout(()=>{if(!r.contains(document.activeElement))gtClose(r)},0)});
@@ -4673,7 +4685,7 @@ document.addEventListener('click',e=>{
       if(v==='reading'){if(prev==='want'){if(wasQ)b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,today())>=365)b.rescued=today()}b.status='reading';if(!b.started)b.started=today()}
       else if(v==='paused'){b.status='paused';b.pausedOn=today()}
       else if(v==='want'||v==='queue'){b.status='want';if(!b.wantSince)b.wantSince=today();if(!has){delete b.started;b.pos=0}if(v==='queue')S.upNext.push(b.id)}
-      else if(v==='finished'){b.status='finished';b.finished=today();b.pos=b.total;if(!b.started)b.started=today();if(prev!=='finished')postBook('finished','finished',b)}
+      else if(v==='finished'){b.status='finished';b.finished=today();b.pos=b.total;if(!b.started)b.started=today();if(prev!=='finished')postBook('finished','finished',b);if(S.timer?.bookId===b.id&&!S.timer.stop)S.timer.stop=Date.now()}
       else if(v==='dnf'){b.status='dnf';b.dnfOn=today()}
       if(selBook===b.id)selBook=null;
       save();if(editDlg.open)editDlg.close();render();if(bookDlg.open)renderBD();
