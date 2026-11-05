@@ -19,6 +19,6 @@ The original audit numbers and findings remain unchanged. This change addresses 
 | 13 | New book activity stores stable title IDs. Renaming updates matching IDs only; ambiguous legacy text stays unchanged. |
 | 14 | An unchanged failed cover is retained during metadata saves; new failed replacements are still rejected. |
 
-15 remains in mockup review. 16 is deferred to Later. James reports 17 working (PR #19 remains separate). 18 is recorded in SYNC-Audit-Follow-ups.md for Claude to review; no color change is approved.
+15 implements the approved compact phone and two-row tablet headers. 16 is deferred to Later. James reports 17 working; its compact aligned fields are merged. 18 is recorded in SYNC-Audit-Follow-ups.md for Claude to review; no color change is approved.
 
 Validated with isolated Chromium regression tests, genuine draft autosave, and two pages sharing browser storage. Items 5–11 also have targeted regressions for keyboard dismissal, duplicate date controls, staged edits/cancel, unknown metadata, corrected completion, copy-format mismatches, and unowned readings. The previously approved copy-editor and ownership workflows also pass. Phone and desktop review screenshots use synthetic data.

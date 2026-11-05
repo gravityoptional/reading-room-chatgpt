@@ -1237,6 +1237,22 @@ a.btn{text-decoration:none}
 
 [data-edit-finish][hidden]{display:none!important}
 
+/* Audit 15: compact phone controls and a second navigation row on smaller tablets. */
+@media(max-width:359px){
+  .top-in{padding:10px;gap:6px}
+  .brand{font-size:17px;gap:5px}
+  .gpt-tag{font-size:8px;padding:3px 5px}
+  .top-right{gap:3px}
+  .top-right .icon-btn{padding:5px}
+  .grp-btn{padding:5px;width:30px}
+  .me-btn{padding:0;width:32px}
+  .me-btn svg{display:none}
+}
+@media(min-width:721px) and (max-width:1024px){
+  .top-in{flex-wrap:wrap;gap:8px}
+  .nav{order:3;flex-basis:100%;margin-left:0;justify-content:center}
+  .top-right{margin-left:auto}
+}
 /* Audit 17: paired controls share a label row; helper text cannot stretch their inputs. */
 .f2{row-gap:5px}
 .f2>label.f{grid-template-rows:subgrid;grid-row:span 3;align-items:start}
