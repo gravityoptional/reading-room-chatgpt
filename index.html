@@ -4576,7 +4576,7 @@ document.addEventListener('click',e=>{
     case 'goToRead':view='library';lib.tab='mybooks';lib.mb='want';closeMenus();render();window.scrollTo(0,0);break;
     case 'jumpShelf':document.getElementById(a.dataset.v)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});break;
     case 'closeLog':logDlg.close();break;
-    case 'cancelLog':{if(logForm.dataset.mode!=='log'){logDlg.close();break}const bid=logForm.dataset.book,b0=findB(bid);draftCancel(logForm,logDlg,()=>{if(book(bid))openLog(bid);else if(b0){pendingNew=b0;drawLog(b0);logDlg.showModal()}},'reading entry');break}
+    case 'cancelLog':{if(logForm.dataset.mode!=='log'){logDlg.close();break}const bid=logForm.dataset.book,b0=findB(bid),copyDraft=startCopyDrafts.get(bid);startCopyDrafts.delete(bid);if(b0)startSetupDone.delete(b0);draftCancel(logForm,logDlg,()=>{if(copyDraft)startCopyDrafts.set(bid,copyDraft);if(b0)startSetupDone.add(b0);if(book(bid))openLog(bid);else if(b0){pendingNew=b0;drawLog(b0);logDlg.showModal()}},'reading entry');break}
     case 'draftDiscard':{const form=a.closest('form');draftClear(form.dataset.dkey);form.dataset.done='1';
       if(form===logForm){const b=findB(logForm.dataset.book);if(b)drawLog(b)}else if(form===noteForm){const id=noteForm.dataset.id;noteDlg.close();openNote(id||null)}else if(form===sessForm){const id=sessForm.dataset.id;sessDlg.close();openSess(id)}
       toast('Draft discarded.');break}
