@@ -1234,6 +1234,8 @@ a.btn{text-decoration:none}
 .link-btn.copy-edit-link{padding:0 2px;vertical-align:baseline;font-size:12px}.copy-access{display:grid;gap:8px}.copy-access-row{display:flex;justify-content:space-between;align-items:center;gap:12px;overflow-wrap:anywhere}.copy-access-row>span{min-width:0}
 
 .reading-edition[hidden], #startCopyFields[hidden]{display:none!important}
+
+[data-edit-finish][hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -1462,7 +1464,7 @@ if(!S.group)S.group={name:'Emberton Family'};
 if(!S.descV2){S.descV2=true;(S.titles||[]).forEach(t=>{if(t.desc){const c=cleanDesc(t.desc);if(c)t.desc=c;else delete t.desc}})}
 if(!S.recRateSeeded){S.recRateSeeded=true;const r=(S.recs||[]).find(x=>x.id==='r1');if(r)r.rating=4.5}
 if(S.titles?.some(t=>t.fromDisc))pruneDisc();
-if(S.readIt){Object.entries(S.readIt).forEach(([tid,on])=>{const t=(S.titles||[]).find(x=>x.id===tid);if(t&&!S.books.some(b=>b.titleId===tid&&b.status==='finished'))S.books.push({id:'r'+uid(),titleId:tid,title:t.title,author:t.author,format:'print',total:t.pages||300,pos:t.pages||300,status:'finished',c:t.c,readIt:true,markedOn:on})});delete S.readIt}
+if(S.readIt){Object.entries(S.readIt).forEach(([tid,on])=>{const t=(S.titles||[]).find(x=>x.id===tid);if(t&&!S.books.some(b=>b.titleId===tid&&b.status==='finished'))S.books.push({id:'r'+uid(),titleId:tid,title:t.title,author:t.author,format:'unknown',total:0,pos:0,status:'finished',c:t.c,readIt:true,markedOn:on})});delete S.readIt}
 (S.titles||[]).forEach(t=>{if(t.olTried&&!t.olV){t.olRedo=true;delete t.olAt;delete t.olTried}else if(t.olAt&&t.olV===2){delete t.olAt;delete t.olTried}});
 S.loanReqs=S.loanReqs||[];
 S.journal=S.journal||[];
@@ -1483,6 +1485,7 @@ function save(){try{
   if(raw!==savedRaw){try{if(!raw)throw new Error('Saved data was removed');next=mergeSaved(savedBase,JSON.parse(JSON.stringify(S)),JSON.parse(raw));}catch(e){saveConflict=true;conflictDownloaded=false;throw e;}}
   S=next;try{diffEvents()}catch(e){}const encoded=JSON.stringify(S);localStorage.setItem(KEY,encoded);savedRaw=encoded;savedBase=JSON.parse(encoded);saveFailed=false;saveConflict=false;conflictDownloaded=false;document.querySelectorAll('.save-warning').forEach(e=>e.remove());return true;
 }catch(e){saveFailed=true;const t=document.getElementById('toast');if(t){if(t.hidePopover){if(t.matches(':popover-open'))t.hidePopover()}else t.hidden=true}queueMicrotask(showSaveFailure);return false}}
+document.addEventListener('close',e=>{if(e.target.matches?.('dialog')&&saveFailed)queueMicrotask(showSaveFailure)},true);
 window.addEventListener('beforeunload',e=>{if(saveFailed){e.preventDefault();e.returnValue=''}});
 document.addEventListener('click',()=>{if(saveFailed)queueMicrotask(showSaveFailure)},true);
 /* Prototype tool: pretend other members did a few things, so Group Activity, reactions, and notifications can be tried without other accounts. */
@@ -2238,7 +2241,7 @@ function libTitles(){
   list=list.filter(t=>{
     if(q&&!(t.title+' '+t.author).toLowerCase().includes(q))return false;
     const cs=copiesOf(t.id);
-    if(f.format!=='all'&&!cs.some(c=>c.format===f.format))return false;
+    if(f.format!=='all'&&!cs.some(c=>c.format===f.format)&&!(lib.tab==='mybooks'&&S.books.some(b=>b.titleId===t.id&&(b.format==='print'?'physical':b.format)===f.format)))return false;
     if(f.avail==='available'&&avail(t.id)?.t!=='Available')return false;
     if(f.avail==='loan'&&!cs.some(c=>c.loanTo))return false;
     if(f.genre!=='all'&&genreKey(t.genre)!==genreKey(f.genre))return false;
@@ -2598,7 +2601,7 @@ const hiddenIt=it=>it.t?hiddenT(it.t):discHidden(it.x.key);
    Continue a Series. Kept apart from your reading records, so it never counts in stats. */
 let finDateFor=null;
 /* "Finished · date unknown" with Add Date, or the date picker when it's open. */
-const finUnknown=b=>finDateFor===b.id?`<span class="fin-date"><input type="date" class="inp sm" id="finDateIn" max="${today()}" aria-label="Finish date for ${esc(b.title)}"><button class="btn btn-primary sm" data-act="finDateSave" data-book="${b.id}">Save</button><button class="link-btn sm" data-act="finDateOpen" data-book="">Cancel</button></span>`
+const finUnknown=b=>finDateFor===b.id?`<span class="fin-date"><input type="date" class="inp sm" data-finish-date max="${today()}" aria-label="Finish date for ${esc(b.title)}"><button class="btn btn-primary sm" data-act="finDateSave" data-book="${b.id}">Save</button><button class="link-btn sm" data-act="finDateOpen" data-book="">Cancel</button></span>`
   :`Finished · date unknown <button class="link-btn sm fin-add" data-act="finDateOpen" data-book="${b.id}">Add Date</button>`;
 /* Already Read It adds a Finished record with no finish date ("Finished, date unknown"): it counts wherever "ever
    read" matters (the Finished filter, lifetime totals, book-count badges, reread detection, ratings Discover uses)
@@ -3232,7 +3235,7 @@ titleForm.addEventListener('submit',e=>{
   if(bookIdentityTaken(t.id,title,author))return er('Another book in Reading Room already has this title and author.');
   if(pages&&!(/^\d+$/.test(pages)&&+pages>0))return er('Enter the number of pages as a whole number, or leave it blank.');
   const mine=S.books.filter(b=>b.titleId===t.id);
-  const past=pages&&mine.find(b=>b.format!=='audio'&&b.pos>+pages);
+  const past=pages&&mine.find(b=>b.format!=='audio'&&b.status!=='finished'&&b.pos>+pages);
   if(past)return er(`Your reading is already at page ${past.pos}, so the book can’t have fewer pages than that.`);
   if(isbn&&!/^(\d{9}[\dX]|\d{13})$/.test(isbn))return er('An ISBN has 10 or 13 digits. Check it, or leave it blank.');
   if(no&&(!sn||isNaN(+no)||+no<=0))return er(sn?'Enter the book number as a number, for example 2.':'Add a series name to go with the book number.');
@@ -3247,7 +3250,7 @@ titleForm.addEventListener('submit',e=>{
   if(te.touched){if(te.cover){t.cover=te.cover;t.coverPicked=true;delete t.noAutoCover}else{delete t.cover;t.noAutoCover=true}}
   else if(!t.cover&&!t.noAutoCover&&old!==title){delete t.coverTried;setTimeout(coverFill,500)}
   updateBookIdentity(t,title,author,old);
-  mine.forEach(b=>{if(['print','ebook'].includes(b.format)&&pages)b.total=+pages});
+  mine.forEach(b=>{if(['print','ebook'].includes(b.format)&&pages){b.total=+pages;if(b.status==='finished')b.pos=b.total}});
   copyEdits.forEach(x=>{let c=S.copies.find(c=>c.id===x.id);if(!c){c={id:'c'+uid(),titleId:t.id,owner:'me',loanTo:null};S.copies.push(c);x.id=c.id;}c.format=x.format;c.edition=x.edition;if(!S.settings.solo)c.private=!x.shared||undefined;else if(!('private' in c))c.private=true;});
   // Retain newly assigned IDs if storage fails, so retrying cannot add duplicates.
   titleForm.querySelectorAll('.inline-copy').forEach((row,i)=>row.dataset.copyId=copyEdits[i].id);
@@ -3296,6 +3299,8 @@ function adDetails(){const d=ad.detail,t=d.look,locked=d.existing&&!d.reread,aud
     <div class="err" id="adDetailError" role="alert"></div><div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="adBack">Back</button><button type="button" class="btn btn-primary" data-act="adSave">${locked?'Add Copy':'Add Book'}</button></div></div>`;
 }
 function adSave(){adCaptureDetail();const d=ad.detail;if(!d)return;const er=m=>{document.getElementById('adDetailError').textContent=m},locked=d.existing&&!d.reread,audio=d.format==='audio',active=['reading','paused'].includes(d.status),reading=!locked&&d.status!=='none';
+  const selectedCopy=S.copies.find(c=>c.id===d.readingCopyId);if(reading&&d.format!=='unknown'&&d.status!=='want'&&selectedCopy&&(selectedCopy.format==='audio')!==audio)return er('Choose a reading format that matches the selected copy.');
+  if(reading&&d.readingCopyId==='__new'&&d.own&&d.format!=='unknown'&&d.status!=='want'&&(d.copyFormat==='audio')!==audio)return er('Choose a reading format that matches the copy you’re adding.');
   const allowed=AD_STATUSES.some(([k])=>k===d.status);if(!allowed)return er('Choose a reading status.');
   if((locked||d.status==='none')&&!d.own)return er(locked?'This reading is already saved. Choose a copy to add, or open My Reading.':'Choose a reading status or mark a copy you own.');
   const parse=v=>String(v).trim()===''?null:audio?parsePos(v):/^\d+$/.test(String(v).trim())?+v:NaN;
@@ -4190,7 +4195,8 @@ document.addEventListener('change',e=>{
   if(e.target===own){fields.hidden=!own.checked;logForm.querySelector('.reading-edition').hidden=own.checked;if(own.checked)copy.value=fmt.value==='audio'?'audio':'physical';}
   if(e.target===copy&&own.checked)fmt.value=copy.value==='audio'?'audio':'print';
   if(e.target===fmt&&own.checked)copy.value=fmt.value==='audio'?'audio':copy.value==='audio'?'physical':copy.value;
-  if(e.target.matches('[data-edition-copy]')&&e.target.value){const c=S.copies.find(c=>c.id===e.target.value);if(c)fmt.value=c.format==='audio'?'audio':'print';}
+  if(e.target.matches('[data-edition-copy]')&&e.target.value){const c=S.copies.find(c=>c.id===e.target.value);if(c){const was=fmt.value;fmt.value=c.format==='audio'?'audio':'print';if(was!==fmt.value)document.getElementById('startLength').value=fmt.value==='audio'?'':titleById(formatPick.b.titleId)?.pages||'';}}
+  if(e.target===fmt||e.target===copy&&own.checked)document.getElementById('startLength').value=fmt.value==='audio'?'':titleById(formatPick.b.titleId)?.pages||'';
   const label=document.querySelector('#startLengthLabel span');if(label)label.textContent=fmt.value==='audio'?'Audio Length (h:mm)':'Total Pages';
 });
 function drawLog(b,focus,preMin,moveTo){
@@ -4408,7 +4414,7 @@ logForm.addEventListener('submit',e=>{
   else{b.status=f.status;if(f.status==='paused')b.pausedOn=today();if(f.status==='dnf'){b.dnfOn=f.date;if(selBook===b.id)selBook=null}}
   if(range)syncPos(b);
   const started=wasWant&&b.status==='reading';
-  if(started){selBook=b.id;if((S.upNext||[]).includes(b.id))b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,f.date)>=365)b.rescued=f.date}
+  if(started){selBook=b.id;if(wasQueued)b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,f.date)>=365)b.rescued=f.date}
   if(started){const re=S.books.some(x=>x!==b&&x.titleId===b.titleId&&x.status==='finished');post(re?'reread':'started',re?'started rereading':'started a new book',b.title)}
   if(S.settings.share){
     if(finished&&!wasFinished)S.activity.push({id:uid(),who:'me',kind:'finished',text:'finished',book:b.title,ts:Date.now(),r:{}});
@@ -4474,7 +4480,7 @@ function statusPicker(b){
 }
 function openEdit(id){
   const b=book(id);if(!b)return;const audio=b.format==='audio';
-  editForm.dataset.id=id;const hasSessions=S.sessions.some(x=>x.bookId===id);
+  editForm.dataset.id=id;delete editForm.dataset.nextStatus;const hasSessions=S.sessions.some(x=>x.bookId===id);
   editForm.innerHTML=`<div class="dlg-h">${cover(b,58)}<div style="flex:1"><h2 id="editTitle">Edit Reading</h2><div class="muted small">${esc(b.title)}</div></div><button type="button" class="icon-btn x" data-act="closeEdit" aria-label="Close">${ic('x')}</button></div>
   <div class="form">
     <label class="f">Title<input class="inp" name="title" value="${esc(b.title)}"></label>
@@ -4484,7 +4490,7 @@ function openEdit(id){
     <label class="f"><span id="eTotalL">${audio?'Length (h:mm)':'Number of Pages'}</span><input class="inp" name="total" value="${audio?fmtPos(b.total):b.total}"></label></div>
     <div class="f2"><label class="f"><span id="ePosL">${audio?'Current Position (h:mm)':'Current Page'}</span><input class="inp" name="pos" value="${audio?fmtPos(b.pos):b.pos}"></label>
     <label class="f">Started On<input class="inp" type="date" name="started" value="${b.started||''}" max="${today()}"></label></div>
-    ${b.status==='finished'?`<label class="f"><span>Finished On <span class="sub">(optional)</span></span><input class="inp" type="date" name="finished" value="${b.finished||''}" max="${today()}"></label><p class="xs muted">Leave blank if the finish date is unknown.</p>`:''}
+    <div data-edit-finish ${b.status==='finished'?'':'hidden'}><label class="f"><span>Finished On <span class="sub">(optional)</span></span><input class="inp" type="date" name="finished" value="${b.finished||''}" max="${today()}"></label><p class="xs muted">Leave blank if the finish date is unknown.</p></div>
     ${hasSessions?'<p class="xs muted">Reading format is fixed because this reading has logged sessions. This protects the page or audio positions in your history.</p>':''}
     ${seriesFields(b)}
     ${statusPicker(b)}
@@ -4498,6 +4504,11 @@ editForm.addEventListener('submit',e=>{
   e.preventDefault();const f=Object.fromEntries(new FormData(editForm)),b=book(editForm.dataset.id);f.format=f.format||b.format;const a=f.format==='audio';
   const num=v=>a?parsePos(v):(/^\d+$/.test(String(v).trim())?+v:NaN);
   const tot=num(f.total),pos=num(f.pos),er=m=>document.getElementById('editErr').textContent=m;
+  const wasQueued=(S.upNext||[]).includes(b.id),next=editForm.dataset.nextStatus||((S.upNext||[]).includes(b.id)&&b.status==='want'?'queue':b.status),nextStatus=next==='queue'?'want':next;
+  if(next==='queue'&&!(S.upNext||[]).includes(b.id)&&upList().length>=10)return er('Your Reading Queue holds 10 books. Remove one first.');
+  if(['reading','paused'].includes(nextStatus)&&f.format==='unknown')return er('Choose a reading format and enter its length before moving this book into progress.');
+  if(nextStatus!=='finished')f.finished='';
+  const chosenCopy=S.copies.find(c=>c.id===readEdition(editForm,'editReading').editionCopyId);if(chosenCopy&&f.format!=='unknown'&&(chosenCopy.format==='audio')!==a)return er('Choose a copy that matches this reading’s format.');
   if(!f.title.trim())return er('Enter a title.');
   if(bookIdentityTaken(b.titleId,f.title.trim(),f.author.trim()||'Unknown author'))return er('Another book already has this title and author.');
   if(!validReadingDate(f.started)||!validReadingDate(f.finished))return er('Choose valid dates that are not in the future.');
@@ -4509,10 +4520,17 @@ editForm.addEventListener('submit',e=>{
   if(pos>tot)return er(a?'The position can’t be past the end.':'The current page can’t be past the last page.');
   if(pos!==b.pos||f.format!==b.format)b.progressBase={pos:f.format==='unknown'?0:pos,date:today(),excluded:S.sessions.filter(x=>x.bookId===b.id).map(x=>x.id)};
   Object.assign(b,{title:f.title.trim(),author:f.author.trim()||'Unknown author',format:f.format,total:f.format==='unknown'?0:tot,pos:f.format==='unknown'?0:pos,started:f.started||undefined});
+  if(nextStatus!==b.status||next==='queue'&&!(S.upNext||[]).includes(b.id)){
+    const hadSessions=S.sessions.some(x=>x.bookId===b.id);S.upNext=(S.upNext||[]).filter(id=>id!==b.id);if(next==='queue')S.upNext.push(b.id);
+    delete b.finished;delete b.readIt;delete b.markedOn;delete b.pausedOn;delete b.dnfOn;b.status=nextStatus;
+    if(nextStatus==='want'){b.wantSince=b.wantSince||today();if(!hadSessions){delete b.started;b.pos=0;}}
+    if(nextStatus==='reading'){if(wasQueued)b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,today())>=365)b.rescued=today();if(!b.started)b.started=today();}if(nextStatus==='paused')b.pausedOn=today();if(nextStatus==='dnf')b.dnfOn=today();
+    if(nextStatus==='finished'){post('finished','finished',b.title);b.pos=b.total;if(S.timer?.bookId===b.id&&!S.timer.stop)S.timer.stop=Date.now();}
+  }
   if(b.status==='finished'){if(f.finished){b.finished=f.finished;delete b.readIt;delete b.markedOn}else{delete b.finished;b.readIt=true;b.markedOn=b.markedOn||today()}}
   saveReadingEdition(b,readEdition(editForm,'editReading'));
   const tt=titleById(b.titleId);if(tt){updateBookIdentity(tt,b.title,b.author);if(['print','ebook'].includes(b.format))tt.pages=b.total;const sn=(f.series||'').trim();tt.series=sn||undefined;tt.seriesNo=sn&&String(f.seriesNo||'').trim()!==''&&!isNaN(+f.seriesNo)?+f.seriesNo:undefined;if(sn&&/^\d+$/.test(String(f.seriesLen||'').trim()))(S.seriesLen=S.seriesLen||{})[sn]=+f.seriesLen}
-  save();editDlg.close();render();toast(`Saved changes to ${b.title}.`);
+  if(!save())return;editDlg.close();render();if(bookDlg.open)renderBD();toast(`Saved changes to ${b.title}.`);
 });
 /* Tabs: Left/Right (and Home/End) move between tabs and switch to them; only the selected tab is a Tab-key stop.
    Switching redraws the page or window, so focus goes back to the newly selected tab instead of falling to the page. */
@@ -4569,7 +4587,7 @@ document.addEventListener('click',e=>{
     case 'loadLatest':if(saveConflict&&conflictDownloaded)location.reload();break;
     case 'retrySave':if(save())toast('Changes saved.');break;
     case 'log':openLog(id,a.dataset.focus);break;
-    case 'setStatus':{const b=book(a.dataset.book),v=a.dataset.v,snap=snapshot(),has=S.sessions.some(x=>x.bookId===b.id&&(x.pages||x.minutes||x.est)),prev=b.status;
+    case 'setStatus':{if(a.closest('#editForm')){editForm.dataset.nextStatus=a.dataset.v;editForm.querySelectorAll('[data-act=setStatus]').forEach(x=>{x.disabled=false;x.setAttribute('aria-pressed',String(x===a))});editForm.querySelector('[data-edit-finish]').hidden=a.dataset.v!=='finished';break;}const b=book(a.dataset.book),v=a.dataset.v,snap=snapshot(),has=S.sessions.some(x=>x.bookId===b.id&&(x.pages||x.minutes||x.est)),prev=b.status;
       if(b.format==='unknown'&&['reading','paused'].includes(v)){if(editDlg.open)editDlg.close();if(bookDlg.open)bookDlg.close();drawLog(b,null,null,v);logDlg.showModal();break}
       if(v==='queue'&&!(S.upNext||[]).includes(b.id)&&upList().length>=10){toast('Your Reading Queue holds 10 books. Remove one first.');break}
       const wasQ=(S.upNext||[]).includes(b.id);if(prev==='finished'&&v!=='finished')delete b.finished;delete b.pausedOn;delete b.dnfOn;
@@ -4719,10 +4737,10 @@ document.addEventListener('click',e=>{
     case 'discUnhide':{const t=titleById(a.dataset.id),ks=[t&&'t:'+t.id,t?.olKey].filter(Boolean);S.discHide=(S.discHide||[]).filter(k=>!ks.includes(k));save();refreshLib();break}
     case 'discOpen':{const it=discIdx[a.dataset.k];if(!it)break;let t=it.t;if(!t){const n=S.titles.length;t=olTitleFrom(it.x);if(S.titles.length>n)t.fromDisc=true}if(nextDlg.open)nextDlg.close();openTitle(t.id,'about');break}
     // Quiet, like Not for Me: the line in the window confirms it and offers Undo.
-    case 'readIt':{const t=titleById(a.dataset.id);if(!t)break;const r={id:'r'+uid(),titleId:t.id,title:t.title,author:t.author,format:'print',total:t.pages||300,pos:t.pages||300,status:'finished',c:t.c,readIt:true,markedOn:today()};S.books.push(r);quickReadUndo.set(t.id,{id:r.id,original:JSON.stringify(r)});save();refreshLib();bookBody.querySelector('[data-act=readItUndo]')?.focus();break}
+    case 'readIt':{const t=titleById(a.dataset.id);if(!t)break;const r={id:'r'+uid(),titleId:t.id,title:t.title,author:t.author,format:'unknown',total:0,pos:0,status:'finished',c:t.c,readIt:true,markedOn:today()};S.books.push(r);quickReadUndo.set(t.id,{id:r.id,original:JSON.stringify(r)});save();refreshLib();bookBody.querySelector('[data-act=readItUndo]')?.focus();break}
     case 'readItUndo':{const b=undoableQuickRead(a.dataset.id);if(!b){toast('This reading has been saved or changed. Use Edit Reading to update it.');break;}S.books=S.books.filter(x=>x.id!==b.id);quickReadUndo.delete(a.dataset.id);save();refreshLib();break;}
-    case 'finDateOpen':finDateFor=a.dataset.book||null;refreshLib();if(finDateFor)setTimeout(()=>document.getElementById('finDateIn')?.focus(),30);break;
-    case 'finDateSave':{const b=book(a.dataset.book),v=document.getElementById('finDateIn')?.value;if(!b||!v)break;if(v>today()){toast('Choose a date that isn’t in the future.');break}
+    case 'finDateOpen':finDateFor=a.dataset.book||null;refreshLib();if(finDateFor)setTimeout(()=>[...document.querySelectorAll('[data-finish-date]')].find(x=>x.getClientRects().length)?.focus(),30);break;
+    case 'finDateSave':{const b=book(a.dataset.book),v=a.closest('.fin-date')?.querySelector('[data-finish-date]')?.value;if(!b||!v)break;if(!validReadingDate(v)){toast('Choose a valid date that isn’t in the future.');break}if(b.started&&v<b.started){toast('The finish date cannot be before the start date.');break}
       const snap=snapshot();b.finished=v;delete b.readIt;finDateFor=null;save();refreshLib();toast(`Finished date saved for ${b.title}.`,restoreTo(snap));break}
     case 'surprise':{const w=wantList().filter(b=>b.id!==surprise&&!hiddenT(titleById(b.titleId)));if(w.length)surprise=w[Math.floor(Math.random()*w.length)].id;refreshLib();document.getElementById('dcSurprise')?.closest('.dc-row')?.querySelector('.lc-open')?.focus();break}
     case 'getBorrow':{if(nextDlg.open)nextDlg.close();if(!bookDlg.open||bd.id!==a.dataset.id)openTitle(a.dataset.id);bd.tab='copies';bd.reqNote=a.dataset.c;renderBD();setTimeout(()=>document.getElementById('reqNoteTx')?.focus(),30);break}
@@ -4814,7 +4832,7 @@ document.addEventListener('click',e=>{
     case 'teGen':te.cover='';te.url='';te.src='gen';te.bad=false;te.touched=true;tePanel();tePreview();break;
     case 'startNew':drawNew();if(!logDlg.open)logDlg.showModal();setTimeout(()=>document.getElementById('newQ')?.focus(),30);break;
     case 'backLog':{const c=currentSel()||S.books.find(x=>x.status==='paused');if(c)drawLog(c);break}
-    case 'startFormatGo':{const f=document.getElementById('startFormat').value,v=document.getElementById('startLength').value.trim(),total=f==='audio'?parsePos(v):/^\d+$/.test(v)?+v:NaN;if(!Number.isFinite(total)||total<=0){document.getElementById('formatError').textContent='Enter a positive page count or audio length as h:mm.';break}const {b,focus,preMin,moveTo}=formatPick;const own=document.getElementById('startOwn')?.checked,copyRow=document.querySelector('#startCopyFields .inline-copy');if(own){const cf=copyRow.querySelector('[data-copy-format]').value,edition=copyRow.querySelector('[data-copy-edition]').value.trim();if((cf==='audio')!==(f==='audio')){document.getElementById('formatError').textContent='Choose a reading format that matches the copy you’re reading.';break;}startCopyDrafts.set(b.id,{id:'c'+uid(),titleId:b.titleId,owner:'me',format:cf,edition,loanTo:null,private:S.settings.solo||!copyRow.querySelector('[data-copy-shared]')?.checked||undefined});saveReadingEdition(b,{edition});}else{startCopyDrafts.delete(b.id);saveReadingEdition(b,readEdition(logForm,'startReading'));}startSetupDone.add(b);b.format=f;b.total=total;b.pos=b.status==='finished'?total:0;if(moveTo){commitStartCopy(b);b.status=moveTo;b.pos=0;delete b.finished;delete b.dnfOn;if(moveTo==='reading'&&!b.started)b.started=today();if(moveTo==='paused')b.pausedOn=today();S.upNext=(S.upNext||[]).filter(id=>id!==b.id);save();logDlg.close();render();toast(`Moved ${b.title} to ${STATUS[moveTo]}.`)}else{save();drawLog(b,focus,preMin)}break}
+    case 'startFormatGo':{const f=document.getElementById('startFormat').value,v=document.getElementById('startLength').value.trim(),total=f==='audio'?parsePos(v):/^\d+$/.test(v)?+v:NaN;if(!Number.isFinite(total)||total<=0){document.getElementById('formatError').textContent='Enter a positive page count or audio length as h:mm.';break}const {b,focus,preMin,moveTo}=formatPick;const selectedCopy=S.copies.find(c=>c.id===document.getElementById('startReadingCopy')?.value);if(!document.getElementById('startOwn')?.checked&&selectedCopy&&(selectedCopy.format==='audio')!==(f==='audio')){document.getElementById('formatError').textContent='Choose a reading format that matches the selected copy.';break;}const own=document.getElementById('startOwn')?.checked,copyRow=document.querySelector('#startCopyFields .inline-copy');if(own){const cf=copyRow.querySelector('[data-copy-format]').value,edition=copyRow.querySelector('[data-copy-edition]').value.trim();if((cf==='audio')!==(f==='audio')){document.getElementById('formatError').textContent='Choose a reading format that matches the copy you’re reading.';break;}startCopyDrafts.set(b.id,{id:'c'+uid(),titleId:b.titleId,owner:'me',format:cf,edition,loanTo:null,private:S.settings.solo||!copyRow.querySelector('[data-copy-shared]')?.checked||undefined});saveReadingEdition(b,{edition});}else{startCopyDrafts.delete(b.id);saveReadingEdition(b,readEdition(logForm,'startReading'));}startSetupDone.add(b);b.format=f;b.total=total;b.pos=b.status==='finished'?total:0;if(moveTo){commitStartCopy(b);b.status=moveTo;b.pos=0;delete b.finished;delete b.dnfOn;if(moveTo==='reading'&&!b.started)b.started=today();if(moveTo==='paused')b.pausedOn=today();S.upNext=(S.upNext||[]).filter(id=>id!==b.id);save();logDlg.close();render();toast(`Moved ${b.title} to ${STATUS[moveTo]}.`)}else{save();drawLog(b,focus,preMin)}break}
     case 'manualNew':detachLogDraft();logDlg.close();openAdd();ad.tab='manual';ad.lastStatus='reading';renderAdd();document.getElementById('amTitle')?.focus();break;
     case 'tourGo':tourStart(a.dataset.v);break;
     case 'tourLater':{const T=tourPrefs();if(a.dataset.v==='group')T.groupSeen=true;else{T.notNow=(T.notNow||0)+1;T.askAt=(T.visits||0)+3}save();hideTourOffer();toast(a.dataset.v==='group'||T.notNow>=2?'You can take the tour anytime from your account menu.':'No problem. You can take the tour anytime from your account menu.');break}
