@@ -4229,6 +4229,7 @@ function drawLog(b,focus,preMin,moveTo){
     <div class="err" id="logErr" role="alert"></div><div class="log-ask" id="logAsk" hidden></div>
     <div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="cancelLog">Cancel</button><button type="submit" class="btn btn-primary">Save Reading</button></div>
   </div>`;
+  logForm.dataset.timerStart=preMin&&S.timer?.bookId===b.id&&S.timer.stop?String(S.timer.start):'';
   logForm.dataset.book=b.id;logForm.dataset.mode='log';logForm.dataset.ok='';logForm.dataset.autoFin='';
   if(S.settings.solo)logForm.querySelector('.reading-together')?.remove();
   const dk='log:'+(b.titleId||b.id),hadDraft=draftAttach(logForm,dk,'reading entry',preMin?['minutes']:null);
@@ -4417,7 +4418,7 @@ logForm.addEventListener('submit',e=>{
   {const aft=goalState(f.date),sk2=streak();if(f.date===today()){if(!before.both&&aft.both)post('goal','met both daily goals');else if(!before.met&&aft.met)post('goal','met today’s reading goal')}
    [7,14,30,60,100,180,365].forEach(n=>{if(skBefore<n&&sk2>=n)post('streak',`reached a ${n}-day reading streak`)})}
   if(finished&&!wasFinished)S.trophies.push({id:uid(),name:'Finished!',desc:b.title,date:f.date,tier:'badge',icon:'check',hue:'green'});
-  if(S.timer&&S.timer.bookId===b.id&&S.timer.stop)S.timer=null;
+  if(S.timer?.bookId===b.id){if(logForm.dataset.timerStart===String(S.timer.start)&&S.timer.stop&&minutes!=null)S.timer=null;else if(finished&&!S.timer.stop)S.timer.stop=Date.now();}
   logForm.dataset.done='1';draftClear(logForm.dataset.dkey);save();logDlg.close();render();
   const after=goalState(f.date),sk=streak(),g=S.settings,isToday=f.date===today(),logged=range||minutes!=null;
   if(finished){if(!openNextDlg(b))toast(`🎉 You finished ${b.title}!`,null,`That’s ${yearFinished()} book${yearFinished()===1?'':'s'} this year.`,true)}
