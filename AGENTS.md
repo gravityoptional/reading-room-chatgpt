@@ -26,6 +26,10 @@ This is **ChatGPT's copy** of the Reading Room "next" prototype, made Nov 3, 202
 5. **Ask James** about anything he would have to agree to: new features, removed features, wording he hasn't
    seen, or anything that costs money.
 
+## Sync default
+
+James prefers converged test beds after a sync. Keep application behavior, forms, and styling aligned with Claude’s approved version unless there is a concrete reason to differ. Preserve this copy’s ChatGPT identity, existing storage keys, and isolated startup behavior. Document necessary shared corrections for return to Claude rather than leaving unexplained permanent differences.
+
 ## Product principles (from the requirements doc)
 
 - *Reading makes you want to read.* A reading tracker that rewards reading, not list-making.
