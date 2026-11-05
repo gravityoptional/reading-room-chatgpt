@@ -1253,6 +1253,13 @@ a.btn{text-decoration:none}
   .nav{order:3;flex-basis:100%;margin-left:0;justify-content:center}
   .top-right{margin-left:auto}
 }
+/* Audit 17: paired controls share a label row; helper text cannot stretch their inputs. */
+.f2{row-gap:5px}
+.f2>label.f{grid-template-rows:subgrid;grid-row:span 3;align-items:start}
+.f2>label.f>.inp{grid-row:2;align-self:start;height:44px}
+.f2>label.f>span:first-child{grid-row:1}
+.f2:has(#amPages),.f2:has([name="tPages"]){grid-template-columns:112px minmax(0,1fr)}
+#amPages,[name="tPages"]{max-width:112px}
 </style>
 </head>
 <body>
@@ -1536,7 +1543,8 @@ function simActivity(){
   if(mine){const who=rnd(ms),[k,e]=rnd(REACTS);mine.r[who]=k;S.notifs.unshift({id:'n'+uid(),text:`${nameOf(who)} reacted ${e} to your update: ${mine.text}${mine.book?' '+mine.book:''}.`,ts:now,link:null});note=' A reaction to your update is in the bell.'}else note=S.settings.share?' Log some reading to get reactions to your own updates.':' Turn on Share My Activity in your account menu to get reactions to your own updates too.'
   save();closeMenus();view='dashboard';render();toast(`Added ${n} sample activity items from your group.${note}`);
 }
-function post(kind,text,bk,extra,ch){if(!S.settings.share)return;S.activity.push({id:uid(),who:'me',kind,text,book:bk||undefined,extra:extra||undefined,ch:ch||undefined,ts:Date.now(),r:{}})}
+function post(kind,text,bk,extra,ch,titleId){if(!S.settings.share)return;S.activity.push({id:uid(),who:'me',kind,text,book:bk||undefined,titleId:titleId||undefined,extra:extra||undefined,ch:ch||undefined,ts:Date.now(),r:{}})}
+function postBook(kind,text,b,extra){const titleId=b.titleId||b.id;post(kind,text,b.title,extra,null,titleId)}
 function evSnap(){
   const ach=achievements().filter(a=>a.earned).map(a=>a.name);
   const chs=S.challenges.filter(c=>(c.participants||[]).includes('me')&&chDoneDate(c)).map(c=>c.id);
@@ -3051,7 +3059,7 @@ copyEditForm.addEventListener('submit',e=>{e.preventDefault();const c=S.copies.f
   if(!FMT[format])return;
   if(format!==c.format&&copyHasCommitment(c)){document.getElementById('copyEditError').textContent='Resolve this copy’s loan, hold, or requests before changing its format.';return}
   c.format=format;c.edition=String(f.get('copyEdition')||'').trim();if(!S.settings.solo)c.private=!f.has('copyShared')||undefined;
-  if(wasPrivate&&!c.private)post('library','shared a copy of:',titleById(c.titleId)?.title);
+  if(wasPrivate&&!c.private)postBook('library','shared a copy of:',titleById(c.titleId));
   if(!save())return;
   document.querySelectorAll('.reading-edition').forEach(w=>{const select=w.querySelector('select'),option=select&&[...select.options].find(o=>o.value===c.id);if(option)option.textContent=FMT[c.format]+' · '+(c.edition||'Copy');if(select?.value===c.id){const prefix=w.dataset.editionPrefix,input=w.querySelector('input');if(input?.value===oldEdition&&(prefix==='adReading'||prefix==='startReading'&&['want','new'].includes(formatPick?.b?.status)))input.value=c.edition}});
   const access=document.getElementById('teCopies');if(access&&titleDlg.open)access.innerHTML=copyAccess(c.titleId);
@@ -3059,7 +3067,7 @@ copyEditForm.addEventListener('submit',e=>{e.preventDefault();const c=S.copies.f
 });
 copyEditDlg.addEventListener('close',()=>{if(copyEditOpener?.isConnected)copyEditOpener.focus()});
 function bookIdentityTaken(id,title,author){return S.titles.some(t=>t.id!==id&&olKey(t.title)===olKey(title)&&olKey(t.author)===olKey(author))}
-function updateBookIdentity(t,title,author,old=t.title){t.title=title;t.author=author;S.books.filter(b=>b.titleId===t.id).forEach(b=>{b.title=title;b.author=author});if(old!==title)S.activity.forEach(a=>{if(a.book===old)a.book=title})}
+function updateBookIdentity(t,title,author,old=t.title){t.title=title;t.author=author;S.books.filter(b=>b.titleId===t.id).forEach(b=>{b.title=title;b.author=author});if(old!==title)S.activity.forEach(a=>{if(a.titleId===t.id)a.book=title})}
 function validReadingDate(d){return !d||/^\d{4}-\d{2}-\d{2}$/.test(d)&&!isNaN(Date.parse(d+'T00:00:00Z'))&&new Date(d+'T00:00:00Z').toISOString().slice(0,10)===d&&d<=today()}
 
 /* Your latest rating of a book, if any. */
@@ -3081,7 +3089,7 @@ const recWho=r=>`${nameOf(r.from)}${r.rating?` (${r.rating}★)`:''}`;
 function sendRec(t,to,note,withRating){
   const names=to.map(nameOf).join(', '),rating=withRating?myRating(t.id):0;
   to.filter(w=>!S.recsSent.some(r=>r.titleId===t.id&&r.to===w)).forEach(w=>S.recsSent.push({id:uid(),titleId:t.id,to:w,note,ts:Date.now(),...(rating?{rating}:{})}));
-  if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'rec',text:'recommended',book:t.title,extra:`to ${names}`,ts:Date.now(),r:{}});
+  if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'rec',text:'recommended',book:t.title,titleId:t.id,extra:`to ${names}`,ts:Date.now(),r:{}});
   return names;
 }
 /* Ratings follow the Share with My Groups switch; book notes stay private either way. */
@@ -3144,7 +3152,7 @@ function renderBD0(){
         :r.status==='dnf'?`<div class="rate dnf-why"><span class="small">${r.dnfWhy||r.dnfNote?`Why you stopped: <b>${esc(dnfWhyL(r.dnfWhy)||'')}</b>${r.dnfNote?` “${esc(r.dnfNote)}”`:''}`:'<span class="muted">No reason given for stopping.</span>'}</span><button class="link-btn sm" data-act="dnfEdit" data-book="${r.id}">${r.dnfWhy||r.dnfNote?'Change':'Add a Reason'}</button></div>`:''}`;
     }
   }else if(bd.tab==='activity'){
-    const items=S.activity.filter(a=>a.book===t.title&&(a.who!=='me'||S.settings.share)).sort((a,b)=>b.ts-a.ts);
+    const items=S.activity.filter(a=>(a.titleId?a.titleId===t.id:a.book===t.title&&S.titles.filter(x=>x.title===t.title).length===1)&&(a.who!=='me'||S.settings.share)).sort((a,b)=>b.ts-a.ts);
     body=`<div class="xs muted bd-act-h">${esc(GN())} activity for this book</div>`+(items.length?items.map(a=>{const p=person(a.who);return `<div class="act-top" style="padding:8px 0"><span class="avatar" style="background:${p.color}">${p.init}</span><div class="act-txt"><b>${esc(p.name)}</b> ${esc(a.text)}${a.extra?` <span class="muted">(${esc(a.extra)})</span>`:''}</div><span class="act-when">${ago(a.ts)}</span></div>`}).join('')
       :`<p class="small muted">No group activity for this book yet. Only members who share their reading appear here.</p>`);
   }else{
@@ -3257,7 +3265,7 @@ titleForm.addEventListener('submit',e=>{
   if(isbn&&!/^(\d{9}[\dX]|\d{13})$/.test(isbn))return er('An ISBN has 10 or 13 digits. Check it, or leave it blank.');
   if(no&&(!sn||isNaN(+no)||+no<=0))return er(sn?'Enter the book number as a number, for example 2.':'Add a series name to go with the book number.');
   if(len&&(!sn||!/^\d+$/.test(len)||+len<=0))return er(sn?'Enter how many books are in the series as a whole number.':'Add a series name to go with the series length.');
-  if(te.bad)return er('The cover image didn’t load. Choose a different one, or use the generated cover.');
+  if(te.bad&&te.touched)return er('The cover image didn’t load. Choose a different one, or use the generated cover.');
   const copyEdits=[...titleForm.querySelectorAll('.inline-copy')].map(row=>({id:row.dataset.copyId,format:row.querySelector('[data-copy-format]').value,edition:row.querySelector('[data-copy-edition]').value.trim(),shared:row.querySelector('[data-copy-shared]')?.checked}));
   for(const x of copyEdits){const c=S.copies.find(c=>c.id===x.id&&c.owner==='me'&&c.titleId===t.id);if(!FMT[x.format]||x.id&&!c)return er('This copy is no longer available. Reopen Edit Book.');if(c&&c.format!==x.format&&copyHasCommitment(c))return er('Resolve this copy’s loan, hold, or requests before changing its format.');}
   const old=t.title;
@@ -3341,7 +3349,7 @@ function adSave(){adCaptureDetail();const d=ad.detail;if(!d)return;const er=m=>{
     if(pos!==null&&active)r.progressBase={pos:r.pos,date:today(),excluded:[]};
     S.books.push(r);if(d.status==='want'&&d.queue)(S.upNext=S.upNext||[]).push(r.id);ad.lastStatus=d.status;ad.lastFormat=d.format;
   }else if(!locked)ad.lastStatus='none';
-  if(d.own){copy={id:'c'+uid(),titleId:t.id,owner:'me',format:d.copyFormat,edition:d.edition.trim(),loanTo:null};if(S.settings.solo||!d.share)copy.private=true;S.copies.push(copy);if(!copy.private)post('library','added a book to the group library:',t.title)}
+  if(d.own){copy={id:'c'+uid(),titleId:t.id,owner:'me',format:d.copyFormat,edition:d.edition.trim(),loanTo:null};if(S.settings.solo||!d.share)copy.private=true;S.copies.push(copy);if(!copy.private)postBook('library','added a book to the group library:',t)}
   if(r)saveReadingEdition(r,d.readingCopyId==='__new'&&copy?{edition:copy.edition,editionCopyId:copy.id}:{edition:d.readingEdition,editionCopyId:d.readingCopyId});
   ad.added.add(t.id);ad.detail=null;ad.tab='search';if(!ad.q)ad.q=t.title;save();render();renderAdd();addDlg.scrollTop=ad.scroll||0;
   toast(reading?`Added ${t.title} as ${AD_STATUSES.find(([k])=>k===d.status)[1]}.`:`Added your ${FMT[d.copyFormat].toLowerCase()} copy of ${t.title}.`,()=>{restoreTo(snap)();ad.added.delete(t.id);renderAdd(true)});
@@ -3634,7 +3642,7 @@ const isMine=c=>c.mode==='personal'?c.creator==='me':(c.participants||[]).includ
 const daysBetween=(a,b)=>Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5);
 const ordinal=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
 function ruleOk(c,tid){const r=c.rule||'all';if(r==='none')return false;if(r==='all')return true;const t=titleById(tid);if(!t)return false;
-  if(r==='author')return t.author.toLowerCase().includes((c.ruleVal||'').trim().toLowerCase());if(r==='genre')return genreKey(t.genre)===genreKey(c.ruleVal);return true}
+  if(r==='author')return t.author.toLowerCase().includes((c.ruleVal||'').trim().toLowerCase());if(r==='genre')return !!genreKey(c.ruleVal)&&genreKey(t.genre)===genreKey(c.ruleVal);return true}
 const inWin=(c,d)=>!!d&&d<=today()&&(!c.end||d<=c.end)&&(c.countPrior||!c.start||d>=c.start);
 const titleOfSession=x=>book(x.bookId)?.titleId;
 function contrib(c){
@@ -3979,7 +3987,7 @@ function renderChForm(){
     ${cf.mode!=='comp'&&cf.type!=='list'?`<label class="f">Goal (${unit})<input class="inp" id="cfTarget" inputmode="numeric" value="${esc(cf.target)}"></label>`:''}
     ${listPick}
     ${cf.mode!=='comp'&&cf.type!=='list'?`<div class="f"><label class="fl" for="cfRule" style="margin:0">Count Automatically</label><select class="inp" id="cfRule" data-cfrule>${[['all',{books:'All books I finish',pages:'Pages from all my reading',minutes:'Minutes from all my reading',days:'Every day I read'}[cf.type]],['author','Only books by an author'],['genre','Only books in a genre'],['none','Nothing. I’ll add progress myself.']].map(([v,l])=>`<option value="${v}" ${cf.rule===v?'selected':''}>${l}</option>`).join('')}</select>
-      ${cf.rule==='author'?`<input class="inp" id="cfRuleVal" placeholder="Author name, for example Stephen King" value="${esc(cf.ruleVal)}" autocomplete="off" aria-label="Author">`:cf.rule==='genre'?`<select class="inp" id="cfRuleVal" aria-label="Genre">${[...new Set(S.titles.map(t=>t.genre).filter(Boolean))].sort().map(g=>`<option ${cf.ruleVal===g?'selected':''}>${esc(g)}</option>`).join('')}</select>`:''}
+      ${cf.rule==='author'?`<input class="inp" id="cfRuleVal" placeholder="Author name, for example Stephen King" value="${esc(cf.ruleVal)}" autocomplete="off" aria-label="Author">`:cf.rule==='genre'?`<select class="inp" id="cfRuleVal" aria-label="Genre"><option value="">Choose a Genre</option>${[...new Set(S.titles.map(t=>t.genre).filter(Boolean))].sort().map(g=>`<option ${cf.ruleVal===g?'selected':''}>${esc(g)}</option>`).join('')}</select>`:''}
       <span class="xs muted">${cf.rule==='none'?'Good for things only you know, like books by women or reading on vacation. Use Add Progress on the challenge to choose them.':'You can still add or remove individual items later with Add Progress.'}</span></div>`:''}
     ${cf.mode!=='comp'&&(cf.type==='list'||cf.rule!=='none')?`<label class="chk"><input type="checkbox" id="cfPrior" ${cf.countPrior?'checked':''}> ${cf.type==='list'||cf.type==='books'?'Count books I’ve already finished':'Count reading from before the start date'}</label>`:''}
     ${cf.mode!=='personal'&&!cf.id?`<div class="f"><span class="fl" style="margin:0">Who Can Join</span><div class="vseg ad-tabs" role="group" aria-label="Who can join">${[['all',`Anyone in ${esc(GN())}`],['invite','Only People I Invite']].map(([k,l])=>`<button aria-pressed="${cf.who===k}" data-act="cfWho" data-v="${k}">${l}</button>`).join('')}</div>
@@ -4005,6 +4013,7 @@ function saveCf(){
   if(cf.type==='list'&&!cf.titleIds.length)return er('Add at least one book.');
   if(cf.mode!=='comp'&&cf.rule==='author'&&!cf.ruleVal.trim())return er('Enter the author’s name.');
   if(cf.mode!=='comp'&&cf.rule==='genre'&&!cf.ruleVal){const g=document.getElementById('cfRuleVal');if(g)cf.ruleVal=g.value}
+  if(cf.mode!=='comp'&&cf.type!=='list'&&cf.rule==='genre'&&!String(cf.ruleVal||'').trim())return er('Choose a genre. If none are listed, add a genre to a book first.');
   if(cf.mode==='comp'&&(!cf.start||!cf.end))return er('Competitions need a start and end date.');
   if(cf.start&&cf.end&&cf.end<cf.start)return er('The end date must be after the start date.');
   if(cf.mode!=='personal'&&!cf.id&&cf.who==='invite'&&!cf.invite.length)return er('Choose at least one person to invite.');
@@ -4204,7 +4213,7 @@ function setLogOpt(){
   ph('end',f==='minutes'||(!f&&gt==='minutes'));ph('minutes',f==='end'||f==='audio'||(!f&&gt==='pages'));
 }
 let formatPick=null;
-function commitStartCopy(b){const c=startCopyDrafts.get(b.id);if(!c)return;c.titleId=b.titleId;S.copies.push(c);b.editionCopyId=c.id;startCopyDrafts.delete(b.id);if(!c.private)post('library','added a book to the group library:',b.title);}
+function commitStartCopy(b){const c=startCopyDrafts.get(b.id);if(!c)return;c.titleId=b.titleId;S.copies.push(c);b.editionCopyId=c.id;startCopyDrafts.delete(b.id);if(!c.private)postBook('library','added a book to the group library:',b);}
 document.addEventListener('change',e=>{
   if(logForm.dataset.mode!=='format')return;
   const own=document.getElementById('startOwn'),fields=document.getElementById('startCopyFields');if(!own||!fields)return;
@@ -4424,7 +4433,7 @@ logForm.addEventListener('submit',e=>{
     if(minutes==null&&S.settings.estimate){if(audio&&span>0)est=span;else if(pages>0){const p=pace(b.id);if(p)est=Math.round(pages/p)}}
     const withIds=[...logForm.querySelectorAll('[name=with]:checked')].map(x=>x.value);
     S.sessions.push({id:uid(),bookId:b.id,date:f.date,from:fromD||undefined,start:range?start:null,end:range?end:null,pages,minutes,est,note:f.note||'',with:withIds.length?withIds:undefined});
-    if(withIds.length){extraSub=`Also counted for ${withIds.map(nameOf).join(' and ')}.`;if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'together',text:`read together with ${withIds.map(nameOf).join(' and ')}`,book:b.title,ts:Date.now(),r:{}})}
+    if(withIds.length){extraSub=`Also counted for ${withIds.map(nameOf).join(' and ')}.`;if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'together',text:`read together with ${withIds.map(nameOf).join(' and ')}`,book:b.title,titleId:b.titleId,ts:Date.now(),r:{}})}
   }
   if(range){if(!['reading','paused'].includes(b.status))b.pos=end;else syncPos(b)}
   if(finished){const alreadyFinished=b.status==='finished';b.status='finished';if(!alreadyFinished)b.finished=f.date;b.pos=b.total}
@@ -4432,12 +4441,12 @@ logForm.addEventListener('submit',e=>{
   if(range)syncPos(b);
   const started=wasWant&&b.status==='reading';
   if(started){selBook=b.id;if(wasQueued)b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,f.date)>=365)b.rescued=f.date}
-  if(started){const re=S.books.some(x=>x!==b&&x.titleId===b.titleId&&x.status==='finished');post(re?'reread':'started',re?'started rereading':'started a new book',b.title)}
+  if(started){const re=S.books.some(x=>x!==b&&x.titleId===b.titleId&&x.status==='finished');postBook(re?'reread':'started',re?'started rereading':'started a new book',b)}
   if(S.settings.share){
-    if(finished&&!wasFinished)S.activity.push({id:uid(),who:'me',kind:'finished',text:'finished',book:b.title,ts:Date.now(),r:{}});
-    else if(range||minutes!=null)S.activity.push({id:uid(),who:'me',kind:'session',text:'logged a reading session',book:b.title,extra:minutes!=null?fmtMin(minutes):(audio?`${fmtMin(span)} of audio`:`${span} pages`),ts:Date.now(),r:{}});
+    if(finished&&!wasFinished)S.activity.push({id:uid(),who:'me',kind:'finished',text:'finished',book:b.title,titleId:b.titleId,ts:Date.now(),r:{}});
+    else if(range||minutes!=null)S.activity.push({id:uid(),who:'me',kind:'session',text:'logged a reading session',book:b.title,titleId:b.titleId,extra:minutes!=null?fmtMin(minutes):(audio?`${fmtMin(span)} of audio`:`${span} pages`),ts:Date.now(),r:{}});
   }
-  if(range&&!audio&&b.total&&!finished){const half=Math.ceil(b.total/2);if(start<half&&end>=half)post('halfway','reached the halfway point of',b.title)}
+  if(range&&!audio&&b.total&&!finished){const half=Math.ceil(b.total/2);if(start<half&&end>=half)postBook('halfway','reached the halfway point of',b)}
   {const aft=goalState(f.date),sk2=streak();if(f.date===today()){if(!before.both&&aft.both)post('goal','met both daily goals');else if(!before.met&&aft.met)post('goal','met today’s reading goal')}
    [7,14,30,60,100,180,365].forEach(n=>{if(skBefore<n&&sk2>=n)post('streak',`reached a ${n}-day reading streak`)})}
   if(finished&&!wasFinished)S.trophies.push({id:uid(),name:'Finished!',desc:b.title,date:f.date,tier:'badge',icon:'check',hue:'green'});
@@ -4542,7 +4551,7 @@ editForm.addEventListener('submit',e=>{
     delete b.finished;delete b.readIt;delete b.markedOn;delete b.pausedOn;delete b.dnfOn;b.status=nextStatus;
     if(nextStatus==='want'){b.wantSince=b.wantSince||today();if(!hadSessions){delete b.started;b.pos=0;}}
     if(nextStatus==='reading'){if(wasQueued)b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,today())>=365)b.rescued=today();if(!b.started)b.started=today();}if(nextStatus==='paused')b.pausedOn=today();if(nextStatus==='dnf')b.dnfOn=today();
-    if(nextStatus==='finished'){post('finished','finished',b.title);b.pos=b.total;if(S.timer?.bookId===b.id&&!S.timer.stop)S.timer.stop=Date.now();}
+    if(nextStatus==='finished'){postBook('finished','finished',b);b.pos=b.total;if(S.timer?.bookId===b.id&&!S.timer.stop)S.timer.stop=Date.now();}
   }
   if(b.status==='finished'){if(f.finished){b.finished=f.finished;delete b.readIt;delete b.markedOn}else{delete b.finished;b.readIt=true;b.markedOn=b.markedOn||today()}}
   saveReadingEdition(b,readEdition(editForm,'editReading'));
@@ -4612,7 +4621,7 @@ document.addEventListener('click',e=>{
       if(v==='reading'){if(prev==='want'){if(wasQ)b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,today())>=365)b.rescued=today()}b.status='reading';if(!b.started)b.started=today()}
       else if(v==='paused'){b.status='paused';b.pausedOn=today()}
       else if(v==='want'||v==='queue'){b.status='want';if(!b.wantSince)b.wantSince=today();if(!has){delete b.started;b.pos=0}if(v==='queue')S.upNext.push(b.id)}
-      else if(v==='finished'){b.status='finished';b.finished=today();b.pos=b.total;if(!b.started)b.started=today();if(prev!=='finished')post('finished','finished',b.title)}
+      else if(v==='finished'){b.status='finished';b.finished=today();b.pos=b.total;if(!b.started)b.started=today();if(prev!=='finished')postBook('finished','finished',b)}
       else if(v==='dnf'){b.status='dnf';b.dnfOn=today()}
       if(selBook===b.id)selBook=null;
       save();if(editDlg.open)editDlg.close();render();if(bookDlg.open)renderBD();
@@ -4626,7 +4635,7 @@ document.addEventListener('click',e=>{
       const cb=document.getElementById('recEditRate');if(cb){if(!cb.checked)delete r.rating;else if(!r.rating&&myRating(r.titleId))r.rating=myRating(r.titleId)}
       recEdit=null;save();refreshLib();toast('Saved.');break}
     case 'recWithdraw':{const snap=snapshot(),r=S.recsSent.find(x=>x.id===a.dataset.id);S.recsSent=S.recsSent.filter(x=>x!==r);save();refreshLib();toast(`Withdrew your recommendation to ${nameOf(r.to)}.`,restoreTo(snap),'They aren’t notified.');break}
-    case 'cpShare':{const c=S.copies.find(x=>x.id===a.dataset.id);c.private=!c.private||undefined;if(!c.private)post('library','added a book to the group library:',titleById(c.titleId)?.title);save();renderBD();refreshLib();toast(c.private?`Only you can see this copy now. It’s hidden from the ${GN()} Library.`:`This copy now shows in the ${GN()} Library.`);break}
+    case 'cpShare':{const c=S.copies.find(x=>x.id===a.dataset.id);c.private=!c.private||undefined;if(!c.private)postBook('library','added a book to the group library:',titleById(c.titleId));save();renderBD();refreshLib();toast(c.private?`Only you can see this copy now. It’s hidden from the ${GN()} Library.`:`This copy now shows in the ${GN()} Library.`);break}
     case 'chDecline':{const c=S.challenges.find(x=>x.id===a.dataset.id);c.declined=[...(c.declined||[]),'me'];save();if(chDlg.open&&chMode==='ch')renderCh();else{const y=window.scrollY;render();window.scrollTo(0,y)}toast(`Declined ${c.name}.`,null,'You can still join later from Group Challenges.');break}
     case 'cfWho':captureCf();cf.who=a.dataset.v;renderChForm();break;
     case 'awPreset':{const i=document.getElementById('awName');if(i){i.value=a.dataset.v;i.focus()}break}
@@ -4767,7 +4776,7 @@ document.addEventListener('click',e=>{
     case 'dnfWhy':{dnfSel.note=document.getElementById('dnfNote').value;dnfSel.why=dnfSel.why.includes(a.dataset.v)?dnfSel.why.filter(x=>x!==a.dataset.v):[...dnfSel.why,a.dataset.v];renderDnf();dnfBody.querySelector(`[data-act=dnfWhy][data-v="${a.dataset.v}"]`)?.focus();break}
     case 'dnfSave':{const b=book(dnfSel.id),note=document.getElementById('dnfNote').value.trim(),had=!!(b.dnfWhy||b.dnfNote);
       if(dnfSel.why.length)b.dnfWhy=DNF_WHY.map(x=>x[0]).filter(k=>dnfSel.why.includes(k));else delete b.dnfWhy;if(note)b.dnfNote=note;else delete b.dnfNote;
-      if(!had&&(b.dnfWhy||b.dnfNote))post('dnf','stopped reading',b.title,`at ${stopAt(b)}${b.dnfWhy?` · ${dnfWhyL(b.dnfWhy,true)}`:''}${b.dnfNote?`: “${b.dnfNote}”`:''}`);
+      if(!had&&(b.dnfWhy||b.dnfNote))postBook('dnf','stopped reading',b,`at ${stopAt(b)}${b.dnfWhy?` · ${dnfWhyL(b.dnfWhy,true)}`:''}${b.dnfNote?`: “${b.dnfNote}”`:''}`);
       save();dnfDlg.close();render();if(bookDlg.open)renderBD();toast(b.dnfWhy||b.dnfNote?'Reason saved.':'Saved.');break}
     case 'dnfClose':dnfDlg.close();break;
     case 'dnfUndo':{const u=dnfSel?.undo;dnfDlg.close();if(u){u();toast('Undone.')}break}
@@ -4802,7 +4811,7 @@ document.addEventListener('click',e=>{
       const t=titleById(nextDone.tid);sendRec(t,to,document.getElementById('nxRecNote').value.trim(),recRateOn('nxRecRate'));nextDone.rec=false;nextDone.sent=to;save();renderNextDlg();nextBody.querySelector('.nx-sent')?.focus();break}
     case 'nxThank':{const w=a.dataset.w;(S.thanks=S.thanks||[]).push({id:uid(),titleId:nextDone.tid,to:w,ts:Date.now()});save();renderNextDlg();nextBody.querySelector('.nx-thanked')?.focus();break}
     case 'bdAddCopy':bd.addCopy=!bd.addCopy;renderBD();break;
-    case 'bdAddCopyConfirm':case 'bdAddCopyGo':{const f=document.getElementById('acFmt').value,w=document.getElementById('acEdition').value.trim();if(a.dataset.act!=='bdAddCopyConfirm'&&copiesOf(bd.id).some(c=>c.owner==='me'&&c.format===f)){let warn=document.getElementById('copyDuplicate');if(!warn){warn=document.createElement('div');warn.id='copyDuplicate';warn.className='ad-notice';document.getElementById('acEdition').closest('.addcopy').append(warn)}warn.innerHTML=`You already have a ${esc(FMT[f].toLowerCase())} copy. Add another?<div class="ad-existing-acts"><button type="button" class="link-btn sm" data-act="bdAddCopy">View Existing Copies</button><button type="button" class="btn btn-ghost sm" data-act="bdAddCopyConfirm">Add Another Copy</button></div>`;break;}const sh=!S.settings.solo&&document.getElementById('acShare')?.checked!==false,had=copiesOf(bd.id).some(c=>!c.private);const nc={id:'c'+uid(),titleId:bd.id,owner:'me',format:f,edition:w,loanTo:null,private:!sh||undefined};S.copies.push(nc);setTimeout(()=>shareAsk(nc.id),0);if(sh)post('library',had?`added a${f==='audio'||f==='ebook'?'n':''} ${FMT[f].toLowerCase()} copy of`:'added a book to the group library:',titleById(bd.id).title);bd.addCopy=false;save();renderBD();toast(`Added your ${FMT[f].toLowerCase()} copy.`);break}
+    case 'bdAddCopyConfirm':case 'bdAddCopyGo':{const f=document.getElementById('acFmt').value,w=document.getElementById('acEdition').value.trim();if(a.dataset.act!=='bdAddCopyConfirm'&&copiesOf(bd.id).some(c=>c.owner==='me'&&c.format===f)){let warn=document.getElementById('copyDuplicate');if(!warn){warn=document.createElement('div');warn.id='copyDuplicate';warn.className='ad-notice';document.getElementById('acEdition').closest('.addcopy').append(warn)}warn.innerHTML=`You already have a ${esc(FMT[f].toLowerCase())} copy. Add another?<div class="ad-existing-acts"><button type="button" class="link-btn sm" data-act="bdAddCopy">View Existing Copies</button><button type="button" class="btn btn-ghost sm" data-act="bdAddCopyConfirm">Add Another Copy</button></div>`;break;}const sh=!S.settings.solo&&document.getElementById('acShare')?.checked!==false,had=copiesOf(bd.id).some(c=>!c.private);const nc={id:'c'+uid(),titleId:bd.id,owner:'me',format:f,edition:w,loanTo:null,private:!sh||undefined};S.copies.push(nc);setTimeout(()=>shareAsk(nc.id),0);if(sh)postBook('library',had?`added a${f==='audio'||f==='ebook'?'n':''} ${FMT[f].toLowerCase()} copy of`:'added a book to the group library:',titleById(bd.id));bd.addCopy=false;save();renderBD();toast(`Added your ${FMT[f].toLowerCase()} copy.`);break}
     case 'reqNoteOpen':bd.reqNote=a.dataset.id||null;renderBD();if(bd.reqNote)document.getElementById('reqNoteTx')?.focus();break;
     case 'reqBorrow':{const c=S.copies.find(x=>x.id===a.dataset.id),t=titleById(c.titleId);if(c.loanTo==='me'||myReqFor(c))break;const free=copyFree(c);
       const note=bd.reqNote===c.id?(document.getElementById('reqNoteTx')?.value.trim().slice(0,200)||''):'';bd.reqNote=null;
@@ -4865,7 +4874,7 @@ document.addEventListener('click',e=>{
     case 'tourLog':tourEnd();view='dashboard';render();openLog();break;
     case 'shGo':{const v=shBody.querySelector('input[name=shV]:checked')?.value||'shared',c=S.copies.find(x=>x.id===shSel.cid);S.settings.copyDefault=v;
       if(c){const was=!c.private;if(v==='private'&&was){c.private=true;const t=titleById(c.titleId);const i=S.activity.map(x=>x.kind==='library'&&x.who==='me'&&x.book===t?.title&&Date.now()-x.ts<6e5).lastIndexOf(true);if(i>=0)S.activity.splice(i,1)}
-        else if(v==='shared'&&!was){delete c.private;post('library','added a book to the group library:',titleById(c.titleId)?.title)}}
+        else if(v==='shared'&&!was){delete c.private;postBook('library','added a book to the group library:',titleById(c.titleId))}}
       save();shDlg.close();render();if(bookDlg.open)renderBD();toast(v==='shared'?'Your books will show in the group library.':'Your books will stay private. Share any of them later.');break}
     case 'shareStart':{if(addDlg.open)addDlg.close();if(bookDlg.open)bookDlg.close();view='library';lib.tab='mybooks';lib.sel=new Set();render();window.scrollTo(0,0);break}
     case 'shNudge':{if(a.dataset.v==='off')S.settings.shareNudgeOff=true;else S.settings.shareNudgeAt=Date.now();save();refreshLib();toast(a.dataset.v==='off'?'Got it. That reminder won’t show again.':'We’ll remind you in a month.');break}
@@ -4894,7 +4903,7 @@ document.addEventListener('click',e=>{
     case 'pickup':{const b=book(id);if(b.format==='unknown'){if(bookDlg.open)bookDlg.close();drawLog(b,null,null,'reading');logDlg.showModal();break}b.status='reading';delete b.dnfOn;save();render();toast(`${b.title} is back in Currently Reading at ${b.format==='audio'?fmtPos(b.pos):'page '+b.pos}.`);break}
     case 'restart':{const b=book(id);b.status='reading';b.pos=0;b.started=today();delete b.dnfOn;save();render();toast(`Starting ${b.title} over from the beginning.`);break}
     case 'undo':{const t=document.getElementById('toast');if(undoFn){undoFn();undoFn=null}hideT(t);break}
-    case 'resume':{const b=book(id);b.status='reading';post('resumed','picked up again',b.title);save();render();toast(`Resumed ${b.title} at ${b.format==='audio'?fmtPos(b.pos):'page '+b.pos}.`);break}
+    case 'resume':{const b=book(id);b.status='reading';postBook('resumed','picked up again',b);save();render();toast(`Resumed ${b.title} at ${b.format==='audio'?fmtPos(b.pos):'page '+b.pos}.`);break}
     case 'toggleAll':showAll=!showAll;render();break;
     case 'togglePaused':showPaused=!showPaused;render();break;
     case 'select':selBook=id;render();document.querySelector(`.mini[data-book="${id}"]`)?.focus();break;
@@ -4902,7 +4911,7 @@ document.addEventListener('click',e=>{
     case 'nextBook':stepBook(1,'nextBook');break;
     case 'more':{const pop=document.getElementById('morePop');pop.hidden=!pop.hidden;a.setAttribute('aria-expanded',String(!pop.hidden));break}
     case 'finish':{const snap=snapshot(),b=book(id);b.status='finished';b.finished=today();b.pos=b.total;selBook=null;if(S.timer?.bookId===b.id&&!S.timer.stop)S.timer.stop=Date.now();
-      if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'finished',text:'finished',book:b.title,ts:Date.now(),r:{}});
+      if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'finished',text:'finished',book:b.title,titleId:b.titleId,ts:Date.now(),r:{}});
       S.trophies.push({id:uid(),name:'Finished!',desc:b.title,date:today(),tier:'badge',icon:'check',hue:'green'});
       save();render();if(!openNextDlg(b,restoreTo(snap)))toast(`Finished ${b.title}. Nice work!`,restoreTo(snap));break}
     case 'react':{const it=S.activity.find(x=>x.id===a.dataset.id);if(it.r.me===a.dataset.r)delete it.r.me;else it.r.me=a.dataset.r;save();render();break}

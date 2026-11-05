@@ -1,6 +1,6 @@
 # Website Audit — Second Pass: repair status
 
-The original audit numbers and findings remain unchanged. This change addresses **1–11**; 12–18 remain separate items.
+The original audit numbers and findings remain unchanged. This change addresses **1–14**; later audit numbers retain their original references.
 
 | Original # | Repair |
 | --- | --- |
@@ -15,5 +15,10 @@ The original audit numbers and findings remain unchanged. This change addresses 
 | 9 | Correcting shared page count updates finished reading position to the corrected total without changing sessions. |
 | 10 | Copy selection aligns setup format, clears incompatible length units, and rejects mismatched copies in setup, Add Book, and Edit Reading. |
 | 11 | My Books format filtering includes personal readings as well as copies; group-library filtering remains copy-based. |
+| 12 | Empty genre-restricted rules cannot save; malformed older rules count no books. |
+| 13 | New book activity stores stable title IDs. Renaming updates matching IDs only; ambiguous legacy text stays unchanged. |
+| 14 | An unchanged failed cover is retained during metadata saves; new failed replacements are still rejected. |
+
+15 implements the approved compact phone and two-row tablet headers. 16 is deferred to Later. James reports 17 working; its compact aligned fields are merged. 18 is recorded in SYNC-Audit-Follow-ups.md for Claude to review; no color change is approved.
 
 Validated with isolated Chromium regression tests, genuine draft autosave, and two pages sharing browser storage. Items 5–11 also have targeted regressions for keyboard dismissal, duplicate date controls, staged edits/cancel, unknown metadata, corrected completion, copy-format mismatches, and unowned readings. The previously approved copy-editor and ownership workflows also pass. Phone and desktop review screenshots use synthetic data.
