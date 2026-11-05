@@ -108,3 +108,7 @@ choices when the window redraws. When merging next into main, next's version win
 - **Did Not Finish reasons** (James, Oct 31): the list is fine for now (Not for me, Too slow, Not the right time,
   Content I didn't want, Had to return it); revisit later. Possible later use: "Not for me" as a soft Not for Me
   for that author in Discover.
+
+## Website Audit — Second Pass, item 16
+
+Recheck the account menu without Prototype Tools before changing its scrolling behavior. James reports the whole page scroll brings the menu bottom into view on his Pixel 10 Pro. Keep the original audit number **16**. This is deferred; no menu-scrolling change is currently approved.
