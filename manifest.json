@@ -1,0 +1,30 @@
+{
+  "repository": "gravityoptional/reading-room-chatgpt",
+  "main_commit": "f82f61a56c7947fd4d999ced37eb7c9c0efeacb0",
+  "published_html_sha256": "6912cb4ef547327af9a54f622ecb0d7108fda2508a83c3c5ab92697429e8bc5e",
+  "prepared_date": "2026-11-05",
+  "second_pass_repaired": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    17
+  ],
+  "deferred": [
+    16
+  ],
+  "claude_review": [
+    18
+  ]
+}
