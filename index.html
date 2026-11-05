@@ -1236,6 +1236,14 @@ a.btn{text-decoration:none}
 .reading-edition[hidden], #startCopyFields[hidden]{display:none!important}
 
 [data-edit-finish][hidden]{display:none!important}
+
+/* Audit 17: paired controls share a label row; helper text cannot stretch their inputs. */
+.f2{row-gap:5px}
+.f2>label.f{grid-template-rows:subgrid;grid-row:span 3;align-items:start}
+.f2>label.f>.inp{grid-row:2;align-self:start;height:44px}
+.f2>label.f>span:first-child{grid-row:1}
+.f2:has(#amPages),.f2:has([name="tPages"]){grid-template-columns:112px minmax(0,1fr)}
+#amPages,[name="tPages"]{max-width:112px}
 </style>
 </head>
 <body>
