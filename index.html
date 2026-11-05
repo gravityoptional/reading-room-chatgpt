@@ -1232,6 +1232,8 @@ a.btn{text-decoration:none}
 .reading-edition{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;min-width:0}.reading-edition .inp{min-width:0;box-sizing:border-box}.reading-edition-details{min-width:0}.reading-edition [hidden]{display:none}.reading-edition-details summary{max-width:100%;overflow-wrap:anywhere}
 .save-warning{padding:12px;margin-bottom:14px;border:2px solid var(--red);border-radius:10px;background:var(--surface);color:var(--text);font-size:13px;line-height:1.5;display:grid;gap:8px}.save-warning .btn{justify-self:start}.save-warning[role=alert]{position:sticky;top:0;z-index:100}
 .link-btn.copy-edit-link{padding:0 2px;vertical-align:baseline;font-size:12px}.copy-access{display:grid;gap:8px}.copy-access-row{display:flex;justify-content:space-between;align-items:center;gap:12px;overflow-wrap:anywhere}.copy-access-row>span{min-width:0}
+
+.reading-edition[hidden], #startCopyFields[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -2999,7 +3001,8 @@ document.addEventListener('change',e=>{
 const copyEditDlg=document.getElementById('copyEditDlg'),copyEditForm=document.getElementById('copyEditForm');
 let copyEditOpener=null;
 const copyHasCommitment=c=>!!c.loanTo||(S.loanReqs||[]).some(r=>r.copyId===c.id&&['pending','approved','loaned'].includes(r.status));
-function copyAccess(tid){const cs=copiesOf(tid).filter(c=>c.owner==='me');return `<div class="section-t">Your Copies</div><p class="xs muted">Edit your copy’s format, edition, or sharing here. Earlier reading editions stay unchanged.</p><div class="copy-access">${cs.length?cs.map(c=>`<div class="copy-access-row"><span class="small">${esc(FMT[c.format])}${c.edition?' · '+esc(c.edition):''}</span><button type="button" class="link-btn sm" data-act="cpEdit" data-id="${c.id}" aria-label="Edit ${esc(FMT[c.format])} copy${c.edition?' — '+esc(c.edition):''}">Edit</button></div>`).join(''):'<span class="xs muted">No owned copies recorded.</span>'}</div>`}
+function inlineCopyRow(c={}){return `<div class="inline-copy" data-copy-id="${esc(c.id||'')}" style="display:grid;gap:8px;margin-top:10px"><div class="f2"><label class="f">Copy Format<select class="inp" data-copy-format ${c.id&&copyHasCommitment(c)?'disabled':''}>${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${(c.format||'physical')===k?'selected':''}>${l}</option>`).join('')}</select></label><label class="f"><span>Edition <span class="sub">(optional)</span></span><input class="inp" data-copy-edition maxlength="200" value="${esc(c.edition||'')}" placeholder="Optional"></label></div>${S.settings.solo?'':`<label class="chk xs"><input type="checkbox" data-copy-shared ${c.id?!c.private?'checked':'':shareDefault()?'checked':''}> Show in the ${esc(GN())} Library</label>`}${c.id&&copyHasCommitment(c)?'<span class="xs muted">Format is locked while this copy has a loan, hold, or requests.</span>':''}</div>`}
+function copyAccess(tid){const cs=copiesOf(tid).filter(c=>c.owner==='me');return `<div style="display:flex;justify-content:space-between;align-items:center"><div class="section-t">${cs.length===1?'Your Copy':'Your Copies'}</div><button type="button" class="link-btn sm" data-act="teAddCopy">${ic('plus')}${cs.length?'Another Copy':'I Own a Copy'}</button></div><div class="copy-access">${cs.map(c=>inlineCopyRow(c)).join('')}</div><span class="xs muted">Earlier readings keep their saved editions.</span>`}
 function openCopyEdit(id,opener){const c=S.copies.find(c=>c.id===id&&c.owner==='me');if(!c)return;copyEditOpener=opener||document.activeElement;copyEditForm.dataset.id=id;copyEditForm.dataset.originalEdition=c.edition||'';
   copyEditForm.innerHTML=`<div class="dlg-h"><div><h2 id="copyEditTitle">Edit My Copy</h2><p class="small muted">${esc(titleById(c.titleId)?.title||'Book')}</p></div><button type="button" class="icon-btn x" data-act="cpEditClose" aria-label="Close">${ic('x')}</button></div><div class="form"><label class="f">Copy Format<select class="inp" name="copyFormat" ${copyHasCommitment(c)?'disabled':''}>${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${c.format===k?'selected':''}>${l}</option>`).join('')}</select></label>${copyHasCommitment(c)?'<p class="xs muted">Resolve the loan, hold, or requests before changing this copy’s format or removing it.</p>':''}<label class="f"><span>Edition <span class="sub">(optional)</span></span><input class="inp" name="copyEdition" maxlength="200" value="${esc(c.edition||'')}" placeholder="e.g. Illustrated or revised"></label>${S.settings.solo?'':`<label class="chk"><input type="checkbox" name="copyShared" ${c.private?'':'checked'}> Show this copy in the ${esc(GN())} Library</label>`}<p class="xs muted">Changes apply to this copy. Your earlier readings keep their saved editions.</p><div id="copyEditError" class="err" role="alert"></div><div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="cpEditClose">Cancel</button><button type="submit" class="btn btn-primary">Save Copy</button></div></div>`;
   copyEditDlg.showModal();copyEditForm.querySelector('[name=copyEdition]')?.focus();
@@ -3128,7 +3131,7 @@ function openTitleEdit(id){
   te={id,cover:t.cover||'',src:t.cover?(t.cover.startsWith('data:')?'upload':/openlibrary\.org/.test(t.cover)?'ol':'url'):'gen',tab:'ol',url:'',q:t.isbn||`${t.title} ${t.author!=='Unknown author'?t.author:''}`.trim(),ol:null,bad:false,touched:false};
   if(te.src==='url'){te.tab='url';te.url=t.cover}
   const genres=[...new Set(S.titles.map(x=>x.genre).filter(Boolean))].sort(),series=[...new Set(S.titles.map(x=>x.series).filter(Boolean))].sort();
-  titleForm.innerHTML=`<div class="dlg-h"><div style="flex:1;min-width:0"><h2 id="teTitle">Edit Book</h2><div class="muted small">Changes apply to everyone${S.settings.solo?'':` in the ${esc(GN())} Library`} and to every reading of this book.</div></div><button type="button" class="icon-btn x" data-act="teClose" aria-label="Close">${ic('x')}</button></div>
+  titleForm.innerHTML=`<div class="dlg-h"><div style="flex:1;min-width:0"><h2 id="teTitle">Edit Book</h2><div class="muted small">Book details apply to everyone${S.settings.solo?'':` in the ${esc(GN())} Library`} and to every reading. Copy details apply only to your copies.</div></div><button type="button" class="icon-btn x" data-act="teClose" aria-label="Close">${ic('x')}</button></div>
   <div class="form">
     <section id="teCopies">${copyAccess(t.id)}</section>
     <div class="section-t">Book Details</div>
@@ -3215,6 +3218,8 @@ titleForm.addEventListener('submit',e=>{
   if(no&&(!sn||isNaN(+no)||+no<=0))return er(sn?'Enter the book number as a number, for example 2.':'Add a series name to go with the book number.');
   if(len&&(!sn||!/^\d+$/.test(len)||+len<=0))return er(sn?'Enter how many books are in the series as a whole number.':'Add a series name to go with the series length.');
   if(te.bad)return er('The cover image didn’t load. Choose a different one, or use the generated cover.');
+  const copyEdits=[...titleForm.querySelectorAll('.inline-copy')].map(row=>({id:row.dataset.copyId,format:row.querySelector('[data-copy-format]').value,edition:row.querySelector('[data-copy-edition]').value.trim(),shared:row.querySelector('[data-copy-shared]')?.checked}));
+  for(const x of copyEdits){const c=S.copies.find(c=>c.id===x.id&&c.owner==='me'&&c.titleId===t.id);if(!FMT[x.format]||x.id&&!c)return er('This copy is no longer available. Reopen Edit Book.');if(c&&c.format!==x.format&&copyHasCommitment(c))return er('Resolve this copy’s loan, hold, or requests before changing its format.');}
   const old=t.title;
   Object.assign(t,{title,author,pages:pages?+pages:undefined,isbn:isbn||undefined,genre:genreValue(v('tGenre')),series:sn||undefined,seriesNo:sn&&no?+no:undefined});
   if(sn&&len)(S.seriesLen=S.seriesLen||{})[sn]=+len;
@@ -3223,7 +3228,10 @@ titleForm.addEventListener('submit',e=>{
   else if(!t.cover&&!t.noAutoCover&&old!==title){delete t.coverTried;setTimeout(coverFill,500)}
   updateBookIdentity(t,title,author,old);
   mine.forEach(b=>{if(['print','ebook'].includes(b.format)&&pages)b.total=+pages});
-  save();titleDlg.close();render();if(bookDlg.open)renderBD();toast(`Saved changes to ${title}.`);
+  copyEdits.forEach(x=>{let c=S.copies.find(c=>c.id===x.id);if(!c){c={id:'c'+uid(),titleId:t.id,owner:'me',loanTo:null};S.copies.push(c);x.id=c.id;}c.format=x.format;c.edition=x.edition;if(!S.settings.solo)c.private=!x.shared||undefined;else if(!('private' in c))c.private=true;});
+  // Retain newly assigned IDs if storage fails, so retrying cannot add duplicates.
+  titleForm.querySelectorAll('.inline-copy').forEach((row,i)=>row.dataset.copyId=copyEdits[i].id);
+  if(!save())return;titleDlg.close();render();if(bookDlg.open)renderBD();toast(`Saved changes to ${title}.`);
 });
 
 /* ---------- add a book ---------- */
@@ -4114,6 +4122,7 @@ function openLog(bookId,focus,preMin){
   logForm.querySelector(`[name=${f}]`)?.focus();
 }
 let pendingNew=null;
+const startCopyDrafts=new Map(),startSetupDone=new WeakSet();
 const findB=id=>book(id)||(pendingNew&&pendingNew.id===id?pendingNew:null);
 /* Log Pages marks Minutes optional and Log Time marks the ending page optional; from Log Reading the goal type decides, and Both marks neither. */
 /* Note prompts: one per opening, shuffled so every prompt shows before any repeats. Stories and nonfiction (by
@@ -4153,8 +4162,20 @@ function setLogOpt(){
   ph('end',f==='minutes'||(!f&&gt==='minutes'));ph('minutes',f==='end'||f==='audio'||(!f&&gt==='pages'));
 }
 let formatPick=null;
+function commitStartCopy(b){const c=startCopyDrafts.get(b.id);if(!c)return;c.titleId=b.titleId;S.copies.push(c);b.editionCopyId=c.id;startCopyDrafts.delete(b.id);if(!c.private)post('library','added a book to the group library:',b.title);}
+document.addEventListener('change',e=>{
+  if(logForm.dataset.mode!=='format')return;
+  const own=document.getElementById('startOwn'),fields=document.getElementById('startCopyFields');if(!own||!fields)return;
+  const fmt=document.getElementById('startFormat'),copy=fields.querySelector('[data-copy-format]');
+  if(e.target===own){fields.hidden=!own.checked;logForm.querySelector('.reading-edition').hidden=own.checked;if(own.checked)copy.value=fmt.value==='audio'?'audio':'physical';}
+  if(e.target===copy&&own.checked)fmt.value=copy.value==='audio'?'audio':'print';
+  if(e.target===fmt&&own.checked)copy.value=fmt.value==='audio'?'audio':copy.value==='audio'?'physical':copy.value;
+  if(e.target.matches('[data-edition-copy]')&&e.target.value){const c=S.copies.find(c=>c.id===e.target.value);if(c)fmt.value=c.format==='audio'?'audio':'print';}
+  const label=document.querySelector('#startLengthLabel span');if(label)label.textContent=fmt.value==='audio'?'Audio Length (h:mm)':'Total Pages';
+});
 function drawLog(b,focus,preMin,moveTo){
-  if(b.format==='unknown'){formatPick={b,focus,preMin,moveTo};logForm.dataset.mode='format';logForm.innerHTML=`<div class="dlg-h"><h2 id="logTitle">Start Reading</h2><button type="button" class="icon-btn x" data-act="closeLog" aria-label="Close">${ic('x')}</button></div><div class="form"><h3>${esc(b.title)}</h3><label class="f">Reading Format<select class="inp" id="startFormat"><option value="print">Book or Ebook</option><option value="audio">Audiobook</option></select></label><label class="f">Total Pages or Audio Length (h:mm)<input class="inp" id="startLength" value="${titleById(b.titleId)?.pages||''}"></label>${readingEditionFields(b,'startReading')}<p class="xs muted">This is how you’re reading, whether you own the book or borrow it.</p><div id="formatError" class="err" role="alert"></div><div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="startNew">Back</button><button type="button" class="btn btn-primary" data-act="startFormatGo">Continue</button></div></div>`;return;}
+  if(b.format==='unknown'||b.status==='want'&&!startSetupDone.has(b)){formatPick={b,focus,preMin,moveTo};logForm.dataset.mode='format';logForm.innerHTML=`<div class="dlg-h"><h2 id="logTitle">Start Reading</h2><button type="button" class="icon-btn x" data-act="closeLog" aria-label="Close">${ic('x')}</button></div><div class="form"><h3>${esc(b.title)}</h3><div class="f2"><label class="f">Reading Format<select class="inp" id="startFormat"><option value="print">Print / Ebook</option><option value="audio">Audiobook</option></select></label><label class="f" id="startLengthLabel"><span>Total Pages</span><input class="inp" id="startLength" value="${titleById(b.titleId)?.pages||''}"></label></div>${readingEditionFields(b,'startReading')}<section><label class="chk"><input type="checkbox" id="startOwn"> I Own a Copy</label><div id="startCopyFields" hidden>${inlineCopyRow()}</div></section><div id="formatError" class="err" role="alert"></div><div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="startNew">Back</button><button type="button" class="btn btn-primary" data-act="startFormatGo">Continue to Log Reading</button></div></div>`;document.getElementById('startFormat').value=b.format==='audio'?'audio':'print';document.getElementById('startLength').value=b.total?(b.format==='audio'?fmtPos(b.total):b.total):titleById(b.titleId)?.pages||'';document.querySelector('#startLengthLabel span').textContent=b.format==='audio'?'Audio Length (h:mm)':'Total Pages';return;}
+
 
   if(logDlg.open&&logForm.dataset.mode==='log')draftSave(logForm);
   /* Log Pages marks Minutes optional, Log Time marks the ending page optional; otherwise the goal type decides, and Both marks neither. */
@@ -4349,6 +4370,7 @@ logForm.addEventListener('submit',e=>{
   if(isNew){S.books.push(b);pendingNew=null}
   if(!b.titleId){const nt={id:'t'+uid(),title:b.title,author:b.author,pages:b.format==='audio'?0:b.total,genre:'',c:b.c,added:Date.now()};S.titles.push(nt);b.titleId=nt.id}
   saveReadingEdition(b,readEdition(logForm,'logReading'));
+  commitStartCopy(b);
   if(wasWant&&!b.started)b.started=fromD||f.date;
   if(range||minutes!=null){
     let est=null;
@@ -4741,7 +4763,8 @@ document.addEventListener('click',e=>{
     case 'cpLend':bd.lend=a.dataset.id||null;renderBD();break;
     case 'cpLendGo':{const c=S.copies.find(x=>x.id===a.dataset.id);lendCopy(c,document.getElementById('lendTo').value);bd.lend=null;save();renderBD();toast(`Marked as loaned to ${nameOf(c.loanTo)}.`);break}
     case 'cpReturn':{const c=S.copies.find(x=>x.id===a.dataset.id),w=c.loanTo;c.loanTo=null;(S.loanReqs||[]).filter(r=>r.copyId===c.id&&r.status==='loaned').forEach(r=>{r.status='returned'});post('loan',`got ${titleById(c.titleId)?.title||'a book'} back from ${nameOf(w)}`);save();renderBD();toast(`Marked as returned by ${nameOf(w)}.`);break}
-    case 'cpEdit':openCopyEdit(a.dataset.id,a);break;
+    case 'teAddCopy':titleForm.querySelector('.copy-access').insertAdjacentHTML('beforeend',inlineCopyRow());break;
+    case 'cpEdit':{const c=S.copies.find(c=>c.id===a.dataset.id&&c.owner==='me');if(c){openTitleEdit(c.titleId);titleForm.querySelector(`[data-copy-id="${CSS.escape(c.id)}"] input`)?.focus();}break;}
     case 'editReadingCopy':{const id=a.closest('.reading-edition')?.querySelector('select')?.value;if(id&&id!=='__new')openCopyEdit(id,a);break}
     case 'cpEditClose':copyEditDlg.close();break;
     case 'cpRemove':{const c=S.copies.find(c=>c.id===a.dataset.id&&c.owner==='me');if(!c)break;if(copyHasCommitment(c)){toast('Resolve this copy’s loan, hold, or requests before removing it.');break}const snap=snapshot();S.copies=S.copies.filter(x=>x.id!==a.dataset.id);save();renderBD();toast('Removed your copy.',restoreTo(snap));break}
@@ -4766,7 +4789,7 @@ document.addEventListener('click',e=>{
     case 'teGen':te.cover='';te.url='';te.src='gen';te.bad=false;te.touched=true;tePanel();tePreview();break;
     case 'startNew':drawNew();if(!logDlg.open)logDlg.showModal();setTimeout(()=>document.getElementById('newQ')?.focus(),30);break;
     case 'backLog':{const c=currentSel()||S.books.find(x=>x.status==='paused');if(c)drawLog(c);break}
-    case 'startFormatGo':{const f=document.getElementById('startFormat').value,v=document.getElementById('startLength').value.trim(),total=f==='audio'?parsePos(v):/^\d+$/.test(v)?+v:NaN;if(!Number.isFinite(total)||total<=0){document.getElementById('formatError').textContent='Enter a positive page count or audio length as h:mm.';break}const {b,focus,preMin,moveTo}=formatPick;saveReadingEdition(b,readEdition(logForm,'startReading'));b.format=f;b.total=total;b.pos=b.status==='finished'?total:0;if(moveTo){b.status=moveTo;b.pos=0;delete b.finished;delete b.dnfOn;if(moveTo==='reading'&&!b.started)b.started=today();if(moveTo==='paused')b.pausedOn=today();S.upNext=(S.upNext||[]).filter(id=>id!==b.id);save();logDlg.close();render();toast(`Moved ${b.title} to ${STATUS[moveTo]}.`)}else{save();drawLog(b,focus,preMin)}break}
+    case 'startFormatGo':{const f=document.getElementById('startFormat').value,v=document.getElementById('startLength').value.trim(),total=f==='audio'?parsePos(v):/^\d+$/.test(v)?+v:NaN;if(!Number.isFinite(total)||total<=0){document.getElementById('formatError').textContent='Enter a positive page count or audio length as h:mm.';break}const {b,focus,preMin,moveTo}=formatPick;const own=document.getElementById('startOwn')?.checked,copyRow=document.querySelector('#startCopyFields .inline-copy');if(own){const cf=copyRow.querySelector('[data-copy-format]').value,edition=copyRow.querySelector('[data-copy-edition]').value.trim();if((cf==='audio')!==(f==='audio')){document.getElementById('formatError').textContent='Choose a reading format that matches the copy you’re reading.';break;}startCopyDrafts.set(b.id,{id:'c'+uid(),titleId:b.titleId,owner:'me',format:cf,edition,loanTo:null,private:S.settings.solo||!copyRow.querySelector('[data-copy-shared]')?.checked||undefined});saveReadingEdition(b,{edition});}else{startCopyDrafts.delete(b.id);saveReadingEdition(b,readEdition(logForm,'startReading'));}startSetupDone.add(b);b.format=f;b.total=total;b.pos=b.status==='finished'?total:0;if(moveTo){commitStartCopy(b);b.status=moveTo;b.pos=0;delete b.finished;delete b.dnfOn;if(moveTo==='reading'&&!b.started)b.started=today();if(moveTo==='paused')b.pausedOn=today();S.upNext=(S.upNext||[]).filter(id=>id!==b.id);save();logDlg.close();render();toast(`Moved ${b.title} to ${STATUS[moveTo]}.`)}else{save();drawLog(b,focus,preMin)}break}
     case 'manualNew':logDlg.close();openAdd();ad.tab='manual';ad.lastStatus='reading';renderAdd();document.getElementById('amTitle')?.focus();break;
     case 'tourGo':tourStart(a.dataset.v);break;
     case 'tourLater':{const T=tourPrefs();if(a.dataset.v==='group')T.groupSeen=true;else{T.notNow=(T.notNow||0)+1;T.askAt=(T.visits||0)+3}save();hideTourOffer();toast(a.dataset.v==='group'||T.notNow>=2?'You can take the tour anytime from your account menu.':'No problem. You can take the tour anytime from your account menu.');break}
