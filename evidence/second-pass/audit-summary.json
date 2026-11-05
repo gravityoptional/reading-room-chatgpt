@@ -1,0 +1,9 @@
+{
+  "audited_commit": "d3088097d4637e57c5282c985d0c535348bb3bd6",
+  "main_merge": "66d159e2a80b39080afbf66d204e4bfcb3771012",
+  "live_source_at_check": "90ace9560a3f8a31a76319e241d9db157b2a0b40",
+  "publication_status": "queued",
+  "findings": 18,
+  "main_page_combinations": 180,
+  "source_modified": false
+}

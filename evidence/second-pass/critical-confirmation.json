@@ -1,0 +1,11 @@
+[
+  {
+    "name": "actual-autosave-lost-after-new-book",
+    "restored": ""
+  },
+  {
+    "name": "one-undated-reading-with-real-sessions-removed",
+    "readingExists": false,
+    "remainingSessions": 1
+  }
+]

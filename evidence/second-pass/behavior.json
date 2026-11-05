@@ -1,0 +1,129 @@
+[
+  {
+    "name": "unknown-finish-undo-deletes-readings-and-orphans-sessions",
+    "before": {
+      "readings": 2,
+      "sessions": 1
+    },
+    "after": {
+      "readings": 0,
+      "sessions": 1,
+      "orphans": 1
+    },
+    "also_in_live_source": true,
+    "errors": []
+  },
+  {
+    "name": "start-new-erases-reading-draft",
+    "before": "An important unsaved thought.",
+    "after": "",
+    "draft": {
+      "f": {},
+      "ts": 1793823584874
+    },
+    "errors": []
+  },
+  {
+    "name": "move-status-discards-other-edits",
+    "dialogOpen": false,
+    "status": "paused",
+    "title": "Example Book",
+    "errors": []
+  },
+  {
+    "name": "owned-audio-copy-defaults-to-print",
+    "before": {
+      "format": "print",
+      "length": "150",
+      "edition": "Unabridged"
+    },
+    "saved": {
+      "format": "print",
+      "total": 150,
+      "copy": "audio"
+    },
+    "errors": []
+  },
+  {
+    "name": "already-read-invents-pages-and-format",
+    "reading": {
+      "id": "rbia34qd9",
+      "titleId": "t2",
+      "title": "Second Example Book",
+      "author": "Example Author",
+      "format": "print",
+      "total": 300,
+      "pos": 300,
+      "status": "finished",
+      "c": 2,
+      "readIt": true,
+      "markedOn": "2026-11-04"
+    },
+    "errors": []
+  },
+  {
+    "name": "inline-finish-date-before-start",
+    "started": "2026-10-20",
+    "finished": "2026-01-01",
+    "errors": []
+  },
+  {
+    "name": "finished-book-page-count-change",
+    "status": "finished",
+    "total": 300,
+    "pos": 200,
+    "percent": 67,
+    "errors": []
+  },
+  {
+    "name": "my-books-format-filter-ignores-unowned-reading",
+    "before": [
+      "Example Book"
+    ],
+    "after": [],
+    "actualFormat": "audio",
+    "errors": []
+  },
+  {
+    "name": "stop-timer-while-other-book-active",
+    "timerBook": "r1",
+    "timerStopped": false,
+    "sessions": 2,
+    "errors": []
+  },
+  {
+    "name": "finish-with-active-timer",
+    "test_error": "locator.click: Timeout 6000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-act=finish][data-book=r1]').first()\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"sa\" data-book=\"r1\" data-act=\"finish\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    11 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+    "errors": []
+  },
+  {
+    "name": "reread-second-format-while-current-active",
+    "active": [
+      "r1",
+      "old"
+    ],
+    "selected": "r1",
+    "errors": []
+  },
+  {
+    "name": "catalog-rename-other-author-same-title",
+    "otherBook": "Example Book",
+    "otherBookActivity": {
+      "id": "a1",
+      "who": "me",
+      "kind": "session",
+      "text": "read",
+      "book": "Corrected Example",
+      "titleId": "t2",
+      "ts": 1793823596748,
+      "r": {}
+    },
+    "errors": []
+  },
+  {
+    "name": "copy-editor-hidden-under-failed-warning-on-esc",
+    "warningInClosedDialog": true,
+    "visibleWarning": false,
+    "errors": []
+  }
+]

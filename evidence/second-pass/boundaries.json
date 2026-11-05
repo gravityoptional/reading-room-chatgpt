@@ -1,0 +1,39 @@
+[
+  {
+    "name": "two-tabs-overwrite-confirmed-save",
+    "before": 1,
+    "afterFirst": {
+      "saved": 2,
+      "onDisk": 2
+    },
+    "afterSecond": {
+      "onDisk": 1,
+      "lostNote": true
+    },
+    "errors": []
+  },
+  {
+    "name": "genre-challenge-saves-no-genre-and-counts-unclassified-books",
+    "options": 0,
+    "saved": [
+      {
+        "rule": "genre",
+        "genre": "",
+        "count": 1
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "save-warning-esc-on-book-notes",
+    "saveStillFailed": true,
+    "visible": false,
+    "warningInClosedBook": true,
+    "errors": []
+  },
+  {
+    "name": "calendar-draft-stays-on-switching-month",
+    "restored": "A calendar draft.",
+    "errors": []
+  }
+]

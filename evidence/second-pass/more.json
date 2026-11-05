@@ -1,0 +1,133 @@
+[
+  {
+    "name": "starting-second-timer-loses-first",
+    "before": {
+      "book": "r1",
+      "elapsed": 11.000316666666667
+    },
+    "after": {
+      "book": "r2",
+      "elapsed": 0.0002,
+      "sessions": 1
+    },
+    "visibleDialogs": 0,
+    "errors": []
+  },
+  {
+    "name": "mark-finished-does-not-stop-timer-and-log-reopens-book",
+    "mid": {
+      "status": "finished",
+      "timerRunning": true
+    },
+    "logStatus": "reading",
+    "after": {
+      "status": "reading",
+      "finished": "2026-11-04"
+    },
+    "errors": []
+  },
+  {
+    "name": "finish-date-duplicate-id-save-does-nothing",
+    "count": 2,
+    "chosen": "2026-10-30",
+    "inputs": [
+      {
+        "value": "",
+        "inDialog": false
+      },
+      {
+        "value": "2026-10-30",
+        "inDialog": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "unchanged-failed-cover-blocks-unrelated-edit",
+    "dialogOpen": true,
+    "error": "The cover image didn’t load. Choose a different one, or use the generated cover.",
+    "savedTitle": "Example Book",
+    "coverChanged": false,
+    "errors": []
+  },
+  {
+    "name": "rename-real-other-author-activity",
+    "before": [
+      {
+        "id": "ekmxjmvy",
+        "book": "Example Book"
+      }
+    ],
+    "after": [
+      {
+        "id": "ekmxjmvy",
+        "book": "Corrected First Book"
+      }
+    ],
+    "actualOtherTitle": "Example Book",
+    "errors": []
+  },
+  {
+    "name": "account-menu-short-screen-reachability",
+    "before": {
+      "top": 60,
+      "bottom": 862,
+      "client": 800,
+      "scroll": 800,
+      "overflow": "visible",
+      "position": "fixed",
+      "offscreen": [
+        {
+          "tag": "BUTTON",
+          "text": "Show New-Member (Empty) View"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Add Sample Group Activity"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Add a Sample Borrow Request"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Owner Answers My Borrow Request"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Restore Sample DataPuts back the sample family and clears your changes"
+        }
+      ]
+    },
+    "after": 0,
+    "errors": []
+  },
+  {
+    "name": "long-heading-in-start-search",
+    "width": 284,
+    "scroll": 284,
+    "header": [
+      {
+        "name": "DIV",
+        "right": 238
+      },
+      {
+        "name": "BUTTON",
+        "right": 286
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "finished-date-update-trophy-date",
+    "finish": "2026-10-31",
+    "trophy": "2026-11-04",
+    "errors": []
+  },
+  {
+    "name": "copy-editor-format-not-reading-snapshot",
+    "copy": "Revised",
+    "reading": "Original",
+    "errors": []
+  }
+]

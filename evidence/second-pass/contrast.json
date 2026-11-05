@@ -1,0 +1,56 @@
+[
+  {
+    "palette": "sage",
+    "theme": "light",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(249, 115, 22)",
+    "fontSize": "10px",
+    "fontWeight": "700",
+    "contrast": 2.8030548103399218
+  },
+  {
+    "palette": "sage",
+    "theme": "dark",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(251, 146, 60)",
+    "fontSize": "10px",
+    "fontWeight": "700",
+    "contrast": 2.2632606344883768
+  },
+  {
+    "palette": "paper-ink",
+    "theme": "light",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(249, 115, 22)",
+    "fontSize": "10px",
+    "fontWeight": "700",
+    "contrast": 2.8030548103399218
+  },
+  {
+    "palette": "paper-ink",
+    "theme": "dark",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(251, 146, 60)",
+    "fontSize": "10px",
+    "fontWeight": "700",
+    "contrast": 2.2632606344883768
+  },
+  {
+    "palette": "blueprint",
+    "theme": "light",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(249, 115, 22)",
+    "fontSize": "10px",
+    "fontWeight": "700",
+    "contrast": 2.8030548103399218
+  },
+  {
+    "palette": "blueprint",
+    "theme": "dark",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(251, 146, 60)",
+    "fontSize": "10px",
+    "fontWeight": "700",
+    "contrast": 2.2632606344883768
+  }
+]

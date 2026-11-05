@@ -1,0 +1,608 @@
+[
+  {
+    "name": "queue-only-start",
+    "mode": "new",
+    "heading": "Start a New Book",
+    "errors": []
+  },
+  {
+    "name": "book-details-start-button",
+    "mode": "format",
+    "heading": "Start Reading",
+    "errors": []
+  },
+  {
+    "name": "delete-last-session-loses-starting-progress",
+    "startingProgress": 80,
+    "actualProgress": 0,
+    "errors": []
+  },
+  {
+    "name": "edit-session-on-finished-book",
+    "status": "finished",
+    "pos": 200,
+    "lastSessionEnd": 190,
+    "errors": []
+  },
+  {
+    "name": "clear-start-date",
+    "before": "2026-10-30",
+    "after": "2026-10-30",
+    "errors": []
+  },
+  {
+    "name": "future-start-date",
+    "saved": "2099-01-01",
+    "open": false,
+    "errors": []
+  },
+  {
+    "name": "format-change-with-existing-sessions",
+    "bookFormat": "audio",
+    "sessionPages": 80,
+    "editorStart": "0:00",
+    "editorEnd": "1:20",
+    "errors": []
+  },
+  {
+    "name": "reading-title-rename-mismatched-history",
+    "catalog": "Corrected Book",
+    "current": "Corrected Book",
+    "previous": "Example Book",
+    "errors": []
+  },
+  {
+    "name": "backdated-log-rolls-progress-back",
+    "currentPage": 100,
+    "latestDatedEnd": 100,
+    "errors": []
+  },
+  {
+    "name": "blank-session-accepted",
+    "savedSession": {
+      "id": "s1",
+      "bookId": "r1",
+      "date": "2026-11-04",
+      "start": 80,
+      "end": 80,
+      "pages": 0,
+      "minutes": null,
+      "note": "",
+      "est": null
+    },
+    "daily": {
+      "active": true,
+      "rec": 0,
+      "est": 0,
+      "pages": 0
+    },
+    "dialogOpen": false,
+    "errors": []
+  },
+  {
+    "name": "overlapping-session-doublecounts",
+    "sessions": 2,
+    "creditedPages": 40,
+    "errors": []
+  },
+  {
+    "name": "paused-book-after-log-stays-reading",
+    "status": "reading",
+    "errors": []
+  },
+  {
+    "name": "unknown-format-followed-by-title-edit",
+    "format": "unknown",
+    "total": 0,
+    "errors": []
+  },
+  {
+    "name": "loaned-copy-removal",
+    "copies": 0,
+    "outstandingRequests": [
+      {
+        "status": "loaned",
+        "missingCopy": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "challenge-countprior-respects-end-date",
+    "value": 0,
+    "errors": []
+  },
+  {
+    "name": "cross-midnight-timer",
+    "minutes": "1500",
+    "catchup": false,
+    "errors": []
+  },
+  {
+    "name": "storage-write-failure-says-saved",
+    "visibleMessage": "Saved changes to Unsaved Correction.",
+    "inMemory": "Unsaved Correction",
+    "onDisk": "Example Book",
+    "errors": []
+  },
+  {
+    "name": "page-coverage",
+    "scans": [
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "dashboard",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "library",
+        "tab": "family",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "library",
+        "tab": "mybooks",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "library",
+        "tab": "discover",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "mine",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "family",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "battle",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "trophies",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "v": "history",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "dashboard",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "library",
+        "tab": "family",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "library",
+        "tab": "mybooks",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "library",
+        "tab": "discover",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "mine",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "family",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "battle",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "trophies",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "v": "history",
+        "scroll": 339,
+        "viewport": 320,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "dashboard",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "library",
+        "tab": "family",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "library",
+        "tab": "mybooks",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "library",
+        "tab": "discover",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "mine",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "family",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "battle",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "trophies",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "v": "history",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "dashboard",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "library",
+        "tab": "family",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "library",
+        "tab": "mybooks",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "library",
+        "tab": "discover",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "mine",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "family",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "battle",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "trophies",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "v": "history",
+        "scroll": 390,
+        "viewport": 390,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "dashboard",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "library",
+        "tab": "family",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "library",
+        "tab": "mybooks",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "library",
+        "tab": "discover",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "mine",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "family",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "battle",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "challenges",
+        "tab": "trophies",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "light",
+        "v": "history",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "dashboard",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "library",
+        "tab": "family",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "library",
+        "tab": "mybooks",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "library",
+        "tab": "discover",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "mine",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "family",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "battle",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "challenges",
+        "tab": "trophies",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "v": "history",
+        "scroll": 1280,
+        "viewport": 1280,
+        "dialogs": 0
+      }
+    ],
+    "errors": []
+  }
+]

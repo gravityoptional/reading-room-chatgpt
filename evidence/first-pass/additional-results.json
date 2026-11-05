@@ -1,0 +1,80 @@
+[
+  {
+    "name": "backdate-confirmation",
+    "fields": {
+      "status": "reading",
+      "logReadingEdition": "",
+      "start": "20",
+      "end": "30",
+      "minutes": "10",
+      "from": "",
+      "date": "2026-11-01",
+      "cu": false,
+      "note": "",
+      "finished": false
+    },
+    "currentPage": 30,
+    "sessions": [
+      {
+        "id": "s1",
+        "bookId": "r1",
+        "date": "2026-11-04",
+        "start": 90,
+        "end": 100,
+        "pages": 10,
+        "minutes": 10
+      },
+      {
+        "id": "vxjlrt8l",
+        "bookId": "r1",
+        "date": "2026-11-01",
+        "start": 20,
+        "end": 30,
+        "pages": 10,
+        "minutes": 10,
+        "est": null,
+        "note": ""
+      }
+    ],
+    "err": "",
+    "errors": []
+  },
+  {
+    "name": "format-change-session-save-corrupts-page-total",
+    "before": 80,
+    "after": 0,
+    "errors": []
+  },
+  {
+    "name": "challenge-create-duplicate-delete-undo",
+    "count": 2,
+    "afterDelete": 1,
+    "afterUndo": 2,
+    "errors": []
+  },
+  {
+    "name": "group-join-leave-undo",
+    "joined": true,
+    "left": true,
+    "undoJoined": true,
+    "errors": []
+  },
+  {
+    "name": "loan-return-completes-request",
+    "loanTo": null,
+    "request": "returned",
+    "errors": []
+  },
+  {
+    "name": "session-minute-limit",
+    "error": "Today can’t hold more than 24 hours.",
+    "savedMinutes": 10,
+    "errors": []
+  },
+  {
+    "name": "zero-session-challenge-credit",
+    "creditedDays": 1,
+    "streak": 1,
+    "errors": []
+  }
+]
