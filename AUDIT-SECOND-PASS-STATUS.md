@@ -8,7 +8,6 @@ The original audit numbers and findings remain unchanged. This change addresses 
 | 2 | Saves reconcile independent collection changes against the last saved baseline. Competing edits to the same record, deletion versus editing, and incompatible changes block the write. The other tab’s saved data remains intact; the local unsaved state can be downloaded before loading the latest data. |
 | 3 | Log Reading saves and detaches its draft identity before search, manual entry, or reading-format setup replaces the form. Pending autosave cannot overwrite that draft with search fields. |
 | 4 | Starting another timer opens the existing timer for resolution instead of replacing it. Finishing stops the matching running timer. Logging its remaining time preserves Finished and its date without awarding completion twice. |
-
 | 5 | Native dialog close, including Esc, moves the unsaved warning to the remaining open dialog or page. |
 | 6 | Inline finish-date Save reads its own input and uses the shared date and start/finish ordering validation. |
 | 7 | Edit Reading stages Move To with metadata; Save Changes applies everything, and Cancel applies nothing. |
