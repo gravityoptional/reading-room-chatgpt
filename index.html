@@ -1392,7 +1392,7 @@ const isCU=x=>!!x.from;
 const DAY_MAX=1440,DAY_ASK_MIN=480,DAY_ASK_PAGES=500;
 const daysIn=(a,b)=>daysBetween(a,b)+1;
 const fmtPos=m=>`${Math.floor(m/60)}:${pad(Math.round(m%60))}`;
-const parsePos=v=>{v=String(v).trim();if(!v)return null;if(/^\d+$/.test(v))return +v;const m=v.match(/^(\d+):(\d{1,2})$/);return m?(+m[1])*60+(+m[2]):NaN};
+const parsePos=v=>{v=String(v).trim();if(!v)return null;if(/^\d+$/.test(v))return +v;const m=v.match(/^(\d+):(\d{1,2})$/);return m&&+m[2]<60?(+m[1])*60+(+m[2]):NaN};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,10);
 const ago=ts=>{const m=Math.round((Date.now()-ts)/60000);if(m<1)return 'just now';if(m<60)return `${m} min ago`;const h=Math.round(m/60);if(h<24)return `${h} hour${h>1?'s':''} ago`;const d=Math.round(h/24);return `${d} day${d>1?'s':''} ago`};
