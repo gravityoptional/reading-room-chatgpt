@@ -4678,7 +4678,7 @@ editForm.addEventListener('submit',e=>{
     if(nextStatus==='reading'){if(wasQueued)b.fromQueue=true;if(b.wantSince&&daysBetween(b.wantSince,today())>=365)b.rescued=today();if(!b.started)b.started=today();}if(nextStatus==='paused')b.pausedOn=today();if(nextStatus==='dnf')b.dnfOn=today();
     if(nextStatus==='finished'){postBook('finished','finished',b);if(hasLen(b))b.pos=b.total;if(S.timer?.bookId===b.id&&!S.timer.stop)S.timer.stop=Date.now();}
   }
-  if(b.status==='finished'){if(f.finished){b.finished=f.finished;delete b.readIt;delete b.markedOn}else{delete b.finished;b.readIt=true;b.markedOn=b.markedOn||today()}}
+  if(b.status==='finished'){if(hasLen(b))b.pos=b.total;if(f.finished){b.finished=f.finished;delete b.readIt;delete b.markedOn}else{delete b.finished;b.readIt=true;b.markedOn=b.markedOn||today()}}
   saveReadingEdition(b,readEdition(editForm,'editReading'));
   const tt=titleById(b.titleId);if(tt){updateBookIdentity(tt,b.title,b.author);if(['print','ebook'].includes(b.format)&&hasLen(b))tt.pages=b.total;const sn=(f.series||'').trim();tt.series=sn||undefined;tt.seriesNo=sn&&String(f.seriesNo||'').trim()!==''&&!isNaN(+f.seriesNo)?+f.seriesNo:undefined;if(sn&&/^\d+$/.test(String(f.seriesLen||'').trim()))(S.seriesLen=S.seriesLen||{})[sn]=+f.seriesLen}
   if(!save())return;editDlg.close();render();if(bookDlg.open)renderBD();toast(`Saved changes to ${b.title}.`);
