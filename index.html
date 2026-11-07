@@ -830,7 +830,7 @@ main section.card .card-h .ico{display:none}
   .carousel .detail{grid-template-columns:1fr}.page-h{font-size:30px}.board{--row:216px;padding:16px 10px 0;border-width:8px 8px 14px}.spine{height:calc(var(--h) - 18px);margin-top:calc(var(--row) - var(--h) + 18px)}.tabs{gap:18px}}
 @media (prefers-reduced-motion:reduce){.flat{transition:none}}
 .brand{white-space:nowrap}
-@media (max-width:720px){.brand{font-size:19px}.top-in{gap:10px}.grp-btn svg:last-child{display:none}.grp-btn #grpName{max-width:96px}.hero2-goal{flex-wrap:nowrap;gap:14px}.streak2{padding-left:14px}.streak2 .streak-n{font-size:28px}}
+@media (max-width:720px){.brand{font-size:19px}.top-in{gap:10px}.grp-btn svg:last-child{display:none}.grp-btn #grpName{max-width:96px}.hero2-goal{flex-wrap:wrap;gap:14px}.streak2{padding-left:14px}.streak2 .streak-n{font-size:28px}}
 @media (max-width:400px){.brand svg.i{display:none}}
 /* Narrow phones: the group name gives up space first so the bell and account button stay on screen. */
 .top-in>*{flex-shrink:0}.top-in>.top-right{flex-shrink:1;min-width:0}.top-right>*{flex-shrink:0}.top-right>.grp-btn{flex-shrink:1;min-width:0}.grp-btn #grpName{min-width:0}
@@ -1391,6 +1391,10 @@ function parseMin(v){v=String(v??'').trim().toLowerCase();if(v==='')return null;
    and challenges whose dates hold the whole stretch, but never toward streaks, daily goals, or reading days. */
 const isCU=x=>!!x.from;
 const DAY_MAX=1440,DAY_ASK_MIN=480,DAY_ASK_PAGES=500;
+const validGoal=(n,unit)=>Number.isSafeInteger(n)&&n>0&&(unit!=='minutes'||n<=DAY_MAX);
+const validGoals=(g=S.settings)=>['minutes','pages','both'].includes(g.goalType)&&validGoal(g.goalMinutes,'minutes')&&validGoal(g.goalPages,'pages');
+const goalAmount=(n,unit,compact=false)=>!validGoal(n,unit)?'—':compact&&n>=10000?new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(n):n.toLocaleString('en-US');
+const GOAL_FIX='Edit Goal to correct your daily target.';
 const daysIn=(a,b)=>daysBetween(a,b)+1;
 const fmtPos=m=>`${Math.floor(m/60)}:${pad(Math.round(m%60))}`;
 const parsePos=v=>{v=String(v).trim();if(!v)return null;if(/^\d+$/.test(v))return +v;const m=v.match(/^(\d+):(\d{1,2})$/);return m&&+m[2]<60?(+m[1])*60+(+m[2]):NaN};
@@ -1708,12 +1712,12 @@ function day(date){
   return {active:ss.length>0,rec,est,pages};
 }
 /* What's left of today's goal: "20 more minutes to reach today's goal." or, with both, "20 minutes or 15 pages to go today." */
-function goalLeft(st){const g=S.settings,m=Math.max(1,Math.ceil(g.goalMinutes-st.mins)),p=Math.max(1,g.goalPages-st.pages),u=(n,w)=>`${n} ${w}${n===1?'':'s'}`;
+function goalLeft(st){const g=S.settings;if(!validGoals(g))return GOAL_FIX;const m=Math.max(1,Math.ceil(g.goalMinutes-st.mins)),p=Math.max(1,g.goalPages-st.pages),u=(n,w)=>`${n} ${w}${n===1?'':'s'}`;
   return g.goalType==='both'?`${u(m,'minute')} or ${u(p,'page')} to go today.`:g.goalType==='pages'?`${u(p,'more page')} to reach today’s goal.`:`${u(m,'more minute')} to reach today’s goal.`}
 function goalState(date){
   const d=day(date),g=S.settings;
   const mins=d.rec+(g.estimate?d.est:0);
-  const mOk=mins>=g.goalMinutes,pOk=d.pages>=g.goalPages;
+  const valid=validGoals(g),mOk=valid&&mins>=g.goalMinutes,pOk=valid&&d.pages>=g.goalPages;
   let met=false,both=false;
   if(g.goalType==='minutes')met=mOk;
   else if(g.goalType==='pages')met=pOk;
@@ -1770,11 +1774,11 @@ function cover(b,w){
   return `<div class="cover" style="background:linear-gradient(160deg,${bg},color-mix(in srgb,${bg} 70%,#000));${w?`width:${w}px`:''}" aria-hidden="true"><div class="ct">${esc(b.title)}</div><div class="ca">${esc(b.author)}</div>${src?`<img class="cimg" src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}${b.format==='audio'?`<span class="fmt">${ic('head')}</span>`:''}</div>`;
 }
 function ring(val,max,unit,size){
-  const r=size/2-8,c=2*Math.PI*r,f=Math.min(1,max?val/max:0);
-  return `<div class="ring" style="width:${size}px;height:${size}px" role="img" aria-label="${Math.round(val)} of ${max} ${unit}">
+  const r=size/2-8,c=2*Math.PI*r,valid=validGoal(max,unit),f=valid?Math.min(1,val/max):0;
+  return `<div class="ring" style="width:${size}px;height:${size}px" role="img" aria-label="${valid?`${Math.round(val)} of ${goalAmount(max,unit)} ${unit}`:`Daily ${unit} goal needs correcting.`}">
   <svg width="${size}" height="${size}"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--track)" stroke-width="10"/>
   <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--primary)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-f)}"/></svg>
-  <div class="lbl"><div class="big" style="font-size:${size>110?34:24}px">${Math.round(val)}</div><div class="unit">of ${max}<br>${unit}</div></div></div>`;
+  <div class="lbl"><div class="big" style="font-size:${size>110?34:24}px">${Math.round(val)}</div><div class="unit">of ${goalAmount(max,unit,true)}<br>${unit}</div></div></div>`;
 }
 function goalCard(){
   const g=S.settings,t=today(),st=goalState(t),sk=streak();
@@ -2286,7 +2290,7 @@ function historyView(){
   const weekCell=ds=>{const mon=addDays(ds,-((new Date(ds+'T12:00').getDay()+6)%7));let mins=0,act=0,pages=0;for(let i=0;i<7;i++){const d=addDays(mon,i);if(d>t)break;const g=goalState(d);mins+=g.mins;pages+=g.pages;if(g.active)act++}
     const perfect=act===7;return `<span class="cal-w ${perfect?'perfect':''}" title="Week of ${fmtDate(mon)}: ${act} of 7 days, ${fmtMin(Math.round(mins))}${pages?`, ${pages} pages`:''}${perfect?' — perfect week':''}">${perfect?'<i aria-hidden="true">★</i>':''}${mins?fmtMin(Math.round(mins)):'—'}</span>`};
   for(let i=0;i<lead;i++)cells+='<span class="cal-d blank"></span>';
-  const G=S.settings,ratio=g=>G.goalType==='pages'?g.pages/G.goalPages:G.goalType==='minutes'?g.mins/G.goalMinutes:Math.max(g.mins/G.goalMinutes,g.pages/G.goalPages);
+  const G=S.settings,ratio=g=>!validGoals(G)?0:G.goalType==='pages'?g.pages/G.goalPages:G.goalType==='minutes'?g.mins/G.goalMinutes:Math.max(g.mins/G.goalMinutes,g.pages/G.goalPages);
   for(let d=1;d<=days;d++){const ds=`${m}-${pad(d)}`,g=goalState(ds),r=!g.active&&rest.has(ds);
     const col=(lead+d-1)%7,endRow=()=>{if(col===6||d===days){for(let k=col+1;k<7;k++)cells+='<span class="cal-d blank"></span>';cells+=weekCell(ds)}};
     if(ds>t){cells+=`<span class="cal-d future">${d}</span>`;endRow();continue}
@@ -4526,7 +4530,7 @@ function calcLog(){
   if(minutes&&!isNaN(minutes))addM=minutes;else if(!audio&&addP&&g.estimate){const p=pace(b.id);if(p)addM=addP/p}
   const lbl=dt===today()?'Today':fmtDate(dt);
   if(cu){const fr=logForm.from.value,n=fr&&fr<=dt?daysIn(fr,dt):0;parts.push(n?`Catch-up for ${n} days: <b>${[addM?fmtMin(addM):'',addP?`${addP} pages`:''].filter(Boolean).join(', ')||'—'}</b>`:'Choose the first day it covers.');el.innerHTML=parts.map(p=>`<span>${p}</span>`).join('');return}
-  const tm=`${Math.round(ts.mins+addM)} / ${g.goalMinutes} min`,tp=`${ts.pages+addP} / ${g.goalPages} pages`;
+  const tm=`${Math.round(ts.mins+addM)} / ${goalAmount(g.goalMinutes,'minutes')} min`,tp=`${ts.pages+addP} / ${goalAmount(g.goalPages,'pages')} pages`;
   parts.push(`${lbl} after saving <b>${g.goalType==='minutes'?tm:g.goalType==='pages'?tp:tm+', '+tp}</b><button type="button" class="edit-goal" data-act="editGoal">${ic('pencil')}Edit Goal</button>`);
   el.innerHTML=parts.map(p=>`<span>${p}</span>`).join('');
 }
@@ -4613,36 +4617,51 @@ logForm.addEventListener('submit',e=>{
   const after=goalState(f.date),sk=streak(),g=S.settings,isToday=f.date===today(),logged=range||minutes!=null;
   if(finished){if(!openNextDlg(b))toast(`🎉 You finished ${b.title}!`,null,`That’s ${yearFinished()} book${yearFinished()===1?'':'s'} this year.`,true)}
   else if(started){const g=S.settings,left=[];if(g.goalType!=='pages')left.push(`${Math.max(1,Math.ceil(g.goalMinutes-after.mins))} more minutes`);if(g.goalType!=='minutes')left.push(`${Math.max(1,g.goalPages-after.pages)} more pages`);
-    const sub=!logged?'Happy reading!':!before.met&&after.met&&isToday?`Goal met for today, too. 🔥 ${sk} day streak`:after.met||!isToday?`🔥 ${sk} day streak. Happy reading!`:`${left.join(' or ')} to reach today’s goal.`;
+    const sub=!logged?'Happy reading!':!validGoals(g)?GOAL_FIX:!before.met&&after.met&&isToday?`Goal met for today, too. 🔥 ${sk} day streak`:after.met||!isToday?`🔥 ${sk} day streak. Happy reading!`:`${left.join(' or ')} to reach today’s goal.`;
     toast(`📖 You started ${b.title}!`,null,sub,true);if(!before.met&&after.met&&isToday)document.querySelector('.rings')?.classList.add('pop')}
   else if(f.status==='dnf')openDnf(b);
   else if(!logged)toast('Saved.');
   else if(!isToday)toast(`Saved for ${fmtDate(f.date)}.`,null,sk>skBefore?`🔥 Your streak is now ${sk} days.`:'');
   else if(!before.met&&after.met){toast(after.both?'🎉 Both goals met today!':'🎉 Goal met for today!',null,`🔥 ${sk} day streak. Keep it going!`,true);document.querySelector('.rings')?.classList.add('pop')}
   else if(after.met)toast(`Nice! ${Math.round(after.mins)} minutes${after.pages?` and ${after.pages} pages`:''} today.`,null,`🔥 ${sk} day streak`);
+  else if(!validGoals(g))toast('Reading saved.',null,GOAL_FIX);
   else{const left=[];if(g.goalType!=='pages')left.push(`${Math.max(1,Math.ceil(g.goalMinutes-after.mins))} more minutes`);if(g.goalType!=='minutes')left.push(`${Math.max(1,g.goalPages-after.pages)} more pages`);toast('Reading saved.',null,`${left.join(' or ')} to reach today’s goal.`)}
 });
 
 /* ---------- goal settings ---------- */
 const goalDlg=document.getElementById('goalDlg'),goalForm=document.getElementById('goalForm');
 function openGoal(){
-  const g=S.settings;
+  const g=S.settings;delete goalForm.dataset.confirmed;delete goalForm.dataset.asked;
   goalForm.innerHTML=`<div class="dlg-h"><h2 id="goalTitle">My Reading Goals</h2><button type="button" class="icon-btn x" data-act="closeGoal" aria-label="Close">${ic('x')}</button></div>
   <div class="form"><div class="small muted">How would you like to measure your daily goal?</div>
   ${[['minutes','Minutes per day'],['pages','Pages per day'],['both','Minutes or pages, whichever I reach first']].map(([v,l])=>`<label class="radio"><input type="radio" name="type" value="${v}" ${g.goalType===v?'checked':''}>${l}</label>`).join('')}
-  <div class="f2"><label class="f">Daily Minutes<input class="inp" name="gm" inputmode="numeric" value="${g.goalMinutes}"></label><label class="f">Daily Pages<input class="inp" name="gp" inputmode="numeric" value="${g.goalPages}"></label></div>
+  <div class="f2"><label class="f">Daily Minutes<input class="inp" name="gm" inputmode="numeric" value="${esc(String(g.goalMinutes??''))}"></label><label class="f">Daily Pages<input class="inp" name="gp" inputmode="numeric" value="${esc(String(g.goalPages??''))}"></label></div>
   <label class="f">Rest Days per Week <span class="sub">Missing a day uses a rest day instead of breaking your streak.</span><select class="inp" name="rest">${[0,1,2].map(n=>`<option value="${n}" ${(g.restDays??1)===n?'selected':''}>${n===0?'None':n}</option>`).join('')}</select></label>
   <label class="chk"><input type="checkbox" name="est" ${g.estimate?'checked':''}> Estimate missing reading time from my reading speed</label>
-  <div class="err" id="goalErr" role="alert"></div>
+  <div class="err" id="goalErr" role="alert"></div><div class="log-ask" id="goalAsk" hidden></div>
   <div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="closeGoal">Cancel</button><button type="submit" class="btn btn-primary">Save Goal</button></div></div>`;
   goalDlg.showModal();
+  if(!validGoals(g)){document.getElementById('goalErr').textContent='Your saved daily goal needs correcting.';const field=!validGoal(g.goalMinutes,'minutes')?goalForm.elements.gm:!validGoal(g.goalPages,'pages')?goalForm.elements.gp:goalForm.querySelector('[name=type]');field?.focus();field?.select?.()}
 }
+function goalAskClear(){const a=document.getElementById('goalAsk');if(a){a.hidden=true;a.innerHTML=''}delete goalForm.dataset.confirmed;delete goalForm.dataset.asked}
+goalForm.addEventListener('input',goalAskClear);
+goalForm.addEventListener('change',goalAskClear);
 goalForm.addEventListener('submit',e=>{
-  e.preventDefault();const f=Object.fromEntries(new FormData(goalForm));
-  const gm=+f.gm,gp=+f.gp;
-  if(!(gm>0&&Number.isInteger(gm))||!(gp>0&&Number.isInteger(gp))){document.getElementById('goalErr').textContent='Goals must be whole numbers above zero.';return}
+  e.preventDefault();const f=Object.fromEntries(new FormData(goalForm)),gm=Number(f.gm),gp=Number(f.gp);
+  const er=(text,field)=>{goalAskClear();document.getElementById('goalErr').textContent=text;field?.focus()};
+  if(!/^\d+$/.test(String(f.gm).trim())||!(gm>0))return er('Goals must be whole numbers above zero.',goalForm.elements.gm);
+  if(!/^\d+$/.test(String(f.gp).trim())||!(gp>0))return er('Goals must be whole numbers above zero.',goalForm.elements.gp);
+  if(!validGoal(gm,'minutes'))return er('A daily goal cannot exceed 1,440 minutes (24 hours).',goalForm.elements.gm);
+  if(!validGoal(gp,'pages'))return er('That page goal is too large. Enter a smaller whole number.',goalForm.elements.gp);
+  if(!['minutes','pages','both'].includes(f.type))return er('Choose how to measure your daily goal.');
+  if(!['0','1','2'].includes(f.rest))return er('Choose zero, one, or two rest days.');
+  const key=JSON.stringify([f.type,gm,gp,f.rest,!!f.est]),highMin=f.type!=='pages'&&gm>DAY_ASK_MIN,highPages=f.type!=='minutes'&&gp>DAY_ASK_PAGES;
+  if((highMin||highPages)&&goalForm.dataset.confirmed!==key){
+    const what=[highMin?`${goalAmount(gm,'minutes')} minutes`:'',highPages?`${goalAmount(gp,'pages')} pages`:''].filter(Boolean).join(' or '),a=document.getElementById('goalAsk');
+    goalForm.dataset.asked=key;a.innerHTML=`<p class="small" id="goalAskText"><b>That’s a daily goal of ${what}. Is that right?</b></p><div class="log-ask-b"><button type="button" class="btn btn-primary sm" data-act="goalYes" aria-describedby="goalAskText">Yes, Save It</button><button type="button" class="btn btn-ghost sm" data-act="goalFix">Let Me Fix It</button></div>`;a.hidden=false;document.getElementById('goalErr').textContent='';a.querySelector('button').focus();return;
+  }
   Object.assign(S.settings,{goalType:f.type,goalMinutes:gm,goalPages:gp,estimate:!!f.est,restDays:+f.rest});
-  save();goalDlg.close();render();toast('Goal saved.');
+  if(!save())return;goalDlg.close();render();toast('Goal saved.');
 });
 /* Opened from Log Reading: the goal form sits on top of it, so what was typed stays put. Refresh the goal line for the new goal. */
 goalDlg.addEventListener('close',()=>{if(logDlg.open&&logForm.dataset.mode==='log'){setLogOpt();calcLog();logForm.querySelector('#calc [data-act=editGoal]')?.focus()}});
@@ -5067,6 +5086,8 @@ document.addEventListener('click',e=>{
       if(!tot||isNaN(tot)||tot<=0){er.textContent=fm==='audio'?'Enter the length as h:mm, for example 6:45.':'Enter the number of pages.';break}
       pendingNew={id:'n'+uid(),title:t,author:au||'Unknown author',format:fm,total:tot,pos:0,status:'new',c:Math.floor(Math.random()*COVERS.length)};drawLog(pendingNew);setTimeout(()=>logForm.querySelector('[name=end]')?.focus(),30);break}
     case 'editGoal':openGoal();break;
+    case 'goalYes':goalForm.dataset.confirmed=goalForm.dataset.asked||'';goalForm.requestSubmit();break;
+    case 'goalFix':{const field=goalForm.elements.type.value!=='pages'&&Number(goalForm.elements.gm.value)>DAY_ASK_MIN?goalForm.elements.gm:goalForm.elements.gp;goalAskClear();field.focus();break;}
     case 'closeGoal':goalDlg.close();break;
     case 'pause':{const snap=snapshot(),b=book(id);b.status='paused';b.pausedOn=today();if(selBook===id)selBook=null;save();render();toast(`Paused ${b.title}. Your place is saved.`,restoreTo(snap));break}
     case 'dnf':{const snap=snapshot(),b=book(id);b.status='dnf';b.dnfOn=today();selBook=null;save();render();openDnf(b,restoreTo(snap));break}
