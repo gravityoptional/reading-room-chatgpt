@@ -145,7 +145,7 @@ main{max-width:1240px;margin:0 auto;padding:20px 20px 40px}
 .btn-primary{background:var(--primary);color:var(--on-primary)}
 .btn-primary:hover{background:var(--primary-hover)}
 .btn-ghost{background:var(--surface);border-color:var(--border);color:var(--text)}
-.btn-ghost:hover{background:var(--surface-alt)}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary)}   /* Nov 24: outlined buttons turn green as you reach for them */
 .btn-big{padding:16px 18px;font-size:17px;font-family:var(--serif);font-weight:600;border-radius:14px}
 .btn-big svg.i{width:22px;height:22px}
 .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -344,13 +344,19 @@ main section.card.fl-card{margin:16px 0 20px;padding:18px 20px;border:2px solid 
 .ch-years{margin-top:4px}.ch-past{margin-top:22px}.ch-past h3.shelf-l{font:600 14px/1.3 Inter,system-ui,sans-serif;color:var(--text-2);margin:16px 0 6px;letter-spacing:.02em}.ch-past>summary{cursor:pointer;list-style:none}.ch-past>summary::-webkit-details-marker{display:none}.ch-past-h{display:inline;font-size:20px}.ch-past>summary::after{content:'▸';margin-left:8px;color:var(--text-2)}.ch-past[open]>summary::after{content:'▾'}
 .ch-past-list,.yir-ch{display:grid;gap:0;border-top:1px solid var(--border)}.ch-past-row,.yir-ch-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 2px;border:0;border-bottom:1px solid var(--border);background:none;text-align:left;color:inherit;width:100%}.ch-past-row:hover{background:var(--surface-alt)}.ch-past-n{display:grid;gap:2px;min-width:0}.ch-past-ok{color:var(--primary);font-weight:600;white-space:nowrap}
 .cw-strip{display:flex;gap:6px;margin:10px 0 4px;align-items:flex-end}.cw-strip .cover{width:30px!important;padding:0}.cw-strip .cover .ct,.cw-strip .cover .ca{display:none}.cw-more{font-size:12px;color:var(--text-2);margin-left:4px}
-.cw-manage>summary{padding:8px 0;min-height:44px;cursor:pointer;font-weight:600;color:var(--text)}
-.ch-list-reading{border-block:1px solid var(--border);padding:8px 0;gap:10px;flex-wrap:wrap}
-.ch-list-reading label{display:flex;align-items:center;flex-wrap:wrap;gap:6px;min-width:0}
-.ch-list-reading select{max-width:100%}
-.cw-b{position:relative}
-.cw-progress{position:absolute;right:4px;bottom:4px;padding:2px 6px;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:12px;font-weight:700;line-height:1.4}
-.cw{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:12px;margin:10px 0 18px}.cw-b{border:0;padding:0;background:none;cursor:pointer;display:block}.cw .cover{width:100%!important}.cw-slot{aspect-ratio:2/3;border:2px dashed var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:13px;text-align:center}.cw-faded{opacity:.35;filter:grayscale(1)}.cw-faded:hover{opacity:.6}
+.cw{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:12px;margin:10px 0 18px}.cw-b{border:0;padding:0;background:none;cursor:pointer;display:block}.cw .cover{width:100%!important}.cw-slot{aspect-ratio:2/3;border:2px dashed var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:13px;text-align:center}.cw-faded{opacity:.35;filter:grayscale(1)}.cw .cw-faded:hover{opacity:.6}.cc-h,.cc-g{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.cc-h{margin:8px 0 4px;font-size:11px;color:var(--text-2);text-align:center}.cc-g{margin-bottom:16px}.cc{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:13px}.cc-on{background:var(--primary);color:var(--on-primary,#fff);font-weight:600}.cc-ahead{border:2px dashed var(--border);color:var(--text-2)}.cc-today{border:2px solid var(--primary);color:var(--primary);font-weight:600}.cc-miss{background:var(--surface-alt);color:var(--text-2)}.cw-b{position:relative}.cw-tag{position:absolute;right:4px;bottom:4px;background:var(--primary);color:#fff;font:700 11px/1 Inter,system-ui,sans-serif;padding:4px 6px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.3)}.cw-up{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:10px 0}.cw-edit{margin-top:6px}.cw-edit>summary{cursor:pointer;padding:8px 0;list-style:none}.cw-edit>summary::-webkit-details-marker{display:none}.cw-edit>summary::after{content:' ▸';color:var(--text-2)}.cw-edit[open]>summary::after{content:' ▾'}
+.rn .detail{display:block;padding:16px}.rn-top{display:grid;grid-template-columns:92px minmax(0,1fr);gap:16px;align-items:start}.rn .d-cover{align-self:start;width:92px}.rn-top .cover{width:92px!important;max-width:92px}#crCard .rn .d-stat .l{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25}#crCard .rn .d-stat{min-width:0}#crCard .rn .d-how{display:block;white-space:normal;overflow-wrap:anywhere;font-size:11px;line-height:1.3}.rn .d-stats{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}.rn .d-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.rn .d-actions .btn{justify-content:center}
+.rn-links{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-top:10px}.rn-links .link-btn{color:var(--text-2);font-weight:500}.rn-links .link-btn:hover{color:var(--primary);background:none}
+.rn-nav{display:flex;align-items:center;gap:8px;margin-left:14px}.rn-nav .pos{margin:0;font-size:13px;color:var(--text-2)}
+.rn-arrow{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow)}.rn-arrow:hover{border-color:var(--primary);color:var(--primary)}.rn-arrow svg.i{width:18px;height:18px}
+.carousel .detail.rn-grid{display:grid!important;grid-template-columns:92px minmax(0,1fr);grid-template-areas:"cov info" "stats stats" "acts acts" "links links";column-gap:16px;row-gap:0;align-items:start;align-content:start}
+.rn-left{grid-area:cov;align-self:start}.rn-cov{width:92px}#crCard .rn-grid{row-gap:0!important}.rn-cov .cover{width:92px!important;max-width:92px}.rn-info{grid-area:info}#crCard .rn-grid .d-stats{grid-area:stats}#crCard .rn-grid .d-actions{grid-area:acts}.rn-grid .rn-links{grid-area:links}.rn-side{display:none!important;grid-area:side}.rn-kick{display:none}
+@media(min-width:720px){.carousel .detail.rn-grid{grid-template-columns:140px minmax(0,1fr);grid-template-areas:"cov info" "cov stats" "cov acts";grid-template-rows:auto auto 1fr;column-gap:28px}
+ .rn-cov,.detail .d-cover.rn-cov .cover{width:140px!important;max-width:140px!important}.rn-side{display:grid!important;width:140px;gap:4px;align-self:start;margin-top:8px}.rn-side .sa{padding:3px 8px}#crCard .card-h{margin-bottom:0}#crCard .rn .detail{padding-top:6px}#crCard .rn .d-prog{margin-top:22px}#crCard .rn-grid .d-actions{align-self:end;margin-bottom:0}.rn-side .sa{justify-content:flex-start}.rn-side .sa:hover{border-color:var(--primary);color:var(--primary)}
+ .rn-grid .rn-links{display:none}.rn-kick{display:block}#crCard .rn .d-actions{display:flex!important;justify-content:flex-start}#crCard .rn .d-actions .btn{flex:0 0 auto}}
+@media(min-width:360px){#crCard .rn .d-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}#crCard .rn .d-stat .n{font-size:20px}}
+@media(max-width:359px){#crCard .rn .d-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.carousel .detail.rn-grid{grid-template-columns:72px minmax(0,1fr)!important;column-gap:12px!important}.rn-cov,.rn-cov .cover{width:72px!important;max-width:72px!important}.rn-top{grid-template-columns:72px minmax(0,1fr);gap:12px}.rn-top .cover{width:72px!important}}
+.mbc .own-me{color:var(--text-2)!important;font-weight:500!important;display:flex;align-items:center;gap:4px}.mbc .own-me svg.i{width:13px;height:13px}   /* Nov 24: owning a book is a fact, not an action */
 .b-n{width:20px;text-align:center;color:var(--text-2);font-size:13px}
 .up-open{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:0;background:none;padding:2px 0;text-align:left;color:inherit;cursor:pointer;max-width:100%}.up-open:hover b{color:var(--primary);text-decoration:underline;text-underline-offset:3px}.b-row .cover-btn{flex:none}
 .b-row .cover{width:34px;padding:3px;flex:none}.b-row .cover .ct{font-size:5px}.b-row .cover .ca,.b-row .cover .fmt{display:none}
@@ -490,7 +496,7 @@ button.cal-d{border:0;font:inherit;color:inherit;cursor:pointer;position:relativ
 .st-paused{background:color-mix(in srgb,var(--orange) 15%,transparent);color:var(--orange-ink)}
 .st-dnf{background:color-mix(in srgb,var(--red) 13%,transparent);color:var(--red-ink)}
 .st-finished{background:color-mix(in srgb,var(--blue) 13%,transparent);color:var(--blue-ink)}
-.st-want{background:var(--primary-light);color:var(--primary)}
+.st-want{background:var(--surface-alt);color:var(--text-2)}   /* Nov 24: To Read is neutral; only Currently Reading is green */
 .rec{font-size:12px;background:var(--surface-alt);border-radius:9px;padding:7px 9px;display:grid;gap:3px}
 .rec .link-btn{justify-self:start;padding:2px 0}
 .link-btn.sm{font-size:13px;padding:4px 6px}
@@ -933,7 +939,6 @@ main section.card .card-h .ico{display:none}
 .req-st{font-size:12px;color:var(--text-2)}.req-st.ok{color:var(--primary);font-weight:600}
 .req-msg{display:block;margin-top:3px;font-style:italic;color:var(--text-2)}.notif p.req-msg{margin:2px 0 0;font-size:13px}
 .beta-tag{background:#EAB308!important;color:#1F2937!important}
-.gpt-tag{background:#2563EB!important;color:#fff!important}
 .next-tag{font:700 14px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--accent,#F97316);border-radius:999px;padding:6px 12px;vertical-align:middle}
 @media(max-width:480px){.next-tag{font-size:12px;padding:5px 9px}.is-beta .grp-btn #grpName{display:none}.is-beta .grp-btn{flex:none}}
 .req-back{font-size:13px;color:var(--text);font-style:italic}
@@ -1298,6 +1303,8 @@ a.btn{text-decoration:none}
 .gs-link{display:inline;padding:0;font-size:inherit;vertical-align:baseline}
 .get{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
 .dc-card .get .btn{width:100%}
+/* Nov 24 green review: Discover card actions are outlined, so Add a Book stays the page's one filled button. */
+.dc-card .btn-primary{background:var(--surface);border-color:var(--border);color:var(--text)}.dc-card .btn-primary:hover{border-color:var(--primary);color:var(--primary)}
 .get-more{display:flex;flex-wrap:wrap;gap:0 4px;align-items:center;color:var(--text-2)}
 .get-a{color:var(--primary);font-weight:500;text-decoration:none}
 .get-a:hover{text-decoration:underline;text-underline-offset:3px}
@@ -1393,6 +1400,7 @@ a.btn{text-decoration:none}
 @media (max-width:819px){:root{--libcov:76px}}
 @media (max-width:719px){:root{--libcov:80px}}   /* the largest that fits a My Books card in each range (measured Nov 10) */
 .lcard .lc-open .cover,.dc-card .lc-open .cover,.lcard .mbc-cov .cover{width:var(--libcov)}
+.gpt-tag{background:#2563EB!important;color:#fff!important}
 </style>
 </head>
 <body>
@@ -1583,7 +1591,9 @@ let S;
 try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null}
 if(!S||S.v!==6)S=seed();
 let savedRaw;try{savedRaw=localStorage.getItem(KEY)}catch(e){savedRaw=null}
-let savedBase=JSON.parse(JSON.stringify(S)),saveConflict=false,conflictDownloaded=false;
+let savedBase=JSON.parse(JSON.stringify(S)),saveConflict=false,conflictDownloaded=false,conflictAsk=false;
+/* Bookkeeping that two tabs write on their own (which note prompts were shown) is never a conflict: this tab's copy wins (Nov 24). */
+const SOFT_KEYS=/^(npKeep|npSeen_)/;
 // Three-way reconciliation preserves independent changes, but never guesses on competing edits.
 function mergeSaved(base,local,remote){
   const eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
@@ -1739,13 +1749,15 @@ function showSaveFailure(){
   document.querySelectorAll('.save-warning').forEach(e=>e.remove());if(!saveFailed)return;
   const host=[...document.querySelectorAll('dialog[open]')].pop()?.querySelector('.dlg')||document.body;
   const box=document.createElement('div');box.className='save-warning';box.setAttribute('role','alert');
-  if(saveConflict){box.innerHTML='<div><b>Another tab saved changes to the same information.</b> Your changes are still here, and the other tab’s saved data is safe. Download your unsaved copy before loading the latest saved data.</div><button type="button" class="btn btn-ghost sm" data-act="downloadConflict">Download My Unsaved Copy</button><button type="button" class="btn btn-ghost sm" data-act="loadLatest" '+(conflictDownloaded?'':'disabled')+'>Load Latest Saved Data</button>';host.prepend(box);return;}
+  /* Load Latest Saved Data always answers (Nov 24): without a downloaded copy it first asks, in place. */
+  if(saveConflict&&conflictAsk&&!conflictDownloaded){box.innerHTML='<div><b>Load the latest saved data?</b> Changes in this tab that weren’t saved will be lost. Download them first if you might need them.</div><button type="button" class="btn btn-ghost sm" data-act="downloadConflict">Download My Unsaved Copy</button><button type="button" class="btn btn-ghost sm" data-act="loadLatest">Load Anyway</button>';host.prepend(box);return;}
+  if(saveConflict){box.innerHTML='<div><b>Another tab saved changes to the same information.</b> Your changes are still here, and the other tab’s saved data is safe. Download your unsaved copy before loading the latest saved data.</div><button type="button" class="btn btn-ghost sm" data-act="downloadConflict">Download My Unsaved Copy</button><button type="button" class="btn btn-ghost sm" data-act="loadLatest">Load Latest Saved Data</button>';host.prepend(box);return;}
   box.innerHTML='<div><b>Changes haven’t been saved.</b> This browser could not save your data. Your changes are only in this open page. Keep it open and try again before refreshing or closing.</div><button type="button" class="btn btn-ghost sm" data-act="retrySave">Try Saving Again</button>';host.prepend(box);
 }
 function save(){try{actPrune()}catch(e){}try{
   const raw=localStorage.getItem(KEY);let next=S;
-  if(raw!==savedRaw){try{if(!raw)throw new Error('Saved data was removed');const remote=JSON.parse(raw);next=mergeSaved(savedBase,JSON.parse(JSON.stringify(S)),remote);assertLoanMerge(remote,next);assertTimerMerge(remote,next);}catch(e){saveConflict=true;conflictDownloaded=false;throw e;}}
-  S=next;try{diffEvents()}catch(e){}const encoded=JSON.stringify(S);localStorage.setItem(KEY,encoded);savedRaw=encoded;savedBase=JSON.parse(encoded);saveFailed=false;saveConflict=false;conflictDownloaded=false;document.querySelectorAll('.save-warning').forEach(e=>e.remove());return true;
+  if(raw!==savedRaw){try{if(!raw)throw new Error('Saved data was removed');const remote=JSON.parse(raw),loc=JSON.parse(JSON.stringify(S));for(const k of Object.keys(loc))if(SOFT_KEYS.test(k))remote[k]=loc[k];next=mergeSaved(savedBase,loc,remote);assertLoanMerge(remote,next);assertTimerMerge(remote,next);}catch(e){saveConflict=true;conflictDownloaded=false;conflictAsk=false;throw e;}}
+  S=next;try{diffEvents()}catch(e){}const encoded=JSON.stringify(S);localStorage.setItem(KEY,encoded);savedRaw=encoded;savedBase=JSON.parse(encoded);saveFailed=false;saveConflict=false;conflictDownloaded=false;conflictAsk=false;document.querySelectorAll('.save-warning').forEach(e=>e.remove());return true;
 }catch(e){saveFailed=true;const t=document.getElementById('toast');if(t){if(t.hidePopover){if(t.matches(':popover-open'))t.hidePopover()}else t.hidden=true}queueMicrotask(showSaveFailure);return false}}
 document.addEventListener('close',e=>{if(e.target.matches?.('dialog')&&saveFailed)queueMicrotask(showSaveFailure)},true);
 window.addEventListener('beforeunload',e=>{if(saveFailed){e.preventDefault();e.returnValue=''}});
@@ -2043,28 +2055,28 @@ const openRead=b=>b.titleId&&titleById(b.titleId)?`data-act="openTitle" data-id=
 function detailPanel(b,list){
   const audio=b.format==='audio',st=bookStats(b),ms=milestone(b),n=list.length;
   const stat=(l,v,cls='')=>`<div class="d-stat"><div class="l">${l}</div><div class="n ${cls}">${v}</div></div>`;
-  return `<div class="carousel">
-  ${n>1?`<button class="arrow prev" data-act="prevBook" aria-label="Previous book">${ic('chevL')}</button>`:''}
-  <div class="detail" id="detail" aria-live="polite"><div class="d-left"><button class="d-cover cover-btn" ${openRead(b)} aria-label="${esc(b.title)} details">${cover(b,140)}</button>${sideActs(b,'side-acts')}</div><div style="min-width:0">
-    <div class="d-kicker">Reading Now</div><h3 class="d-title"><button class="d-tlink" ${openRead(b)}>${esc(b.title)}</button></h3><div class="muted small">${esc(b.author)}${st.started?`, started ${fmtDateY(st.started)}`:''}${audio?' · audiobook':''}</div>
-    ${sideActs(b,'side-acts-m')}
+  /* Nov 24: compact Reading Now. Arrows and "1 of 3" sit in the card header; a smaller cover beside the title; tiles in
+     one row (2 × 2 on the smallest phones); Log Reading (filled) and Start Timer; Mark Finished, Pause, Did Not Finish,
+     Edit as quiet links at the bottom. */
+  return `<div class="carousel rn">
+  <div class="detail rn-grid" id="detail" aria-live="polite"><div class="rn-left"><button class="d-cover cover-btn rn-cov" ${openRead(b)} aria-label="${esc(b.title)} details">${cover(b,140)}</button>${sideActs(b,'rn-side')}</div><div class="rn-info" style="min-width:0">
+    <h3 class="d-title"><button class="d-tlink" ${openRead(b)}>${esc(b.title)}</button></h3><div class="muted small">${esc(b.author)}${st.started?` · Started ${fmtDateY(st.started)}`:''}${audio?' · audiobook':''}</div>
     ${hasLen(b)?`<div class="d-prog"><span>${progText(b)}</span><b>${pct(b)}%</b></div>
     <div class="bar"><span style="width:${pct(b)}%"></span></div>`:`<div class="d-prog"><span>${progText(b)}</span>${addLenLink(b)}</div>`}
     ${ms?`<div class="hint">${ms}</div>`:''}
+    </div>
     ${hasLen(b)?`<div class="d-stats">
       ${audio?stat('Time Left',fmtMin(st.left)):stat('Pages Left',st.left)}
-      ${st.mode==='goal'?stat(audio?'Listening Pace':'Page Pace',`${Math.max(1,Math.round(st.daily))}<small>${audio?' min':''}/day</small>`):stat(audio?'Listening Pace':'Page Pace',st.per?`${Math.round(st.per)}<small>${audio?' min':''}/session</small>`:'—')}
+      ${st.mode==='goal'?stat(audio?'Listening Pace':'Page Pace',`${Math.max(1,Math.round(st.daily))}<small class="d-how">${audio?'minutes':'pages'} / day</small>`):stat(audio?'Listening Pace':'Page Pace',st.per?`${Math.round(st.per)}<small class="d-how">${audio?'minutes':'pages'} / session</small>`:'—')}
       ${st.mode==='goal'?stat('Days to Go',`≈ ${st.daysToGo}`):stat('Sessions to Go',st.toGo!=null?`≈ ${st.toGo}`:'—')}
       ${stat('Finish Around',st.finish?`${fmtDateY(st.finish)}<small class="d-how">${st.mode==='goal'?'at your daily goal':'at your recent pace'}</small>`:'—','accent')}
     </div>`:''}
     <div class="d-actions"><button class="btn btn-primary" data-act="log" data-book="${b.id}">${ic('book')}Log Reading</button>${S.timer&&S.timer.bookId===b.id?`<button class="btn btn-ghost" data-act="stopTimer">${ic('clock')}<span data-timer>${fmtClock(tElapsed())}</span></button>`:`<button class="btn btn-ghost" data-act="startTimer" data-book="${b.id}">${ic('play')}Start Timer</button>`}
     </div>
-  </div></div>
-  ${n>1?`<button class="arrow next" data-act="nextBook" aria-label="Next book">${ic('chevR')}</button>`:''}
   </div>`;
 }
 function sideActs(b,cls){
-  return `<div class="${cls}" role="group" aria-label="More for ${esc(b.title)}"><button class="sa" data-act="finish" data-book="${b.id}">${ic('check')}Mark Finished</button><button class="sa" data-act="pause" data-book="${b.id}">${ic('pause')}Pause</button><button class="sa" data-act="dnf" data-book="${b.id}">${ic('x')}Did Not Finish</button><button class="sa" data-act="editBook" data-book="${b.id}">${ic('pencil')}Edit</button></div>`;
+  return `<div class="${cls}" role="group" aria-label="More for ${esc(b.title)}"><button class="sa" data-act="finish" data-book="${b.id}">${ic('check')}Mark Finished</button><button class="sa" data-act="pause" data-book="${b.id}">${ic('pause')}Pause</button><button class="sa" data-act="dnf" data-book="${b.id}">${ic('x')}Did Not Finish</button></div>`;
 }
 function miniCard(b,sel){
   return `<button class="mini ${sel?'sel':''}" data-act="select" data-book="${b.id}" aria-pressed="${sel}" aria-label="Show ${esc(b.title)}">${cover(b)}<span class="mini-t">${esc(b.title)}</span><span class="bar"><span style="width:${pct(b)}%"></span></span><span class="bk-meta">${pct(b)}%</span></button>`;
@@ -2075,10 +2087,10 @@ function readingCard(){
   const upPick=un0?`<div class="up-pick"><div class="small"><span class="muted">Up Next:</span> <b>${esc(un0.title)}</b></div><button class="cover-btn" ${ut?`data-act="openTitle" data-id="${ut.id}"`:`data-act="editBook" data-book="${un0.id}"`} aria-label="${esc(un0.title)} details">${libCover(ut||un0,64)}</button><button class="btn btn-ghost sm" data-act="bdLog" data-id="${un0.id}">${ic('play')}Start Reading</button></div>`:'';
   const minis=n>1?`<div class="minis" role="group" aria-label="Your current books">${list.map(x=>miniCard(x,x.id===b.id)).join('')}</div>`:'';
   const body=n?detailPanel(b,list)+((minis||upPick)?`<div class="cr-foot">${minis}${upPick}</div>`:'')
-    :`<div class="empty">${ic('book')}<h3>Your Reading Journey Starts Here</h3><p>Add a book to your collection or search for a title to get started.</p><button class="btn btn-primary" data-act="startNew">Start a Book</button></div>`;
+    :`<div class="empty">${ic('book')}<h3>Your Reading Journey Starts Here</h3><p>Add a book to your collection or search for a title to get started.</p><button class="btn btn-ghost" data-act="startNew">Start a Book</button></div>`;
   const un=upList()[0];
   const upLine=''&&un?`<div class="up-line"><span class="small"><span class="muted">Up Next:</span> <b>${esc(un.title)}</b></span><button class="btn btn-ghost sm" data-act="bdLog" data-id="${un.id}">${ic('play')}Start Reading</button></div>`:'';
-  return `<section class="card" id="crCard" data-tour="current" aria-labelledby="crH"><div class="card-h"><span class="ico">${ic('book')}</span><h2 id="crH">Currently Reading <span class="count">(${n})</span></h2>${n>1?`<span class="pos">${list.indexOf(b)+1} of ${n}</span>`:''}</div>${body}${upLine}</section>`;
+  return `<section class="card" id="crCard" data-tour="current" aria-labelledby="crH"><div class="card-h"><span class="ico">${ic('book')}</span><h2 id="crH">Currently Reading${n>1?'':` <span class="count">(${n})</span>`}</h2>${n>1?`<span class="rn-nav"><button class="rn-arrow" data-act="prevBook" aria-label="Previous book">${ic('chevL')}</button><span class="pos">${list.indexOf(b)+1} of ${n}</span><button class="rn-arrow" data-act="nextBook" aria-label="Next book">${ic('chevR')}</button></span>`:''}</div>${body}${upLine}</section>`;
 }
 function stepBook(d,refocus){
   const list=readingList();if(list.length<2)return;
@@ -2095,11 +2107,15 @@ function monthBlock(){
   return `<section class="card" aria-labelledby="mrH"><div class="card-h"><span class="ico">${ic('chart')}</span><h2 id="mrH">My Reading This Month</h2><button class="more" data-go="history">View Details</button></div>
   <div class="stats"><div class="stat">${ic('book')}<div class="n">${yearFinished()}</div><div class="l">books finished this year</div></div><div class="stat">${ic('library')}<div class="n">${monthPages().toLocaleString()}</div><div class="l">pages read this month</div></div><div class="stat o">${ic('flame')}<div class="n">${streak()}</div><div class="l">day streak</div></div></div></section>`;
 }
+/* Challenge order (Nov 25): in progress first, ending soonest first (no end date last); then not started, starting soonest;
+   then done and ended, most recently ended first. */
+function chOrder(a,b){const ORDK={active:0,up:1,done:2,ended:3},k=ORDK[a.k]-ORDK[b.k];if(k)return k;const end=c=>c.end||'9999',st=c=>c.start||'9999';
+  if(a.k==='active')return end(a.c).localeCompare(end(b.c))||a.c.name.localeCompare(b.c.name);if(a.k==='up')return st(a.c).localeCompare(st(b.c))||end(a.c).localeCompare(end(b.c));
+  return (b.c.end||'').localeCompare(a.c.end||'')}
 function challengesCard(){
-  const ORDK={active:0,up:1,done:2,ended:3};
-  const list=S.challenges.filter(isMine).map(c=>{const p=chProg(c);return {c,p,st:chStatus(c,p)}}).filter(x=>x.st.k!=='ended').sort((a,b)=>ORDK[a.st.k]-ORDK[b.st.k]).slice(0,3);
+  const list=S.challenges.filter(isMine).map(c=>{const p=chProg(c);return {c,p,st:chStatus(c,p)}}).filter(x=>x.st.k!=='ended').sort((a,b)=>chOrder({c:a.c,k:a.st.k},{c:b.c,k:b.st.k})).slice(0,3);
   const rows=list.map(({c,p})=>{const pc=p.frac!=null?p.frac*100:p.t?Math.min(100,p.v/p.t*100):0;return `<button class="ch ch-btn" data-act="openCh" data-id="${c.id}"><span class="ci" style="background:var(--primary-light);color:var(--primary)">${ic(CT[c.type].ic)}</span><span class="nm">${esc(c.name)}</span><span class="vl">${p.label}</span><div class="bar"><span style="width:${pc}%"></span></div></button>`}).join('');
-  const body=list.length?rows:`<div class="empty">${ic('trophy')}<h3>No Active Challenges</h3><p>Create a personal challenge or join one your group started.</p><button class="btn btn-primary" data-go="challenges">Browse Challenges</button></div>`;
+  const body=list.length?rows:`<div class="empty">${ic('trophy')}<h3>No Active Challenges</h3><p>Create a personal challenge or join one your group started.</p><button class="btn btn-ghost" data-go="challenges">Browse Challenges</button></div>`;
   return `<section class="card" aria-labelledby="chH"><div class="card-h"><span class="ico o">${ic('target')}</span><h2 id="chH">My Challenges</h2><button class="more" data-go="challenges" data-ch="mine">View All</button></div>${body}</section>`;
 }
 function hexBadge(t){
@@ -2344,7 +2360,7 @@ function getStarted(){
     S.settings.solo?['join','Start a Challenge','Set a personal goal, like 12 books this year.',S.challenges.some(c=>(c.participants||[]).includes('me')),'gsJoin','trophy']:['join','Join a Challenge','Read along with your group in a challenge or Battle of the Books.',S.challenges.some(c=>(c.participants||[]).includes('me'))||S.battles.some(b=>b.readers.me||b.moderator==='me'),'gsJoin','trophy']];
   const done=steps.filter(x=>x[3]).length;if(done===steps.length)return '';
   return `<section class="card gs" aria-labelledby="gsH"><div class="card-h"><h2 id="gsH">Get Started</h2><span class="count">${done} of ${steps.length} done</span><button class="link-btn sm" data-act="gsHide" style="margin-left:auto">Hide</button></div>
-  <ol class="gs-list">${steps.map(([k,t,d,ok,act,icon])=>`<li class="gs-i ${ok?'done':''}"><span class="gs-c" aria-hidden="true">${ok?ic('check'):ic(icon)}</span><span class="gs-t"><b>${t}</b><span class="xs muted">${ok?'Done':d}</span></span>${ok?'':`<button class="btn btn-primary sm" data-act="${act}" aria-label="Start: ${t}">Start</button>`}</li>`).join('')}</ol></section>`;
+  <ol class="gs-list">${steps.map(([k,t,d,ok,act,icon])=>`<li class="gs-i ${ok?'done':''}"><span class="gs-c" aria-hidden="true">${ok?ic('check'):ic(icon)}</span><span class="gs-t"><b>${t}</b><span class="xs muted">${ok?'Done':d}</span></span>${ok?'':`<button class="btn btn-ghost sm" data-act="${act}" aria-label="Start: ${t}">Start</button>`}</li>`).join('')}</ol></section>`;
 }
 function hero(){
   const h=new Date().getHours();const g=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
@@ -2674,11 +2690,11 @@ function avail(tid,cs=copiesOf(tid)){const ph=cs.filter(c=>c.format==='physical'
 function avStack(tid,cs=copiesOf(tid)){const owners=[...new Set(cs.map(c=>c.owner))];if(!owners.length)return '';
   return `<span class="av-stack" aria-hidden="true">${owners.slice(0,3).map(o=>`<span class="avatar" style="background:${avBg(o)}">${avInit(o)}</span>`).join('')}</span><span class="xs muted">${owners.length===1?`Owned by ${esc(nameOf(owners[0]))}`:`${owners.length} owners`}</span>`}
 const fmtChips=(tid,cs=copiesOf(tid))=>[...new Set(cs.map(c=>c.format))].map(f=>`<span class="fchip">${FMT[f]}</span>`).join('');
-const STATUS={reading:'Currently Reading',paused:'Paused',finished:'Finished',dnf:'Did Not Finish',want:'On To Read'};
+const STATUS={reading:'Currently Reading',paused:'Paused',finished:'Finished',dnf:'Did Not Finish',want:'To Read'};
 const libCover=(t,w)=>cover({title:t.title,author:t.author,c:t.c,cover:(t.id&&myEd(t.id).cover)||t.cover,titleId:t.titleId,format:'print'},w);
 function cardAction(t){
   const r=myReading(t.id);
-  if(r&&r.status==='want')return `<button class="btn btn-ghost sm on" data-act="toggleWant" data-id="${t.id}" aria-pressed="true">${ic('check')}On To Read</button>`;
+  if(r&&r.status==='want')return `<div class="st st-want" style="margin-bottom:6px">To Read</div><button class="btn btn-ghost sm" data-act="bdLog" data-id="${r.id}">${ic('play')}Start Reading</button>`;   // style guide: status as a gray chip, one outlined action (Nov 24)
   if(r&&(r.status==='reading'||r.status==='paused'))return `<div class="xs muted" style="margin-bottom:4px">${STATUS[r.status]}${hasLen(r)?` · ${pct(r)}%`:''}</div><button class="btn btn-ghost sm" data-act="bdLog" data-id="${r.id}">${ic('book')}Log Reading</button>`;
   if(r)return `<div class="st st-${r.status}">${STATUS[r.status]}</div>`;
   return `<button class="btn btn-ghost sm" data-act="toggleWant" data-id="${t.id}" aria-pressed="false">${ic('plus')}Add to To Read</button>`;
@@ -2690,13 +2706,17 @@ function lcard(t,extra=''){
   ${av?`<div class="avail ${av.cls}">${esc(av.t)}</div>`:''}${extra}
   <div class="lc-act">${cardAction(t)}</div></div>`;
 }
-const LIB0={format:'all',avail:'all',genre:'all',status:'any',owner:'all'};
+const LIB0={format:'all',avail:'all',genre:'all',status:'any',owner:'all',rating:'any',length:'any',type:'any',fin:'any'};
 let lib={tab:'family',q:'',f:{...LIB0},sort:'title',open:false,group:'alpha',mb:'all',rv:'disc',fgroup:'year'};
 const finDate=t=>S.books.filter(b=>b.titleId===t.id&&b.status==='finished'&&b.finished).map(b=>b.finished).sort().pop()||'';
 const PER={year:d=>d.slice(0,4),month:d=>d.slice(0,7),week:d=>weekOf(d)};
 const perLabel=(g,k)=>k==='~'?'Date Unknown':g==='year'?k:g==='month'?`${MONF[+k.slice(5,7)-1]} ${k.slice(0,4)}`:`Week of ${fmtDateY(k)}`;
 function periodGroups(list,g){const groups={};list.forEach(t=>{const d=finDate(t),k=d?PER[g](d):'~';(groups[k]=groups[k]||[]).push(t)});return Object.keys(groups).sort((a,b)=>a==='~'?1:b==='~'?-1:b.localeCompare(a)).map(k=>[k,groups[k]])}
-const nFilters=()=>Object.keys(LIB0).filter(k=>lib.f[k]!==LIB0[k]&&(k!=='owner'||lib.tab==='family')).length;   // Owner applies to the group library only
+const nFilters=()=>Object.keys(LIB0).filter(k=>(lib.f[k]??LIB0[k])!==LIB0[k]&&(k!=='owner'||lib.tab==='family')&&(!['rating','fin'].includes(k)||lib.tab==='mybooks')).length;   // Owner: group library only; Rating and Finished In: My Books only
+/* Filters added Nov 25 (James): your rating, length (your edition's pages), fiction or nonfiction, and the year you finished. */
+const libPages=t=>{const r=myReading(t.id),n=r&&r.format!=='audio'&&!isPct(r)&&r.total>0?r.total:+t.pages||0;return n>0?n:null};
+const libRate=t=>{const r=S.books.filter(b=>b.titleId===t.id&&+b.rating>0).map(b=>+b.rating);return r.length?Math.max(...r):null};
+const libFinYears=t=>S.books.filter(b=>b.titleId===t.id&&b.status==='finished').map(b=>b.finished?b.finished.slice(0,4):'unknown');
 // Own but Not Started: I own a copy and haven't begun any reading of it. Being on To Read or in the Reading Queue
 // doesn't count as starting (before Nov 16 those books dropped out of this filter).
 const ownNotStarted=t=>copiesOf(t.id).some(c=>c.owner==='me')&&!S.books.some(b=>b.titleId===t.id&&b.status!=='want');
@@ -2722,12 +2742,23 @@ function libTitles(){
     if(f.avail==='available'&&avail(t.id)?.t!=='Available')return false;
     if(f.avail==='loan'&&!cs.some(c=>c.loanTo))return false;
     if(f.genre!=='all'&&genreKey(t.genre)!==genreKey(f.genre))return false;
+    if(lib.tab==='mybooks'&&(f.rating||'any')!=='any'){const r=libRate(t);if(f.rating==='none'?r!=null:!(r!=null&&r>=+f.rating))return false /* Not Rated: any book you haven't rated (James, Nov 25); with Finished it's the books still to rate */}
+    if((f.length||'any')!=='any'){const p=libPages(t);if(p==null||(f.length==='short'?p>=200:f.length==='medium'?p<200||p>400:p<=400))return false}
+    if((f.type||'any')!=='any'&&bookType(t)!==f.type)return false;
+    if(lib.tab==='mybooks'&&(f.fin||'any')!=='any'){const ys=libFinYears(t),y=new Date().getFullYear();const want=f.fin==='this'?String(y):f.fin==='last'?String(y-1):f.fin;if(!ys.includes(want))return false}
     if(lib.tab==='family'&&f.status!=='any'){const r=myReading(t.id);if(f.status==='none'?!!r:r?.status!==f.status)return false}
     return true;
   });
   const rr=t=>{const r=myReading(t.id);return r?(lastRead(r.id)||r.finished||r.started||''):''};
   const by={title:(a,b)=>sortKey(a.title).localeCompare(sortKey(b.title)),titleza:(a,b)=>sortKey(b.title).localeCompare(sortKey(a.title)),author:(a,b)=>lastName(a.author).localeCompare(lastName(b.author))||sortKey(a.title).localeCompare(sortKey(b.title)),added:(a,b)=>(b.added||0)-(a.added||0),finished:(a,b)=>finDate(b).localeCompare(finDate(a))||sortKey(a.title).localeCompare(sortKey(b.title)),read:(a,b)=>rr(b).localeCompare(rr(a))};
-  return list.sort(by[lib.sort]);
+  // More sorting (James, Nov 25; from ChatGPT's mockup): your rating, your edition's pages, and series order; unknowns last
+  const tA=(a,b)=>sortKey(a.title).localeCompare(sortKey(b.title)),rate=t=>{const r=S.books.filter(b=>b.titleId===t.id&&+b.rating>0).map(b=>+b.rating);return r.length?Math.max(...r):null},
+    pg=t=>{const r=myReading(t.id),n=r&&r.format!=='audio'&&!isPct(r)&&r.total>0?r.total:+t.pages||0;return n>0?n:null},sn=t=>String(t.series||'').trim().toLowerCase(),
+    unk=(x,y)=>(x==null)-(y==null);
+  Object.assign(by,{rating:(a,b)=>unk(rate(a),rate(b))||(rate(b)??0)-(rate(a)??0)||tA(a,b),
+    pagesup:(a,b)=>unk(pg(a),pg(b))||(pg(a)??0)-(pg(b)??0)||tA(a,b),pagesdown:(a,b)=>unk(pg(a),pg(b))||(pg(b)??0)-(pg(a)??0)||tA(a,b),
+    series:(a,b)=>(!sn(a))-(!sn(b))||sn(a).localeCompare(sn(b))||unk(a.seriesNo,b.seriesNo)||(a.seriesNo??0)-(b.seriesNo??0)||tA(a,b)});
+  return list.sort(by[lib.sort]||by.title);
 }
 const MB=[['all','All'],['reading','Currently Reading'],['paused','Paused'],['want','To Read'],['finished','Finished'],['dnf','Did Not Finish'],['owned','Own but Not Started']];
 const MB_ORDER=['reading','paused','want','owned','finished','dnf'],MB_LABEL={reading:'Currently Reading',paused:'Paused',want:'To Read',owned:'Own but Not Started',finished:'Finished',dnf:'Did Not Finish'};
@@ -2888,7 +2919,7 @@ function mbCard(t){
   <div class="mbc-side"><button class="mbc-fav ${fav?'on':''}" data-act="favTog" data-id="${t.id}" aria-pressed="${fav}" aria-label="${fav?'Remove from':'Add to'} Favorites" title="${fav?'Favorite':'Add to Favorites'} (${rateWho()})">${fav?'♥':'♡'}</button>
   <span class="st st-${st==='owned'?'':st}"${full?` title="${full}"`:''}>${full?`<span aria-hidden="true">${sh}</span><span class="sr-only">${full}</span>`:sh}</span>${pc}${rt}</div></div>
   <button class="lc-open" data-act="openTitle" data-id="${t.id}"><span class="lc-t">${esc(dispT(t.title))}</span><span class="bk-a">${esc(t.author)}</span></button>
-  ${when?`<div class="xs muted">${when}</div>`:''}${fin>1?`<div class="xs muted">Read ${fin}×</div>`:fin===1&&st!=='finished'?`<div class="xs muted">Read once before</div>`:''}${mine||cs.length?`<div class="xs ${mine?'own-me':'muted'}">${own}</div>`:''}
+  ${when?`<div class="xs muted">${when}</div>`:''}${fin>1?`<div class="xs muted">Read ${fin}×</div>`:fin===1&&st!=='finished'?`<div class="xs muted">Read once before</div>`:''}${mine||cs.length?`<div class="xs ${mine?'own-me':'muted'}">${mine?ic('shelf'):''}${own}</div>`:''}
   <div class="lc-act">${act}</div></div>`;
 }
 let recEdit=null;
@@ -2911,14 +2942,19 @@ function fromMe(){
 }
 function filtersPanel(){
   const f=lib.f,genres=(()=>{const seen=new Set();return S.titles.map(t=>t.genre).filter(Boolean).map(genreValue).filter(g=>{const k=genreKey(g);if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.localeCompare(b))})();
-  const chips=(k,opts)=>opts.map(([v,l])=>`<button class="tab sm" aria-pressed="${f[k]===v}" data-act="libF" data-k="${k}" data-v="${v}">${l}</button>`).join('');
+  const chips=(k,opts)=>opts.map(([v,l])=>`<button class="tab sm" aria-pressed="${(f[k]??LIB0[k])===v}" data-act="libF" data-k="${k}" data-v="${v}">${l}</button>`).join('');
   return `<div class="filters card" id="libFilters">
     <div class="fg"><div class="fl">Format</div><div class="chips">${chips('format',[['all','All'],['physical','Physical'],['ebook','Ebook'],['audio','Audiobook']])}</div></div>
     <div class="fg"><div class="fl">Availability</div><div class="chips">${chips('avail',[['all','All'],['available','Available'],['loan','On Loan']])}</div></div>
+    ${lib.tab==='mybooks'?`<div class="fg"><div class="fl">Rating</div><div class="chips">${chips('rating',[['any','Any'],['5','5 ★'],['4','4 ★ and up'],['3','3 ★ and up'],['none','Not Rated']])}</div></div>`:''}
+    <div class="fg"><div class="fl">Length</div><div class="chips">${chips('length',[['any','Any'],['short','Short'],['medium','Medium'],['long','Long']])}</div><div class="xs muted" style="margin-top:4px">Short: under 200 pages · Medium: 200–400 · Long: over 400</div></div>
+    <div class="fg"><div class="fl">Fiction or Nonfiction</div><div class="chips">${chips('type',[['any','Any'],['fiction','Fiction'],['nonfiction','Nonfiction']])}</div></div>
+    ${lib.tab==='mybooks'?(()=>{const y=new Date().getFullYear(),ys=[...new Set(S.books.filter(b=>b.status==='finished'&&b.finished).map(b=>b.finished.slice(0,4)))].filter(x=>+x<y-1).sort().reverse(),unk=S.books.some(b=>b.status==='finished'&&!b.finished);
+      return `<div class="fg"><label class="fl" for="fFin">Finished In</label><select class="inp sm" id="fFin" data-lsel="fin">${[['any','Any Time'],['this','This Year ('+y+')'],['last','Last Year ('+(y-1)+')'],...ys.map(x=>[x,x]),...(unk?[['unknown','Date Unknown']]:[])].map(([v,l])=>`<option value="${v}" ${(f.fin||'any')===v?'selected':''}>${l}</option>`).join('')}</select></div>`})():''}
     <div class="fg"><label class="fl" for="fGenre">Genre</label><select class="inp sm" id="fGenre" data-lsel="genre"><option value="all">All Genres</option>${genres.map(g=>`<option ${f.genre===g?'selected':''}>${esc(g)}</option>`).join('')}</select></div>
     ${lib.tab!=='family'||S.settings.solo?'':(()=>{const own=[...new Set(S.titles.flatMap(t=>sharedCopiesOf(t.id).map(c=>c.owner)))].filter(o=>o!=='me').sort((a,b)=>nameOf(a).localeCompare(nameOf(b)));
       return `<div class="fg"><label class="fl" for="fOwner">Owner</label><select class="inp sm" id="fOwner" data-lsel="owner"><option value="all">All Owners</option><option value="me" ${f.owner==='me'?'selected':''}>You</option>${own.map(o=>`<option value="${esc(o)}" ${f.owner===o?'selected':''}>${esc(nameOf(o))}</option>`).join('')}</select></div>`})()}
-    ${lib.tab!=='family'?'':`<div class="fg"><label class="fl" for="fStatus">My Reading</label><select class="inp sm" id="fStatus" data-lsel="status">${[['any','Any'],['none','Not Started'],['want','On To Read'],['reading','Currently Reading'],['paused','Paused'],['finished','Finished'],['dnf','Did Not Finish']].map(([v,l])=>`<option value="${v}" ${f.status===v?'selected':''}>${l}</option>`).join('')}</select></div>`}
+    ${lib.tab!=='family'?'':`<div class="fg"><label class="fl" for="fStatus">My Reading</label><select class="inp sm" id="fStatus" data-lsel="status">${[['any','Any'],['none','Not Started'],['want','To Read'],['reading','Currently Reading'],['paused','Paused'],['finished','Finished'],['dnf','Did Not Finish']].map(([v,l])=>`<option value="${v}" ${f.status===v?'selected':''}>${l}</option>`).join('')}</select></div>`}
     <div class="f-end"><button class="link-btn" data-act="libClear">Clear Filters</button><button class="btn btn-primary sm" data-act="libFilters">Show ${libTitles().length} Book${libTitles().length===1?'':'s'}</button></div>
   </div>`;
 }
@@ -2942,7 +2978,7 @@ function shareNudge(){if(S.settings.solo||S.settings.shareNudgeOff||Date.now()-(
 function libEmpty(){
   if(lib.q.trim()||nFilters())return `<div class="empty">${ic('search')}<h3>No Books Found</h3><p>Try a different search or clear your filters.</p><button class="btn btn-ghost" data-act="libClear">Clear Filters</button></div>`;
   if(lib.tab==='mybooks'&&lib.mb!=='all')return `<div class="empty">${ic('book')}<h3>No Books Here Yet</h3><p>Books with this status will show up here.</p></div>`;
-  if(lib.tab==='family'&&!S.settings.solo&&S.copies.some(c=>c.owner==='me'))return `<div class="empty">${ic('library')}<h3>The ${esc(GN())} Library Is Empty</h3><p>When people share books they own, they show up here for everyone to browse and borrow.</p><button class="btn btn-primary" data-act="shareStart">Share Books I Own</button></div>`;
+  if(lib.tab==='family'&&!S.settings.solo&&S.copies.some(c=>c.owner==='me'))return `<div class="empty">${ic('library')}<h3>The ${esc(GN())} Library Is Empty</h3><p>When people share books they own, they show up here for everyone to browse and borrow.</p><button class="btn btn-ghost" data-act="shareStart">Share Books I Own</button></div>`;
   const E={family:['library','Your Library Is Empty','Add your first book to get started. Search for it, add it yourself, or import a list.'],
     mybooks:['book','Your Books Will Show Up Here','Everything you’ve read, are reading, want to read, or own appears here.'],
     recs:['send','No Recommendations Yet','When someone in your group recommends a book to you, it shows up here.']}[lib.tab];
@@ -3100,10 +3136,10 @@ function libraryView(){
   ${tools?`<div class="lib-tools">
     <label class="search">${ic('search')}<input id="libQ" type="search" placeholder="${lib.tab==='family'&&!S.settings.solo?'Search by title, author, or owner':'Search by title or author'}" value="${esc(lib.q)}" aria-label="Search the library" autocomplete="off"></label>
 ${lib.tab==='mybooks'&&lib.mb==='series'?'':`    <button class="btn btn-ghost" data-act="libFilters" aria-expanded="${lib.open}" aria-controls="libFilters">${ic('filter')}Filters${n?` (${n})`:''}</button>
-    <label class="sortl"><span class="small muted">Sort</span><select class="inp sm" data-lsel="sort">${[['title','Title A–Z'],['titleza','Title Z–A'],['author','Author'],['added','Recently Added'],['read','Recently Read']].concat(lib.tab==='mybooks'?[['finished','Date Finished']]:[]).map(([v,l])=>`<option value="${v}" ${lib.sort===v?'selected':''}>${l}</option>`).join('')}</select></label>
+    <label class="sortl"><span class="small muted">Sort</span><select class="inp sm" data-lsel="sort">${(o=>[['title','Title A–Z'],['titleza','Title Z–A'],['author','Author'],['added','Recently Added'],['read','Recently Read']].concat(lib.tab==='mybooks'?[['finished','Date Finished']]:[]).map(o).join('')+`<optgroup label="Rating, Length & Series">${(lib.tab==='mybooks'?[['rating','Rating']]:[]).concat([['pagesup','Pages · Shortest First'],['pagesdown','Pages · Longest First'],['series','Series Order']]).map(o).join('')}</optgroup>`)(([v,l])=>`<option value="${v}" ${lib.sort===v?'selected':''}>${l}</option>`)}</select></label>
     <span class="vseg" role="group" aria-label="View"><button aria-pressed="${!shelf}" data-act="libView" data-v="grid">${ic('grid')}Grid</button><button aria-pressed="${shelf}" data-act="libView" data-v="shelf">${ic('shelf')}Shelf</button></span>`}
   </div>
-  ${lib.open?filtersPanel():''}`:''}
+  ${lib.open&&!(lib.tab==='mybooks'&&lib.mb==='series')?filtersPanel():''}`:''}
   ${disc?'':`<div id="libResults">${libResults()}</div>`}</div></div>`;
 }
 function toggleWant(tid){
@@ -3386,6 +3422,18 @@ function nsSave(){const snap=snapshot(),before=(S.noSug||[]).length;S.noSug=[...
 function ruleShelf(){
   return S.titles.filter(t=>ownNotStarted(t)&&!hiddenT(t)).sort((a,b)=>(a.added||0)-(b.added||0)).slice(0,6)
     .map(t=>({rule:'toread',reason:t.added?`On your shelf since ${fmtMonY(new Date(t.added).toISOString().slice(0,10))}`:'On your shelf, not started yet',t}))}
+/* Quick Reads (James, Nov 25): short books from To Read, the shelf, and the suggestion rows, shortest first, using the
+   same rule as the Quick read line on cards (so never Children's books, picture-book lengths, or audiobooks). */
+function ruleQuick(sugg){const queued=new Set((S.upNext||[]).map(id=>book(id)?.titleId).filter(Boolean)),seen=new Set(),out=[],add=it=>{const k=it.t?.id||it.x?.key||(it.x?.title||'')+'|'+(it.x?.author||'');if(!k||seen.has(k)||it.t&&queued.has(it.t.id))return;   // already in the Reading Queue: chosen, not a suggestion (James, Nov 27)
+  if(!quickRead(it.t,it.x,it.kid))return;seen.add(k);out.push(it)};
+  wantList().filter(b=>!hiddenT(titleById(b.titleId))).forEach(b=>add({rule:'toread',reason:b.wantSince?`On your To Read since ${fmtMonY(b.wantSince)}`:'On your To Read',t:titleById(b.titleId)}));
+  S.titles.filter(t=>ownNotStarted(t)&&!hiddenT(t)).forEach(t=>add({rule:'toread',reason:t.added?`On your shelf since ${fmtMonY(new Date(t.added).toISOString().slice(0,10))}`:'On your shelf, not started yet',t}));
+  (sugg||[]).forEach(add);
+  /* The mix (James, Nov 27): up to three from your Library and up to three new suggestions, each side shortest first;
+     when one side has fewer, the other fills the row. Shown shortest first. */
+  const pg=it=>+(it.t?.pages||it.x?.pages||0),mineT=it=>it.rule==='toread',by=(a,b)=>pg(a)-pg(b);
+  const mine=out.filter(mineT).sort(by),fresh=out.filter(it=>!mineT(it)).sort(by),nM=Math.min(mine.length,Math.max(3,6-fresh.length)),nF=Math.min(fresh.length,6-nM);
+  return [...mine.slice(0,nM),...fresh.slice(0,nF)].sort(by)}
 function ruleSeries(){
   const fin=new Set(S.books.filter(b=>b.status==='finished').map(b=>b.titleId)),busy=new Set(S.books.filter(b=>b.status==='reading'||b.status==='paused').map(b=>b.titleId));
   const by={};S.titles.forEach(t=>{if(t.series&&t.seriesNo!=null)(by[t.series]=by[t.series]||[]).push(t)});
@@ -3494,7 +3542,7 @@ function discoverBody(){
     return `<div class="disc dc-sub">${back}<div class="dc-sec-h dc-sub-h"><h2>Sent by Me</h2><span class="dc-rtools">${fromN?`<span class="vseg" role="group" aria-label="View"><button aria-pressed="${!shelf}" data-act="libView" data-v="grid">${ic('grid')}Grid</button><button aria-pressed="${shelf}" data-act="libView" data-v="shelf">${ic('shelf')}Shelf</button></span>`:''}</span></div>${fromMe()}</div>`}
   if(lib.rv==='to'&&!S.settings.solo){const ids=[...new Set(myRecs().map(r=>r.titleId))],items=ruleRecs(99);
     return `<div class="disc dc-sub">${back}<div class="dc-sec-h dc-sub-h"><h2>Recommended to You</h2>${recTools(fromN)}</div>${items.length?`<div class="dc-scroll dc-wrap">${items.map(dcard).join('')}</div>`:`<div class="empty">${ic('send')}<h3>No Recommendations Yet</h3><p>When someone in your group recommends a book to you, it shows up here.</p></div>`}</div>`}
-  const because=ruleBecause(),award=ruleAward(),shelf=ruleShelf(),recs=ruleRecs(),nRecs=S.settings.solo?0:new Set(recsShown().map(r=>r.titleId)).size,author=ruleAuthor(),series=ruleSeries(),toRead=ruleToRead(),want=wantList().filter(b=>!hiddenT(titleById(b.titleId)));
+  const because=ruleBecause(),award=ruleAward(),shelf=ruleShelf(),recs=ruleRecs(),nRecs=S.settings.solo?0:new Set(recsShown().map(r=>r.titleId)).size,author=ruleAuthor(),series=ruleSeries(),toRead=ruleToRead(),want=wantList().filter(b=>!hiddenT(titleById(b.titleId))),quick=ruleQuick([...recs,...author,...because,...award]);
   if(surprise&&!want.some(b=>b.id===surprise))surprise=null;
   const loading=!author.length&&discBusy?`<p class="xs muted" role="status">Looking for more books by authors you rated highly…</p>`:'';
   const sb=surprise&&book(surprise),sp=sb?[{rule:'toread',reason:'Picked at random from your To Read',t:titleById(sb.titleId)}]:[];
@@ -3502,8 +3550,8 @@ function discoverBody(){
     ${dcRow('dcSurprise','Surprise Me',sp,`<button class="link-btn sm" data-act="surpriseClear">${ic('x')}Clear</button>`)}${dcRow('dcSeries','Continue a Series',series)}${dcRow('dcShelf','Already on Your Shelf',shelf)}${dcRow('dcToRead','From Your To Read',toRead)}</section>`:'';
   const recRow=recs.length?dcRow('dcRecs','Recommended to You',recs,`${nRecs>recs.length?`<button class="link-btn sm" data-act="goRecs">See All ${nRecs}</button>`:''}${recTools(fromN)}`)
     :S.settings.solo?'':`<div class="dc-rh dc-rh-only">${recTools(fromN)}</div>`;
-  const rows=recRow+dcRow('dcAuthor','More by This Author',author)+dcRow('dcBecause','Because You Read',because)+dcRow('dcAward','Award Winners for You',award);
-  const none=!recs.length&&!author.length&&!because.length&&!award.length&&!have&&!loading?`<div class="empty">${ic('compass')}<h3>Suggestions Will Show Up Here</h3><p>Rate the books you finish and add a few to To Read. Discover uses them to suggest what to read next.</p></div>`:'';
+  const rows=recRow+dcRow('dcAuthor','More by This Author',author)+dcRow('dcBecause','Because You Read',because)+dcRow('dcAward','Award Winners for You',award)+dcRow('dcQuick','Quick Reads',quick);
+  const none=!recs.length&&!author.length&&!because.length&&!award.length&&!quick.length&&!have&&!loading?`<div class="empty">${ic('compass')}<h3>Suggestions Will Show Up Here</h3><p>Rate the books you finish and add a few to To Read. Discover uses them to suggest what to read next.</p></div>`:'';
   const nsN=(S.noSug||[]).length,nsLine=S.books.some(b=>b.status!=='want')?`<p class="xs muted dc-ns">Read some books that don’t reflect your taste? <button type="button" class="link-btn sm" data-act="nsOpen" style="padding:0 2px">Leave books out of your suggestions</button>${nsN?` (${nsN} left out)`:''}</p>`:'';
   return `<div class="disc">${rows||loading?`<section class="dc-find" aria-label="Suggestions">${rows}${loading}</section>`:''}${have}${none}${nsLine}</div>`;
 }
@@ -3771,16 +3819,22 @@ function copyRow(c){
   else if(mine&&ph)act=c.loanTo?`<button class="btn btn-ghost sm" data-act="cpReturn" data-id="${c.id}">Mark Returned</button>`
     :bd.lend===c.id?`<span class="lend"><select class="inp sm" id="lendTo" aria-label="Lend to">${Object.entries(S.members).map(([k,m])=>`<option value="${k}">${esc(m.name)}</option>`).join('')}</select><button class="btn btn-primary sm" data-act="cpLendGo" data-id="${c.id}">Lend</button><button class="link-btn sm" data-act="cpLend" data-id="">Cancel</button></span>`
     :`<button class="btn btn-ghost sm" data-act="cpLend" data-id="${c.id}">Mark Loaned</button>`;
-  return `<div class="copy"><span class="avatar" style="background:${avBg(c.owner)}">${avInit(c.owner)}</span><div class="cp-main"><div class="small"><b>${FMT[c.format]}</b>${c.edition?` · ${esc(c.edition)}`:''}${c.where?` · ${esc(c.where)}`:''}</div><div class="xs muted">Owned by ${esc(nameOf(c.owner))}${mine?` · <button type="button" class="link-btn sm copy-edit-link" data-act="cpEdit" data-id="${c.id}" aria-label="Edit ${esc(FMT[c.format])} copy${c.edition?' — '+esc(c.edition):''}">Edit</button>`:''}</div></div>
+  return `<div class="copy"><span class="avatar" style="background:${avBg(c.owner)}">${avInit(c.owner)}</span><div class="cp-main"><div class="small"><b>${esc(copyName(c))}</b></div><div class="xs muted">Owned by ${esc(nameOf(c.owner))}${mine?` · <button type="button" class="link-btn sm copy-edit-link" data-act="cpEdit" data-id="${c.id}" aria-label="Edit ${esc(FMT[c.format])} copy${c.edition?' — '+esc(c.edition):''}">Edit</button>`:''}</div></div>
   <span class="avail ${ph?(c.loanTo||hold?'loan':'ok'):''}">${ph?(c.loanTo?(c.loanTo==='me'?'On loan to you':`On loan to ${esc(nameOf(c.loanTo))}`):hold?(hold.from==='me'?'On hold for you':`On hold for ${esc(nameOf(hold.from))} — awaiting pickup`):'Available'):'Digital'}</span>
   <span class="cp-act">${act}${mine&&!S.settings.solo?`<button class="link-btn sm cp-share" data-act="cpShare" data-id="${c.id}" aria-pressed="${!c.private}" title="Show this copy in the ${esc(GN())} Library">${c.private?`${ic('lock')}Only Me`:`${ic('users')}Shared`}</button>`:''}${mine?`<button class="link-btn sm" data-act="cpRemove" data-id="${c.id}">Remove</button>`:''}</span></div>${bd.reqNote===c.id&&!mine&&!mr?`<div class="req-in req-compose"><label class="f"><span>Note to ${esc(nameOf(c.owner))} <span class="sub">(optional)</span></span><textarea class="inp" id="reqNoteTx" rows="2" maxlength="200" data-count="200" aria-describedby="reqNoteCount" placeholder="When you could pick it up, or why you'd like to read it"></textarea>${charCount('reqNoteCount',0,200)}</label><span class="req-btns"><button class="btn btn-ghost sm" data-act="reqNoteOpen" data-id="">Cancel</button><button class="btn btn-primary sm" data-act="reqBorrow" data-id="${c.id}">${free?'Send Request':'Join the Waiting Line'}</button></span></div>`:''}${incoming.map((r,i)=>`<div class="req-in"><span class="small">${free?'':`<span class="xs muted">${ordinal(i+1)} in line · </span>`}<b>${esc(nameOf(r.from))}</b> asked to borrow this ${ago(r.ts)}.${r.note?`<span class="req-msg">“${esc(r.note)}”</span>`:''}</span>${replyBtns(r,free)}</div>`).join('')}`;
 }
 /* A reading keeps its own edition label: selecting a copy copies the label, never a live reference. */
+/* A copy's name: its edition when it has one; otherwise just the format when it's your only copy in that format;
+   otherwise what tells it apart (shared or private, on loan, Kindle or Audible); only when nothing does, (1 of 2). */
+function copyName(c,{mineOnly=false}={}){const sib=S.copies.filter(x=>x.titleId===c.titleId&&x.owner===c.owner&&x.format===c.format),f=FMT[c.format]||'Copy';
+  if(c.edition)return `${f} · ${c.edition}`;const plain=sib.filter(x=>!x.edition);if(plain.length<2)return c.where?`${f} · ${c.where}`:mineOnly?`Your ${f.toLowerCase()} copy`:f;
+  const tags=x=>[x.where||'',x.loanTo?`on loan to ${nameOf(x.loanTo)}`:'available',S.settings.solo?'':x.private?'private':'shared'],mine=tags(c),diff=[0,1,2].filter(k=>new Set(plain.map(x=>tags(x)[k])).size>1);
+  const parts=diff.map(k=>mine[k]).filter(Boolean);return parts.length?`${f} · ${parts.join(' · ')}`:`${f} (${plain.indexOf(c)+1} of ${plain.length})`}
 function readingEditionFields(b,prefix,includeNew=false){
   const copies=(S.copies||[]).filter(c=>c.titleId===b.titleId&&c.owner==='me');
   const selected=b.editionCopyId==='__new'&&includeNew?'__new':copies.some(c=>c.id===b.editionCopyId)?b.editionCopyId:'';
   const useNew=selected==='__new',opt='<span class="sub">(optional)</span>';
-  return `<div class="reading-edition" data-edition-prefix="${prefix}">${copies.length||includeNew?`<label class="f"><span>Copy for This Reading ${opt}</span><select class="inp" id="${prefix}Copy" name="${prefix}Copy" data-edition-copy><option value="">Other or Not Specified</option>${includeNew?`<option value="__new" ${useNew?'selected':''}>Copy I’m Adding</option>`:''}${copies.map((c,i)=>`<option value="${esc(c.id)}" ${selected===c.id?'selected':''}>${esc(FMT[c.format])} · ${esc(c.edition||'Copy '+(i+1))}</option>`).join('')}</select></label><button type="button" class="link-btn sm" data-act="editReadingCopy" ${selected&&selected!=='__new'?'':'hidden'}>Edit My Copy</button>`:''}<label class="f" data-edition-label ${useNew?'hidden':''}><span>Edition ${opt}</span><input class="inp" id="${prefix}Edition" name="${prefix}Edition" value="${esc(b.edition||'')}" maxlength="200" placeholder="e.g. Illustrated, revised, or a translation"></label>${includeNew?`<p class="xs muted addb-help" data-edition-new ${useNew?'':'hidden'}>Uses the edition entered under I Own a Copy below.</p>`:''}</div>`;
+  return `<div class="reading-edition" data-edition-prefix="${prefix}">${copies.length||includeNew?`<label class="f"><span>Copy for This Reading ${opt}</span><select class="inp" id="${prefix}Copy" name="${prefix}Copy" data-edition-copy><option value="">Other or Not Specified</option>${includeNew?`<option value="__new" ${useNew?'selected':''}>Copy I’m Adding</option>`:''}${copies.map((c,i)=>`<option value="${esc(c.id)}" ${selected===c.id?'selected':''}>${esc(copyName(c,{mineOnly:true}))}</option>`).join('')}</select></label><button type="button" class="link-btn sm" data-act="editReadingCopy" ${selected&&selected!=='__new'?'':'hidden'}>Edit My Copy</button>`:''}<label class="f" data-edition-label ${useNew?'hidden':''}><span>Edition ${opt}</span><input class="inp" id="${prefix}Edition" name="${prefix}Edition" value="${esc(b.edition||'')}" maxlength="200" placeholder="e.g. Illustrated, revised, or a translation"></label>${includeNew?`<p class="xs muted addb-help" data-edition-new ${useNew?'':'hidden'}>Uses the edition entered under I Own a Copy below.</p>`:''}</div>`;
 }
 function readEdition(root,prefix){return {edition:root.querySelector('#'+prefix+'Edition')?.value.trim()||'',editionCopyId:root.querySelector('#'+prefix+'Copy')?.value||''}}
 function saveReadingEdition(b,v){
@@ -3801,10 +3855,16 @@ document.addEventListener('change',e=>{
 const copyEditDlg=document.getElementById('copyEditDlg'),copyEditForm=document.getElementById('copyEditForm');
 let copyEditOpener=null;
 const copyHasCommitment=c=>!!c.loanTo||(S.loanReqs||[]).some(r=>r.copyId===c.id&&['pending','approved','loaned'].includes(r.status));
-function inlineCopyRow(c={}){return `<div class="inline-copy" data-copy-id="${esc(c.id||'')}" style="display:grid;gap:8px;margin-top:10px"><div class="f2"><label class="f">Copy Format<select class="inp" data-copy-format ${c.id&&copyHasCommitment(c)?'disabled':''}>${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${(c.format||'physical')===k?'selected':''}>${l}</option>`).join('')}</select></label><label class="f"><span>Edition <span class="sub">(optional)</span></span><input class="inp" data-copy-edition maxlength="200" value="${esc(c.edition||'')}" placeholder="Optional"></label></div>${S.settings.solo?'':`<label class="chk xs"><input type="checkbox" data-copy-shared ${c.id?!c.private?'checked':'':shareDefault()?'checked':''}> Show in the ${esc(GN())} Library</label>`}${c.id&&copyHasCommitment(c)?'<span class="xs muted">Format is locked while this copy has a loan, hold, or requests.</span>':''}</div>`}
+const isbnLook=()=>`<div class="isbn-look"><label class="fl isbn-l"><span>ISBN <span class="sub">(optional)</span></span></label><span class="isbn-row"><input class="inp" data-isbn inputmode="numeric" autocomplete="off" placeholder="From the back cover or copyright page" aria-label="ISBN of this copy (optional)"><button type="button" class="btn btn-ghost sm" data-act="isbnGo">Look Up</button></span><span class="xs muted isbn-msg" aria-live="polite">Fills in the edition from Open Library.</span></div>`;
+/* The edition text from an Open Library edition: its edition name and format, then publisher and year, e.g.
+   "Paperback · Simon & Schuster, 2013". Only the text is kept (copies have no ISBN field on the live site). */
+function isbnEdition(d){const y=(String(d.publish_date||'').match(/\b(1[5-9]|20)\d\d\b/)||[''])[0],pub=(d.publishers||[])[0]||'';
+  const pf=/ebook|e-book|kindle|electronic|audio|cd|mp3/i.test(d.physical_format||'')?'':d.physical_format;   // the format list already says Ebook or Audiobook
+  const a=[d.edition_name,pf].filter(Boolean).map(x=>String(x).trim()),b=[pub,y].filter(Boolean).join(', ');return [...a,b].filter(Boolean).join(' · ').slice(0,200)}
+function inlineCopyRow(c={}){return `<div class="inline-copy" data-copy-id="${esc(c.id||'')}" style="display:grid;gap:8px;margin-top:10px"><div class="f2"><label class="f">Copy Format<select class="inp" data-copy-format ${c.id&&copyHasCommitment(c)?'disabled':''}>${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${(c.format||'physical')===k?'selected':''}>${l}</option>`).join('')}</select></label><label class="f"><span>Edition <span class="sub">(optional)</span></span><input class="inp" data-copy-edition maxlength="200" value="${esc(c.edition||'')}" placeholder="Optional"></label></div>${isbnLook()}${S.settings.solo?'':`<label class="chk xs"><input type="checkbox" data-copy-shared ${c.id?!c.private?'checked':'':shareDefault()?'checked':''}> Show in the ${esc(GN())} Library</label>`}${c.id&&copyHasCommitment(c)?'<span class="xs muted">Format is locked while this copy has a loan, hold, or requests.</span>':''}</div>`}
 function copyAccess(tid){const cs=copiesOf(tid).filter(c=>c.owner==='me');return `<div style="display:flex;justify-content:space-between;align-items:center"><div class="section-t">${cs.length===1?'Your Copy':'Your Copies'}</div><button type="button" class="link-btn sm" data-act="teAddCopy">${ic('plus')}${cs.length?'Another Copy':'I Own a Copy'}</button></div><div class="copy-access">${cs.map(c=>inlineCopyRow(c)).join('')}</div><span class="xs muted">Earlier readings keep their saved editions.</span>`}
 function openCopyEdit(id,opener){const c=S.copies.find(c=>c.id===id&&c.owner==='me');if(!c)return;copyEditOpener=opener||document.activeElement;copyEditForm.dataset.id=id;copyEditForm.dataset.originalEdition=c.edition||'';
-  copyEditForm.innerHTML=`<div class="dlg-h"><div><h2 id="copyEditTitle">Edit My Copy</h2><p class="small muted">${esc(titleById(c.titleId)?.title||'Book')}</p></div><button type="button" class="icon-btn x" data-act="cpEditClose" aria-label="Close">${ic('x')}</button></div><div class="form"><label class="f">Copy Format<select class="inp" name="copyFormat" ${copyHasCommitment(c)?'disabled':''}>${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${c.format===k?'selected':''}>${l}</option>`).join('')}</select></label>${copyHasCommitment(c)?'<p class="xs muted">Resolve the loan, hold, or requests before changing this copy’s format or removing it.</p>':''}<label class="f"><span>Edition <span class="sub">(optional)</span></span><input class="inp" name="copyEdition" maxlength="200" value="${esc(c.edition||'')}" placeholder="e.g. Illustrated or revised"></label>${S.settings.solo?'':`<label class="chk"><input type="checkbox" name="copyShared" ${c.private?'':'checked'}> Show this copy in the ${esc(GN())} Library</label>`}<p class="xs muted">Changes apply to this copy. Your earlier readings keep their saved editions.</p><div id="copyEditError" class="err" role="alert"></div><div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="cpEditClose">Cancel</button><button type="submit" class="btn btn-primary">Save Copy</button></div></div>`;
+  copyEditForm.innerHTML=`<div class="dlg-h"><div><h2 id="copyEditTitle">Edit My Copy</h2><p class="small muted">${esc(titleById(c.titleId)?.title||'Book')}</p></div><button type="button" class="icon-btn x" data-act="cpEditClose" aria-label="Close">${ic('x')}</button></div><div class="form"><label class="f">Copy Format<select class="inp" name="copyFormat" ${copyHasCommitment(c)?'disabled':''}>${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${c.format===k?'selected':''}>${l}</option>`).join('')}</select></label>${copyHasCommitment(c)?'<p class="xs muted">Resolve the loan, hold, or requests before changing this copy’s format or removing it.</p>':''}<label class="f"><span>Edition <span class="sub">(optional)</span></span><input class="inp" name="copyEdition" maxlength="200" value="${esc(c.edition||'')}" placeholder="e.g. Illustrated or revised"></label>${isbnLook()}${S.settings.solo?'':`<label class="chk"><input type="checkbox" name="copyShared" ${c.private?'':'checked'}> Show this copy in the ${esc(GN())} Library</label>`}<p class="xs muted">Changes apply to this copy. Your earlier readings keep their saved editions.</p><div id="copyEditError" class="err" role="alert"></div><div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="cpEditClose">Cancel</button><button type="submit" class="btn btn-primary">Save Copy</button></div></div>`;
   copyEditDlg.showModal();copyEditForm.querySelector('[name=copyEdition]')?.focus();
 }
 copyEditForm.addEventListener('submit',e=>{e.preventDefault();const c=S.copies.find(c=>c.id===copyEditForm.dataset.id&&c.owner==='me');if(!c)return;const f=new FormData(copyEditForm),format=f.get('copyFormat')||c.format,oldEdition=copyEditForm.dataset.originalEdition||'',wasPrivate=!!c.private;
@@ -3882,7 +3942,7 @@ function renderBD0(){
   if(S.settings.solo&&bd.tab==='activity')bd.tab='copies';
   let prim='';
   if(r&&(r.status==='reading'||r.status==='paused'))prim=`<button class="btn btn-primary" data-act="bdLog" data-id="${r.id}">${ic('book')}Log Reading</button>`;
-  else if(r&&r.status==='want')prim=`<button class="btn btn-primary" data-act="bdLog" data-id="${r.id}">${ic('play')}Start Reading</button><button class="btn btn-ghost on" data-act="toggleWant" data-id="${t.id}">${ic('check')}On To Read</button>${(S.upNext||[]).includes(r.id)?`<button class="btn btn-ghost on" data-act="upRm" data-id="${r.id}" title="Remove from Reading Queue">${ic('check')}In Reading Queue</button>`:`<button class="btn btn-ghost" data-act="upAdd" data-id="${r.id}">${ic('plus')}Add to Reading Queue</button>`}`;
+  else if(r&&r.status==='want')prim=`<button class="btn btn-primary" data-act="bdLog" data-id="${r.id}">${ic('play')}Start Reading</button><button class="btn btn-ghost on tw" data-act="toggleWant" data-id="${t.id}" title="Remove from To Read" aria-label="On your To Read. Remove from To Read">${ic('check')}<span class="tw-w" aria-hidden="true"><span class="tw-l">To Read</span><span class="tw-h">Remove from To Read</span></span></button>${(S.upNext||[]).includes(r.id)?`<button class="btn btn-ghost on" data-act="upRm" data-id="${r.id}" title="Remove from Reading Queue">${ic('check')}In Reading Queue</button>`:`<button class="btn btn-ghost" data-act="upAdd" data-id="${r.id}">${ic('plus')}Add to Reading Queue</button>`}`;
   else if(r&&r.status==='finished')prim=`<button class="btn btn-primary" data-act="startTitle" data-id="${t.id}">${ic('play')}Read Again</button>`;
   else if(r&&r.status==='dnf')prim=`<button class="btn btn-primary" data-act="pickup" data-book="${r.id}">${ic('play')}Pick Up Again</button>`;
   else prim=`<button class="btn btn-primary" data-act="toggleWant" data-id="${t.id}">${ic('plus')}Add to To Read</button>`;
@@ -3902,16 +3962,19 @@ function renderBD0(){
       +`<div class="small" style="margin-top:8px">${t.series?`${esc(t.series)}${t.seriesNo!=null?`, Book ${t.seriesNo}`:''} · `:''}<button class="link-btn sm" data-act="srOpen" data-id="${t.id}" style="padding:0 2px">${t.series?'See the Whole Series':'Is This Part of a Series?'}</button></div>`;
   }else if(bd.tab==='copies'){
     body=(cs.length?cs.map(copyRow).join(''):`<p class="small muted">${S.settings.solo?'You haven’t added a copy of this book.':'Nobody in your group owns a copy yet.'}</p>`)+
-      (bd.addCopy?`<div class="addcopy"><select class="inp sm" id="acFmt" aria-label="Format"><option value="physical">Physical</option><option value="ebook">Ebook</option><option value="audio">Audiobook</option></select><input class="inp sm" id="acEdition" placeholder="Edition (optional)" aria-label="Edition (optional)">${S.settings.solo?'':`<label class="chk xs"><input type="checkbox" id="acShare" ${shareDefault()?'checked':''}> Show in ${esc(GN())} Library</label>`}<button class="btn btn-primary sm" data-act="bdAddCopyGo">Add My Copy</button><button class="link-btn sm" data-act="bdAddCopy">Cancel</button></div>`
+      (bd.addCopy?`<div class="addcopy"><select class="inp sm" id="acFmt" aria-label="Format"><option value="physical">Physical</option><option value="ebook">Ebook</option><option value="audio">Audiobook</option></select><input class="inp sm" id="acEdition" placeholder="Edition (optional)" aria-label="Edition (optional)">${isbnLook()}${S.settings.solo?'':`<label class="chk xs"><input type="checkbox" id="acShare" ${shareDefault()?'checked':''}> Show in ${esc(GN())} Library</label>`}<button class="btn btn-primary sm" data-act="bdAddCopyGo">Add My Copy</button><button class="link-btn sm" data-act="bdAddCopy">Cancel</button></div>`
       :`<button class="link-btn" data-act="bdAddCopy">${ic('plus')}I Own a Copy</button>`);
   }else if(bd.tab==='mine'){
     if(!r)body=`<p class="small muted">You haven’t read this book yet. Add it to your To Read list to keep it handy.</p>`;
     else{
       const prog=progText(r);
-      body=`<div class="st st-${r.status}">${STATUS[r.status]}</div> <button class="link-btn sm" data-act="editBook" data-book="${r.id}">${ic('pencil')}Change Status or Details</button>
+      body=`<div class="st st-${r.status}">${STATUS[r.status]}</div> ${['reading','paused'].includes(r.status)?`<button class="link-btn sm" data-act="log" data-book="${r.id}">${ic('book')}Log Reading</button>`:`<button class="link-btn sm" data-act="editBook" data-book="${r.id}">${ic('pencil')}Change Status or Details</button>`}
       ${r.status!=='want'&&r.format!=='unknown'?(hasLen(r)?`<div class="bar" style="margin-top:12px"><span style="width:${pct(r)}%"></span></div><div class="xs muted">${prog} · ${pct(r)}%</div>`:`<div class="len-box"><div class="small">${prog}</div><div class="xs muted">${addLenLink(r)}</div></div>`):''}
       <div class="xs muted" style="margin-top:6px">${[r.started?`Started ${fmtDateY(r.started)}`:'',r.finished?`Finished ${fmtDateY(r.finished)}`:r.status==='finished'?finUnknown(r):'',r.dnfOn?`Set aside ${fmtDateY(r.dnfOn)}`:''].filter(Boolean).join(' · ')}</div>${(r.with||[]).length?`<div class="xs muted">Read with ${esc((n=>n.length>1?n.slice(0,-1).join(', ')+' and '+n.at(-1):n[0])(r.with.map(nameOf)))}</div>`:''}
       ${lastNoteBox(r)}
+      ${(()=>{const ss=S.sessions.filter(x=>x.bookId===r.id).reverse().sort((a,b)=>(b.date+(b.from||'')).localeCompare(a.date+(a.from||'')));if(!ss.length)return '';
+        const row=x=>`<div class="bd-sess"><span class="small">${esc(sessLine(x,r))}${x.note?` <span class="muted">· “${esc(x.note.length>60?x.note.slice(0,60)+'…':x.note)}”</span>`:''}</span><button type="button" class="link-btn sm" data-act="sessEdit" data-id="${x.id}" aria-label="Edit the session on ${esc(fmtDate(x.date))}">Edit</button></div>`;
+        return `<div class="bd-sessions"><div class="small" style="font-weight:600">Your Sessions <span class="muted" style="font-weight:400">${ss.length}</span></div>${ss.map(row).join('')}</div>`})()}
       ${r.edition?`<div class="small" style="margin-top:10px">Edition: ${esc(r.edition)}</div>`:''}
       ${r.status==='finished'?`<div class="rate"><span class="small">Your Rating <span class="muted">(${rateWho()})</span></span>${starsFor(r)}</div>`
         :r.status==='dnf'?`<div class="rate dnf-why"><span class="small">${r.dnfWhy||r.dnfNote?`Why you stopped: <b>${esc(dnfWhyL(r.dnfWhy)||'')}</b>${r.dnfNote?` “${esc(r.dnfNote)}”`:''}`:'<span class="muted">No reason given for stopping.</span>'}</span><button class="link-btn sm" data-act="dnfEdit" data-book="${r.id}">${r.dnfWhy||r.dnfNote?'Change':'Add a Reason'}</button></div>`:''}`;
@@ -3981,8 +4044,8 @@ function rwbRender(){const el=document.getElementById('rwbRes');if(!el||!rwb)ret
   const q=rwb.q.trim().toLowerCase();if(!q){el.innerHTML='<p class="xs muted" style="margin:0">Type the title of the book you actually read.</p>';return}
   const local=S.titles.filter(t=>t.id!==rwb.from&&(t.title+' '+t.author).toLowerCase().includes(q)).slice(0,8);
   const o=rwb.ol,ols=o&&o.state==='done'?o.items.map((x,i)=>({x,i})).filter(({x})=>{const e=olExisting(x);return !(e&&(e.id===rwb.from||local.includes(e)))}):[];
-  el.innerHTML=(local.length?`<div class="pick-h">In Reading Ember</div><div class="pick-list">${local.map(t=>`<button type="button" class="pick addb-choice" data-act="rwbPick" data-id="${esc(t.id)}">${libCover(t)}<span class="addb-choice-info"><span class="pick-t">${esc(t.title)}</span><span class="xs muted">${esc(t.author)}${t.pages?` · ${t.pages} pages`:''}</span></span></button>`).join('')}</div>`:'')
-   +(q.length<3?'':!o||o.state==='loading'?'<div class="pick-h">From Open Library</div><p class="xs muted" role="status">Searching Open Library…</p>':o.state==='error'?'<p class="xs muted">Open Library didn’t answer. Check your connection and try again.</p>':ols.length?`<div class="pick-h">From Open Library</div><div class="pick-list">${ols.map(({x,i})=>`<button type="button" class="pick addb-choice" data-act="rwbPickOL" data-i="${i}">${libCover({title:x.title,author:x.author,c:hashStr(x.title)%COVERS.length,cover:x.coverId?`https://covers.openlibrary.org/b/id/${x.coverId}-S.jpg`:''})}<span class="addb-choice-info"><span class="pick-t">${esc(x.title)}</span><span class="xs muted">${[esc(x.author),x.year,x.pages?`${x.pages} pages`:''].filter(Boolean).join(' · ')}</span></span></button>`).join('')}</div>`:local.length?'':'<p class="xs muted">No matches. Check the spelling, or try the author or ISBN.</p>')}
+  el.innerHTML=(local.length?`<div class="pick-h">Results</div><div class="pick-list">${local.map(t=>`<button type="button" class="pick addb-choice" data-act="rwbPick" data-id="${esc(t.id)}">${libCover(t)}<span class="addb-choice-info"><span class="pick-t">${esc(t.title)}</span><span class="xs muted">${esc(t.author)}${t.pages?` · ${t.pages} pages`:''}</span>${findWhere(t)?`<span class="xs addb-existing">${esc(findWhere(t))}</span>`:''}</span></button>`).join('')}</div>`:'')
+   +(q.length<3?'':!o||o.state==='loading'?'<div class="pick-h">From Open Library</div><p class="xs muted" role="status">Searching Open Library…</p>':o.state==='error'?'<p class="xs muted">Open Library didn’t answer. Check your connection and try again.</p>':ols.length?`<div class="pick-h">${local.length?'More from':'From'} Open Library</div><div class="pick-list">${ols.map(({x,i})=>`<button type="button" class="pick addb-choice" data-act="rwbPickOL" data-i="${i}">${libCover({title:x.title,author:x.author,c:hashStr(x.title)%COVERS.length,cover:x.coverId?`https://covers.openlibrary.org/b/id/${x.coverId}-S.jpg`:''})}<span class="addb-choice-info"><span class="pick-t">${esc(x.title)}</span><span class="xs muted">${[esc(x.author),x.year,x.pages?`${x.pages} pages`:''].filter(Boolean).join(' · ')}</span></span></button>`).join('')}</div>`:local.length?'':'<p class="xs muted">No matches. Check the spelling, or try the author or ISBN.</p>')}
 function rwbSearch(){clearTimeout(rwbTimer);const raw=rwb.q.trim();if(raw.length<3){rwbCtl?.abort();rwb.ol=null;rwbRender();return}rwb.ol={state:'loading',items:[]};rwbRender();
   rwbTimer=setTimeout(async()=>{rwbCtl?.abort();rwbCtl=new AbortController();const mine=rwb;try{const items=await olSearch(raw,rwbCtl.signal);if(rwb===mine&&rwb.q.trim()===raw){rwb.ol={state:'done',items};rwbRender()}}catch(e){if(e.name!=='AbortError'&&rwb===mine){rwb.ol={state:'error',items:[]};rwbRender()}}},350)}
 function rwbReplace(){const from=titleById(rwb.from),er=m=>{document.getElementById('rwbErr').textContent=m};
@@ -4216,16 +4279,26 @@ function adResults(){
   const raw=ad.q.trim(),q=raw.toLowerCase(),isbn=raw.replace(/[-\s]/g,'');
   if(!q)return `<p class="xs muted" style="margin:0">Type a title, author, or ISBN. Choose a book, then set its reading status and whether you own a copy.</p>`;
   const res=S.titles.filter(t=>(t.title+' '+t.author).toLowerCase().includes(q)||t.isbn&&t.isbn===isbn);
-  const local=res.length?`<div class="pick-h">In Reading Ember</div><div class="pick-list">${res.map(adLocalRow).join('')}</div>`:'';
+  const local=res.length?`<div class="pick-h">Results</div><div class="pick-list">${res.map(adLocalRow).join('')}</div>`:'';
   return local+olSection(res);
 }
-function adLocalRow(t){const r=myReading(t.id),own=copiesOf(t.id).some(c=>c.owner==='me'),added=ad.added?.has(t.id);
-  return `<button type="button" class="pick addb-choice" data-act="adPick" data-id="${esc(t.id)}">${libCover(t)}<span class="addb-choice-info"><span class="pick-t">${esc(t.title)}</span><span class="xs muted">${esc(t.author)}${t.pages?` · ${t.pages} pages`:''}</span>${added||r||own?`<span class="xs addb-existing">${added?'Added':r?STATUS[r.status]:'You own a copy'}</span>`:''}</span>${ic('chevR')}</button>`}
+/* Where a catalog book can be found (James, Nov 25: "If I can't find a book in Library, it shouldn't tell me it's there"):
+   in My Books, or in someone's shared copies in the group library. A book only in the catalog gets no line. */
+function findWhere(t){const r=myReading(t.id);if(r)return `${STATUS[r.status]} · in My Books`;if(copiesOf(t.id).some(c=>c.owner==='me'))return 'You own a copy · in My Books';
+  const who=[...new Set(sharedCopiesOf(t.id).filter(c=>c.owner!=='me').map(c=>nameOf(c.owner)))];return who.length?`In the ${GN()} Library · ${who.slice(0,2).join(', ')}${who.length>2?` +${who.length-2}`:''}`:''}
+function adLocalRow(t){const added=ad.added?.has(t.id),where=added?'Added':findWhere(t);
+  return `<button type="button" class="pick addb-choice" data-act="adPick" data-id="${esc(t.id)}">${libCover(t)}<span class="addb-choice-info"><span class="pick-t">${esc(t.title)}</span><span class="xs muted">${esc(t.author)}${t.pages?` · ${t.pages} pages`:''}</span>${where?`<span class="xs addb-existing">${esc(where)}</span>`:''}</span>${ic('chevR')}</button>`}
 function adCaptureManual(){const v=id=>document.getElementById(id)?.value||'';ad.manual={title:v('amTitle'),author:v('amAuthor'),pages:v('amPages'),genre:v('amGenre'),type:v('amType')}}
 function adCaptureDetail(){const d=ad.detail;if(!d)return;adMoreCapture(d);const v=id=>document.getElementById(id);for(const[k,id]of Object.entries({status:'adStatus',format:'adReadFormat',total:'adTotal',pos:'adPosition',started:'adStarted',finished:'adFinished',stopped:'adStopped',rating:'adRating',copyFormat:'adCopyFormat',edition:'adCopyEdition'}))if(v(id))d[k]=v(id).value;for(const[k,id]of Object.entries({own:'adOwnCopy',share:'adShare',queue:'adQueue',noPost:'adNoPost'}))if(v(id))d[k]=v(id).checked;if(v('adReasons'))d.reasons=[...v('adReasons').querySelectorAll('input:checked')].map(e=>e.value);if(addBody.querySelector('[data-edition-prefix=adReading]')){const e=readEdition(addBody,'adReading');d.readingEdition=e.edition;d.readingCopyId=e.editionCopyId}}
+/* Found by searching an ISBN: that ISBN is the reader's edition. Put it in ISBN of My Edition and fill Edition (the reading's
+   and, if they tick I Own a Copy, the copy's) from Open Library, without overwriting anything typed. */
+function adIsbnFill(d){const isbn=olIsbn(ad.q||'');if(!d||!isbn||(d.existing&&!d.reread))return;d.isbnQ=isbn;const ix=document.getElementById('axIsbn');if(ix&&!ix.value)ix.value=isbn;
+  fetchRetry(`https://openlibrary.org/isbn/${isbn}.json`).then(r=>r.ok?r.json():null).then(j=>{const txt=j&&isbnEdition(j);if(!txt||ad.detail!==d)return;
+    if(addDlg.open)adCaptureDetail();let used=false;if(!d.readingEdition){d.readingEdition=txt;used=true}if(!d.edition){d.edition=txt;used=true}
+    if(!used)return;d.edFrom=txt;if(addDlg.open){const sc=addDlg.scrollTop,f=document.activeElement?.id;renderAdd();addDlg.scrollTop=sc;if(f)document.getElementById(f)?.focus()}}).catch(()=>{})}
 function adChoose(t,x,manual=false){
   ad.scroll=addDlg.scrollTop;const resumed=manual&&ad.manualDetail&&(ad.manualDetail.t?.id||null)===(t?.id||null)?ad.manualDetail:null;ad.manualDetail=null;const r=t&&myReading(t.id),look=t||{title:x.title,author:x.author,pages:x.pages,genre:x.genre||'',type:x.type||'',c:hashStr(x.title)%COVERS.length,cover:x.coverId?`https://covers.openlibrary.org/b/id/${x.coverId}-M.jpg`:''};
-  ad.detail={t:t||null,x:x||null,manual,look,existing:r||null,reread:false,status:r?.status||ad.lastStatus||'want',format:r?.format||(['reading','paused'].includes(ad.lastStatus)?'print':'unknown'),total:r?.total||look.pages||'',pos:'',started:'',finished:'',stopped:'',rating:'',own:false,share:shareDefault(),copyFormat:'physical',queue:false,reasons:[],edition:'',readingEdition:'',readingCopyId:'',extraCopy:false};if(resumed)ad.detail={...resumed,t:t||null,x:x||null,look,existing:r||null};renderAdd();addDlg.scrollTop=0;setTimeout(()=>document.getElementById('adDetailHeading')?.focus(),0);
+  ad.detail={t:t||null,x:x||null,manual,look,existing:r||null,reread:false,status:r?.status||ad.lastStatus||'want',format:r?.format||(['reading','paused'].includes(ad.lastStatus)?'print':'unknown'),total:r?.total||look.pages||'',pos:'',started:'',finished:'',stopped:'',rating:'',own:false,share:shareDefault(),copyFormat:'physical',queue:false,reasons:[],edition:'',readingEdition:'',readingCopyId:'',extraCopy:false};if(resumed)ad.detail={...resumed,t:t||null,x:x||null,look,existing:r||null};renderAdd();addDlg.scrollTop=0;setTimeout(()=>document.getElementById('adDetailHeading')?.focus(),0);if(!resumed&&!manual)adIsbnFill(ad.detail);
 }
 function adBack(){adCaptureDetail();if(ad.detail?.manual)ad.manualDetail=ad.detail;ad.detail=null;renderAdd();requestAnimationFrame(()=>{addDlg.scrollTop=ad.scroll||0;const el=document.getElementById(ad.tab==='manual'?'amTitle':'adQ');el?.focus({preventScroll:true})})}
 /* Add Book (Nov 10): an optional, closed Book Details section with the same rules as Edit Book. A new book is yours, so
@@ -4240,7 +4313,7 @@ function adMore(d){const ex=adMoreTarget(d),full=!ex||canEditTitle(ex),m=d.more|
   ${full||!b.series?`<div class="f2">${inp(true,'Series Name <span class="sub">(optional)</span>','axSeries',val('series'))}${inp(true,'Book Number','axSeriesNo',val('seriesNo'),'inputmode="decimal"')}</div>`:teRO('Series',`${b.series}${b.seriesNo!=null?` · Book ${b.seriesNo}`:''}`)}
   ${inp(full||!b.year,'Year Published <span class="sub">(first published)</span>','axYear',val('year',d.x?.year),'inputmode="numeric" maxlength="4"')}
   ${full||!b.descText?`<label class="f"><span>Description <span class="sub">(optional, shown in About)</span></span><textarea class="inp" id="axDesc" rows="2" maxlength="3000" placeholder="What the book is about, without spoilers">${esc(m.descText??b.descText??'')}</textarea></label>`:teRO('Description',b.descText.length>120?b.descText.slice(0,120)+'…':b.descText)}
-  ${inp(true,'ISBN of My Edition <span class="sub">(optional, only you see it)</span>','axIsbn',m.isbn??(ex?myEd(ex.id).isbn:'')??'','inputmode="numeric"')}</div></details>`}
+  ${inp(true,'ISBN of My Edition <span class="sub">(optional, only you see it)</span>','axIsbn',m.isbn??((ex&&myEd(ex.id).isbn)||d.isbnQ||''),'inputmode="numeric"')}</div></details>`}
 function adMoreCapture(d){const g=id=>document.getElementById(id);if(!g('axIsbn'))return;const box=document.querySelector('.addb-more');d.moreOpen=!!box?.open;const m=d.more=d.more||{};
   if(g('axGenre'))m.genre=g('axGenre').value.trim();if(g('axType'))m.type=g('axType').value;if(g('axSeries')){m.series=g('axSeries').value.trim();m.seriesNo=g('axSeriesNo').value.trim()}
   if(g('axYear'))m.year=g('axYear').value.trim();if(g('axDesc'))m.descText=g('axDesc').value.trim();m.isbn=g('axIsbn').value.replace(/[-\s]/g,'').toUpperCase()}
@@ -4268,10 +4341,10 @@ function adDetails(){const d=ad.detail,t=d.look,locked=d.existing&&!d.reread,aud
       ${d.status==='finished'?`${input('adFinished',`Finish Date ${opt}`,d.finished,`type="date" max="${today()}"`)}<p class="xs muted addb-help">Leave blank for Finished, date unknown.</p><label class="f"><span>Your Rating ${opt}</span><select class="inp" id="adRating"><option value="">Not Rated</option>${Array.from({length:10},(_,i)=>(i+1)/2).map(n=>`<option value="${n}" ${+d.rating===n?'selected':''}>${n} ${n===1?'star':'stars'}</option>`).join('')}</select></label>`:''}
       ${d.status==='dnf'?`${input('adStopped',`Stopped Date ${opt}`,d.stopped,`type="date" max="${today()}"`)}<fieldset class="addb-reasons" id="adReasons"><legend class="small">Why You Stopped ${opt}</legend>${DNF_WHY.map(([k,l])=>`<label class="chk small"><input type="checkbox" value="${k}" ${d.reasons.includes(k)?'checked':''}> ${l}</label>`).join('')}</fieldset>`:''}
       ${d.status==='want'?`<label class="chk small"><input id="adQueue" type="checkbox" ${d.queue?'checked':''}> Add to Reading Queue</label>`:''}
-      ${readingEditionFields({titleId:d.t?.id,edition:d.readingEdition,editionCopyId:d.readingCopyId},'adReading',d.own)}
+      ${readingEditionFields({titleId:d.t?.id,edition:d.readingEdition,editionCopyId:d.readingCopyId},'adReading',d.own)}${d.edFrom&&!d.own&&d.readingEdition===d.edFrom?'<p class="xs muted addb-help">Edition filled in from Open Library using the ISBN you searched. Change it if you like.</p>':''}
       <p class="xs muted addb-help">This adds your reading status, not a reading session.</p></div>`:''}
     <section class="addb-ownership"><label class="chk"><input id="adOwnCopy" type="checkbox" ${d.own?'checked':''}> <b>I Own a Copy</b></label>${owned.length?`<p class="xs muted addb-help">You already own: ${[...new Set(owned.map(c=>FMT[c.format]))].map(esc).join(', ')}. You can record another copy, including the same format.</p>`:''}
-      ${d.own?`<div class="addb-copy-options"><label class="f">Copy Format<select class="inp" id="adCopyFormat">${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${d.copyFormat===k?'selected':''}>${l}</option>`).join('')}</select></label>${input('adCopyEdition',`Edition ${opt}`,d.edition,'placeholder="e.g. Anniversary edition"')}${S.settings.solo?'':`<label class="chk small"><input id="adShare" type="checkbox" ${d.share?'checked':''}> Show this copy in the ${esc(GN())} Library</label>`}</div>`:'<p class="xs muted addb-help">You can track your reading without owning the book.</p>'}</section>
+      ${d.own?`<div class="addb-copy-options"><label class="f">Copy Format<select class="inp" id="adCopyFormat">${Object.entries(FMT).map(([k,l])=>`<option value="${k}" ${d.copyFormat===k?'selected':''}>${l}</option>`).join('')}</select></label>${input('adCopyEdition',`Edition ${opt}`,d.edition,'placeholder="e.g. Anniversary edition"')}${d.edFrom&&d.edition===d.edFrom?'<p class="xs muted addb-help">Edition filled in from Open Library using the ISBN you searched. Change it if you like.</p>':''}${S.settings.solo?'':`<label class="chk small"><input id="adShare" type="checkbox" ${d.share?'checked':''}> Show this copy in the ${esc(GN())} Library</label>`}</div>`:'<p class="xs muted addb-help">You can track your reading without owning the book.</p>'}</section>
     ${S.settings.share&&!S.settings.solo?`<label class="chk small ns-chk addb-np"><input id="adNoPost" type="checkbox" ${(d.noPost??noPost(d.t?.id))?'checked':''}> <span>Don’t post activity about this book <span class="sub">(your group won’t see you add, start, log, or finish it)</span></span></label>`:''}
     ${adMore(d)}
     <div class="err" id="adDetailError" role="alert"></div><div class="dlg-f"><button type="button" class="btn btn-ghost" data-act="adBack">Back</button><button type="button" class="btn btn-primary" data-act="adSave">${locked?'Add Copy':'Add Book'}</button></div></div>`;
@@ -4369,7 +4442,7 @@ async function olFetch(raw){
   const el=document.getElementById('adRes');if(el&&addDlg.open&&ad.tab==='search')el.innerHTML=adResults();
 }
 function olSection(res){
-  const raw=ad.q.trim(),o=ad.ol,h='<div class="pick-h">From Open Library</div>';
+  const raw=ad.q.trim(),o=ad.ol,h=`<div class="pick-h">${res.length?'More from':'From'} Open Library</div>`;
   const manual=`<button class="btn btn-ghost sm" data-act="adTab" data-v="manual">Add It Yourself</button>`;
   if(raw.length<3)return res.length?'':`<p class="xs muted" style="margin:0">Keep typing to search Open Library.</p>`;
   if(!o||o.q!==olKey(raw)||o.state==='loading')return h+`<p class="xs muted" role="status">Searching Open Library…</p>`;
@@ -4633,6 +4706,16 @@ function draftCancel(form,dlg,reopen,label){
   form.dataset.done='1';clearTimeout(draftTimer);if(k)draftClear(k);dlg.close();
   if(f)toast(`Discarded your ${label}.`,()=>{const d=draftsAll();d[k]={f,ts:Date.now()};draftsPut(d);reopen()});
 }
+/* One line for a session (Last session, Your Sessions), and the figure its Group Activity post shows (Nov 24) */
+function sessLine(x,b){const audio=b?.format==='audio',d=isCU(x)?`${fmtDate(x.from)}–${fmtDate(x.date)}`:fmtDate(x.date);
+  const pg=x.start!=null&&x.end!=null?(audio?`${fmtPos(x.start)}–${fmtPos(x.end)}`:x.unit==='pct'?`${x.start}%–${x.end}%`:`p. ${x.start}–${x.end}`):x.pages?`${x.pages} pages`:'';
+  return [d,pg,x.minutes?fmtMin(x.minutes):x.est?`~${fmtMin(x.est)}`:''].filter(Boolean).join(' · ')}
+function sessPostExtra(x,b){const span=x.start!=null&&x.end!=null?x.end-x.start:0;
+  return x.minutes!=null?fmtMin(x.minutes):b?.format==='audio'?`${fmtMin(span)} of audio`:x.unit==='pct'?`${+span.toFixed(1)}% of the book`:`${x.pages||span} pages`}
+/* B (James, Nov 24): a session's post follows it. Editing the session updates the post's figure; deleting it removes the post. */
+function sessPostsSync(x,b,gone){const mine=S.activity.filter(a=>a.who==='me'&&!a.fromGroup&&a.sid===x.id);if(!mine.length)return;
+  if(gone){S.activity=S.activity.filter(a=>!mine.includes(a));S.actGone=(S.actGone||[]).concat(mine.map(a=>({id:a.id,ts:Date.now()})));return}
+  mine.forEach(a=>{a.extra=sessPostExtra(x,b)})}
 function openSess(id){
   const x=S.sessions.find(y=>y.id===id);if(!x)return;const b=book(x.bookId),audio=b?.format==='audio',pc=x.unit==='pct',v=n=>n==null?'':audio?fmtPos(n):n;
   sessForm.dataset.id=id;
@@ -4674,6 +4757,7 @@ sessForm.addEventListener('submit',e=>{
   if(isCU(x))x.from=f.from;
   Object.assign(x,{date:f.date,start:st,end:en,pages,minutes:mn,note:f.note||''});
   x.est=null;if(!audio&&pages&&mn==null&&S.settings.estimate){const pc=pace(x.bookId);if(pc)x.est=Math.round(pages/pc)}else if(audio&&en!=null&&mn==null&&S.settings.estimate)x.est=en-st;
+  sessPostsSync(x,b,false);
   sessForm.dataset.done='1';draftClear(sessForm.dataset.dkey);syncPos(b);save();sessDlg.close();render();toast('Session updated.',null,'Goals, streaks, challenges, and records recalculate automatically.');
 });
 
@@ -4768,9 +4852,9 @@ const minStr=m=>{m=Math.ceil(m);if(m<60)return `${m} minute${m===1?'':'s'}`;retu
 /* Book list pace (Nov 20). A challenge is a goal, not a prediction: "to finish by Dec 31, you need this pace". It adds
    up what's left of the list's unfinished books: pages (minutes for audiobooks), so a one-book list still gets a useful
    line. A list mixing print and audio, or with books of unknown length, uses books instead. */
-function chListPace(c,p,showEstimate=false){
+function chListPace(c,p){
   const td=today();if(!c.end||td>c.end||(c.start&&td<c.start)||!p.t||p.v>=p.t||c.mode==='comp')return '';
-  const done=new Set(contrib(c).live.map(i=>i.titleId)),rest=(c.titleIds||[]).filter(id=>!done.has(id));if(!rest.length)return '';
+  const done=new Set(contrib(c).live.map(i=>i.titleId)),rest=listOrder(c).filter(id=>!done.has(id));if(!rest.length)return '';
   const from=c.start&&c.start>addDays(td,-365)?c.start:addDays(td,-30),by=`to finish by ${fmtDateY(c.end)}`;let left=Math.max(1,daysBetween(td,c.end)),el=daysBetween(from,td)+1;
   let unit=null,amt=0;
   for(const id of rest){const b=S.books.filter(x=>x.titleId===id&&x.status!=='finished'&&x.status!=='dnf').sort((x,y)=>(y.pos||0)-(x.pos||0))[0],t=titleById(id);
@@ -4786,16 +4870,22 @@ function chListPace(c,p,showEstimate=false){
     const end=ses.some(x=>x.date===td)?td:addDays(td,-1),k=Math.min(14,Math.max(1,el)),rec=ses.filter(x=>x.date>addDays(end,-k)&&x.date<=end).reduce((a,x)=>a+q(x),0)/k;
     const f=(avg+rec)/2;   // forecast: half the whole average, half the last 14 days (Nov 23 simulation)
     const need=unit==='pages'?`About ${Math.ceil(r).toLocaleString()} page${Math.ceil(r)===1?'':'s'} a day`:`About ${minStr(r)} a day`;
-    if(f>0&&amt/f<=.8*left){
-      const finish=fmtDateY(addDays(td,Math.ceil(amt/f)-(end===td?0:1)));
-      return showEstimate?`Estimated finish: ${finish}`:`On track to finish by ${finish}`;
-    }
-    if(f>0&&amt/f<=left)return `Just on track · ${need.replace('About','about')} keeps it`;
+    const est=f>0?fmtDateY(addDays(td,Math.ceil(amt/f)-(end===td?0:1))):'';
+    if(f>0&&amt/f<=.8*left)return `On track · estimated finish ${est}`;   // today is a reading day until you've read today
+    if(f>0&&amt/f<=left)return `Just on track · estimated finish ${est}`;
     const avgTxt=unit==='pages'?(avg<1?'under 1':Math.round(avg).toLocaleString()):(avg<1?'under a minute':minStr(Math.round(avg)));
     return ses.length&&el>0?`${need} ${by} · you've averaged ${avgTxt} a day`:`${need} ${by}`}   // the average waits for a first session on the list (Nov 20)
   const n=rest.length;return `${left/n>=3?'1 '+everyStr(left/n):`About ${Math.ceil(n/left*7)} a week`} ${by}`}
+/* Reading Days and Goal Days (Nov 24): not a pace but slack. Today counts as available until it has counted. */
+function chDaysPace(c,p){const td=today();if(c.mode==='comp'||!c.start||!c.end||!p.t||td<c.start||td>c.end||p.v>=p.t)return '';
+  const counted=new Set(contrib(c).live.map(i=>i.date)),R=daysBetween(td,c.end)+(counted.has(td)?0:1),need=p.t-p.v,slack=R-need,gd=c.type==='goaldays';
+  if(slack<0)return `${p.v+R} of ${p.t} is still possible · every day counts`;
+  const tc=counted.has(td)?'':', counting today';   // the card's "days left" doesn't include today
+  if(slack===0)return gd?`Meet your goal every remaining day to make it${tc}`:`Read every remaining day to make it${tc}`;
+  return gd?`Meet your goal on ${need} of the next ${R} days${tc}`:`You can miss ${slack} more day${slack===1?'':'s'} and still make it${tc}`}
 function chPace(c,p){
   if(c.type==='list')return chListPace(c,p);
+  if(c.type==='days'||c.type==='goaldays')return chDaysPace(c,p);
   if(!['books','pages','minutes'].includes(c.type)||c.mode==='comp'||!c.start||!c.end||!p.t)return '';const td=today();if(td<c.start||td>c.end||p.v>=p.t)return '';
   const tot=daysBetween(c.start,c.end)+1;let el=daysBetween(c.start,td)+1;if(el<14&&(c.type==='books'?p.v<2:p.v<=0))return '';   // too early to say
   if(!S.sessions.some(x=>x.date===td&&!isCU(x))&&el>1)el-=1;   // today counts once you've read today (Nov 20): a morning average isn't diluted by a day not yet read, and the pace needed includes today
@@ -4863,6 +4953,13 @@ function repeatDemos(){if(!BETA||S.repeatSeeded||!S.members?.josh)return;S.repea
   const have=y=>S.challenges.some(c=>c.type==='books'&&new RegExp('^books in '+y+'$','i').test((c.name||'').trim()));
   [[2024,Math.max(1,fin(2024)-1)],[2025,fin(2025)+3],[2026,Math.max(1,fin(2026))],[2027,30]].forEach(([y,t])=>{if(!have(y))S.challenges.push(mk(y,t))});save()}
 try{repeatDemos()}catch(e){}
+/* Test site only (Nov 24): Reading Days and Goal Days examples. Each starts at the sample family's recent reading and
+   ends a week from today, with a target chosen to show each case: days to spare, every day needed, out of reach. */
+function daysDemos(){if(!BETA||S.daysSeeded||!S.members?.josh)return;S.daysSeeded=true;const td=today(),ds=[...new Set(S.sessions.map(x=>x.date))].filter(d=>d<=td).sort(),st=ds.length?ds[Math.max(0,ds.length-4)]:td,en=addDays(td,7);
+  const mk=(name,type)=>({id:'pd'+uid(),name,desc:'Days example (test site).',mode:'personal',type,target:1,start:st,end:en,creator:'me',participants:['me']});
+  const fit=(c,extra)=>{c.target=chProg(c).v+extra;return c};
+  S.challenges.push(fit(mk('Pace: Reading Days with Room to Spare','days'),5),fit(mk('Pace: Reading Days, Every Day Needed','days'),8),fit(mk('Pace: Reading Days Out of Reach','days'),11),fit(mk('Pace: Goal Days','goaldays'),4));save()}
+try{daysDemos()}catch(e){}
 function chStatus(c,p){
   const t=today();
   if(c.start&&t<c.start)return {k:'up',txt:`Starts ${fmtDateY(c.start)}`};
@@ -5036,8 +5133,7 @@ function pastChallenges(list){if(!list.length)return '';
   return `<details class="ch-past"${list.length<=3?' open':''}><summary><h2 class="ch-past-h">Past Challenges <span class="count">(${list.length})</span></h2></summary>${ys.map(y=>`<h3 class="shelf-l">${y}</h3><div class="ch-past-list">${by[y].sort((a,b)=>(b.end||'').localeCompare(a.end||'')).map(c=>{const r=chResult(c);
     return `<button type="button" class="ch-past-row" data-act="openCh" data-id="${c.id}"><span class="ch-past-n"><b>${esc(c.name)}</b><span class="xs muted">${c.mode==='personal'?'Personal':c.mode==='comp'?'Competition':'Group'}${r.when?' · '+r.when:''}</span></span><span class="small ${r.done?'ch-past-ok':'muted'}">${r.text}</span></button>`}).join('')}</div>`).join('')}</details>`}
 function challengesView(){
-  const ORDK={active:0,up:1,done:2,ended:3};
-  const sortC=list=>list.map(c=>({c,k:chStatus(c,chProg(c)).k})).sort((a,b)=>ORDK[a.k]-ORDK[b.k]).map(x=>x.c);
+  const sortC=list=>list.map(c=>({c,k:chStatus(c,chProg(c)).k})).sort(chOrder).map(x=>x.c);
   const vis=c=>showHiddenC||!hiddenC().includes(c.id),nHid=S.challenges.filter(c=>hiddenC().includes(c.id)).length;
   const mine=sortC(S.challenges.filter(c=>isMine(c)&&vis(c))),fam=sortC(S.challenges.filter(c=>c.mode!=='personal'&&canSeeCh(c)&&vis(c)));
   const hidLink=nHid?`<button class="link-btn sm b-hidden-t" data-act="chShowHidden" style="margin-top:12px">${showHiddenC?'Hide':'Show'} ${nHid} Hidden Challenge${nHid===1?'':'s'}</button>`:'';
@@ -5059,32 +5155,28 @@ function challengesView(){
 /* Group challenges work like battles: the starter can delete one only before it's completed or ended, after a confirmation naming who joined; finished ones stay as history and can be hidden from your own lists. */
 const hiddenC=()=>S.settings.hiddenCh||(S.settings.hiddenCh=[]);
 let showHiddenC=false;
-document.addEventListener('toggle',event=>{
-  if(event.target.matches?.('.cw-manage'))cv.manage=event.target.open;
-},true);
-function openCh(id){chMode='ch';cv={id,all:false,manage:false,del:false};renderCh();if(!chDlg.open)chDlg.showModal()}
+function openCh(id){chMode='ch';cv={id,all:false,del:false};renderCh();if(!chDlg.open)chDlg.showModal()}
 function renderCh(){
   const c=S.challenges.find(x=>x.id===cv.id);if(!c){chDlg.close();return}
   const p=chProg(c),st=chStatus(c,p),fam=c.mode!=='personal',joined=(c.participants||[]).includes('me'),creator=c.creator==='me',pc=p.frac!=null?Math.min(99,Math.round(p.frac*100)):p.t?Math.min(100,Math.round(p.v/p.t*100)):0;
   const left=c.end?Math.max(0,daysBetween(today(),c.end)):null;
-  const compactList=!fam&&c.type==='list'&&Boolean(c.titleIds?.length);
-  const readings=compactList?c.titleIds.map(myReading).filter(b=>b&&['reading','paused'].includes(b.status)):[];
-  const selectedReading=readings.find(b=>b.id===selBook)||readings.find(b=>b.status==='reading')||readings[0];
-  const readingRow=selectedReading&&st.k!=='ended'?`<div class="chc-row ch-list-reading">
-    ${readings.length===1?`<span class="small"><span class="muted">${selectedReading.status==='paused'?'Paused':'Reading'}:</span> <b>${esc(selectedReading.title)}</b></span>`:`<label class="small"><span class="muted">Log for</span><select id="chListReading">${readings.map(b=>`<option value="${esc(b.id)}"${b===selectedReading?' selected':''}>${esc(b.title)}</option>`).join('')}</select></label>`}
-    <button class="btn btn-primary sm" data-act="chLog" data-id="${esc(selectedReading.id)}">${ic('book')}Log Reading</button>
-  </div>`:'';
   const stats=c.mode==='comp'?[[joined?p.v:'—',c.type==='goaldays'?'your goal days':'your reading days'],[p.soFar,'days so far'],[left??'—','days left']]
     :[[`${fmtV(c,Math.max(0,p.t-p.v))}`,`${c.type==='minutes'?'':unitOf(c,2).trim()+' '}to go`],[left??'—','days left'],[fam?c.participants.length:pc+'%',fam?'participants':'complete']];
   let sec='';
   if(c.mode==='coop'){const rows=c.participants.map(w=>({w,v:valOf(c,w)})).sort((a,b)=>b.v-a.v),vis=rows.filter(r=>r.w==='me'||S.members[r.w]?.share!==false),hid=rows.length-vis.length;
     sec=`<h3 class="sec-h">Contributions</h3>${vis.map(r=>`<div class="contrib"><span class="avatar" style="background:${avBg(r.w)}">${avInit(r.w)}</span><span class="small"><b>${esc(nameOf(r.w))}</b></span><span class="small muted">${fmtV(c,r.v)}${unitOf(c,r.v)}</span><div class="bar"><span style="width:${p.t?Math.min(100,r.v/p.t*100):0}%"></span></div></div>`).join('')}${hid?`<p class="xs muted">${hid} member${hid===1?'’s':'s’'} contribution${hid===1?' is':'s are'} private but still counts toward the total.</p>`:''}`}
   else if(c.mode==='comp'){sec=`<h3 class="sec-h">Everyone’s Progress</h3><p class="xs muted" style="margin:0 0 6px">Counts ${c.type==='goaldays'?'days each person meets their own daily goal':'days each person reads'}, so every reader has a fair shot. A rest day never counts against anyone.</p>${p.ranked.map((r,i)=>{const priv=r.w!=='me'&&S.members[r.w]?.share===false;return `<div class="contrib"><span class="avatar" style="background:${avBg(r.w)}">${avInit(r.w)}</span><span class="small"><b>${esc(nameOf(r.w))}</b></span><span class="small muted">${priv?'Private':r.v+unitOf(c,r.v)}</span><div class="bar"><span style="width:${priv?0:Math.min(100,r.v/Math.max(1,p.soFar||p.t)*100)}%"></span></div></div>`}).join('')}`}
-  else if(c.type==='list'&&!compactList){sec=`<h3 class="sec-h">Books</h3>${c.titleIds.map(id=>{const t=titleById(id);return t?`<div class="b-row">${libCover(t)}<div class="cp-main"><div class="small"><b>${esc(t.title)}</b></div><div class="xs muted">${esc(t.author)}</div>${listMiss(c,id)}</div>${listMissR(c,id)||bookAct(id)}</div>`:''}).join('')}`}
+  else if(c.type==='list'&&chWall(c)){   /* Nov 24: the cover wall replaces the Books rows; status shows on the covers, and one Up Next line replaces the Start Reading buttons. A finished book that doesn't count yet keeps its row and Count It button. */
+    const done=new Set(chCovers(c).map(i=>i.titleId)),rds=listOrder(c).map(id=>!done.has(id)&&S.books.find(b=>b.titleId===id&&(b.status==='reading'||b.status==='paused'))).filter(Boolean),nx=!rds.length&&listOrder(c).find(id=>!done.has(id)&&!S.books.some(b=>b.titleId===id&&b.status==='finished'));
+    const line=(lab,t,btn)=>`<div class="cw-up"><span class="small"><span class="muted">${lab}</span> <b>${esc(t.title)}</b></span>${btn}</div>`;
+    const up=rds.length?rds.map(b=>line('Reading:',titleById(b.titleId)||b,`<button class="btn btn-primary sm" data-act="log" data-book="${b.id}">${ic('book')}Log Reading</button>`)).join(''):nx&&titleById(nx)?line('Up Next:',titleById(nx),bookAct(nx).replace('btn btn-ghost','btn btn-primary')):'';   // the window's one filled button is the next step (Nov 24)
+    const miss=listOrder(c).filter(id=>listMissR(c,id)).map(id=>{const t=titleById(id);return t?`<div class="b-row">${libCover(t)}<div class="cp-main"><div class="small"><b>${esc(t.title)}</b></div>${listMiss(c,id)}</div>${listMissR(c,id)}</div>`:''}).join('');
+    sec=up+miss}
+  else if(c.type==='list'){sec=`<h3 class="sec-h">Books</h3>${listOrder(c).map(id=>{const t=titleById(id);return t?`<div class="b-row">${libCover(t)}<div class="cp-main"><div class="small"><b>${esc(t.title)}</b></div><div class="xs muted">${esc(t.author)}</div>${listMiss(c,id)}</div>${listMissR(c,id)||bookAct(id)}</div>`:''}).join('')}`}
 
-  if(c.mode!=='comp'&&(c.mode==='personal'||joined))sec+=contribSection(c,compactList,readings);
+  if(c.mode!=='comp'&&(c.mode==='personal'||joined))sec+=contribSection(c);
   let acts='';
-  if(st.k!=='ended'&&(!fam||joined)&&!compactList)acts+=`<button class="btn btn-primary" data-act="chLog">${ic('book')}Log Reading</button>`;
+  if(st.k!=='ended'&&(!fam||joined)&&!(c.type==='list'&&chWall(c)))acts+=`<button class="btn btn-primary" data-act="chLog">${ic('book')}Log Reading</button>`;
   if(fam&&!joined&&st.k!=='ended'){const inv=(c.invited||[]).includes('me')&&!(c.declined||[]).includes('me');acts+=inv?`<div class="inv-box"><span class="small"><b>${esc(nameOf(c.invitedBy?.me||c.creator))}</b> invited you to this challenge.</span><span class="inv-acts"><button class="btn btn-ghost" data-act="chDecline" data-id="${c.id}">Decline</button><button class="btn btn-primary" data-act="chJoin" data-id="${c.id}">${ic('check')}Accept</button></span></div>`:`<button class="btn btn-primary" data-act="chJoin" data-id="${c.id}">${ic('plus')}Join Challenge</button>`}
   if(fam&&joined)acts+=`<button class="btn btn-ghost" data-act="chLeave" data-id="${c.id}">Leave Challenge</button>`;
   if(fam&&joined&&st.k!=='ended'&&!S.settings.solo)acts+=`<button class="btn btn-ghost" data-act="chInv" aria-expanded="${!!cv.inv}">${ic('users')}Invite People</button>`;
@@ -5097,9 +5189,8 @@ function renderCh(){
     :cv.del&&fam&&!finished?`<div class="b-confirm" role="alert"><div class="small"><b>Delete ${esc(c.name)}?</b> ${others.length?`${esc(others.length>1?others.slice(0,-1).join(', ')+' and '+others.at(-1):others[0])} ${others.length>1?'have':'has'} joined, and the challenge will disappear for everyone.`:'No one else has joined yet.'} Reading already logged stays in everyone’s History.</div><div class="acts"><button class="btn btn-del" data-act="chDel" data-id="${c.id}">Delete Challenge</button><button class="btn btn-ghost" data-act="chDelAsk">Keep It</button></div></div>`:'';
   chBody.innerHTML=`<div class="dlg-h"><span class="chc-ic">${ic(CT[c.type].ic)}</span><div style="flex:1;min-width:0"><h2 id="chTitle">${esc(c.name)}</h2><div class="xs muted">${MODE_L[c.mode]} · ${CT[c.type].l}${fam?` · Started by ${esc(nameOf(c.creator))}`:''}</div><div class="xs muted">${dateRange(c)} · ${st.txt}</div></div><button type="button" class="icon-btn x" data-act="closeCh" aria-label="Close">${ic('x')}</button></div>
   ${c.desc?`<p class="small" style="margin:0 0 10px">${esc(c.desc)}</p>`:''}
-  <div class="bar" style="height:10px"><span style="width:${pc}%"></span></div><div class="chc-row"><span class="small">${compactList?`${p.v} of ${p.t} finished`:p.label}</span>${c.mode==='comp'||(compactList&&p.frac==null)?'':`<span class="small muted">${pc}%${compactList?' of list read':''}</span>`}</div>
-  ${compactList?'':`<div class="stats ch-stats">${stats.map(([n,l])=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('')}</div>`}${(t=>t?`<p class="small ch-pace" style="margin:8px 0 0">${t}</p>`:'')(compactList?chListPace(c,p,true):chPace(c,p))}
-  ${readingRow}
+  <div class="bar" style="height:10px"><span style="width:${pc}%"></span></div><div class="chc-row"><span class="small">${c.type==='list'?`${fmtV(c,p.v)} of ${fmtV(c,p.t)} finished`:p.label}</span>${c.mode==='comp'?'':`<span class="small muted">${pc}%${c.type==='list'&&p.frac!=null?' of list read':''}</span>`}</div>
+  ${c.mode==='comp'?`<div class="stats ch-stats">${stats.map(([n,l])=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('')}</div>`:''}${(t=>t?`<p class="small ch-pace" style="margin:8px 0 0">${t}</p>`:'')(chPace(c,p))}
   ${sec?`<div style="margin-top:14px">${sec}</div>`:''}
   <div class="bd-acts" style="margin-top:16px">${acts}</div>${confirmBox}${cv.inv&&fam&&joined?invitePicker('ch',c.participants||[],c.invited||[],c.declined||[]):''}`;
 }
@@ -5117,31 +5208,35 @@ function ruleText(c){
 /* Cover walls (Nov 23): seeing what you've read. Goodreads readers missed the grid of finished covers. */
 function chCovers(c){if(!(c.type==='books'||c.type==='list'))return [];const seen=new Set();
   return contrib(c).live.filter(i=>i.titleId&&!seen.has(i.titleId)&&seen.add(i.titleId)).sort((a,b)=>(a.date||'').localeCompare(b.date||''))}
-function chStrip(c){const it=chCovers(c);if(!it.length)return '';const last=it.slice(-5).reverse();
+function chStrip(c){
+  if(c.type==='list'){const ids=listOrder(c);if(!ids.length)return '';const done=new Set(chCovers(c).map(i=>i.titleId)),rd=id=>S.books.some(b=>b.titleId===id&&(b.status==='reading'||b.status==='paused')),ord=[...ids.filter(id=>done.has(id)),...ids.filter(id=>!done.has(id)&&rd(id)),...ids.filter(id=>!done.has(id)&&!rd(id))];   // a list shows its books from the start: finished in color, the rest faded (Nov 24)
+    return `<div class="cw-strip" aria-label="${done.size} of ${ids.length} finished">${ord.slice(0,5).map(id=>`<span class="${done.has(id)||S.books.some(b=>b.titleId===id&&(b.status==='reading'||b.status==='paused'))?'':'cw-faded'}">${libCover(titleById(id)||{title:'Book'},34)}</span>`).join('')}${ids.length>5?`<span class="cw-more">+${ids.length-5} more</span>`:''}</div>`}
+  const it=chCovers(c);if(!it.length)return '';const last=it.slice(-5).reverse();
   return `<div class="cw-strip" aria-label="${it.length} finished">${last.map(i=>libCover(titleById(i.titleId)||{title:i.label},34)).join('')}${it.length>5?`<span class="cw-more">+${it.length-5} more</span>`:''}</div>`}
-function chWall(c,compactList=false,readings=[]){if(c.mode==='comp'||!(c.type==='books'||c.type==='list'))return '';const it=chCovers(c),p=chProg(c);
+function chCal(c){if(c.mode==='comp'||!c.start||!c.end)return '';const tot=daysBetween(c.start,c.end)+1;if(tot>92)return '';
+  const td=today(),got=new Set(contrib(c).live.map(i=>i.date)),lead=(new Date(c.start+'T12:00:00').getDay()+6)%7,cells=[];
+  for(let i=0;i<lead;i++)cells.push('<span class="cc-x"></span>');
+  for(let i=0;i<tot;i++){const d=addDays(c.start,i),n=+d.slice(8),k=got.has(d)?'cc-on':d>td?'cc-ahead':d===td?'cc-today':'cc-miss';cells.push(`<span class="cc ${k}" title="${fmtDateY(d)}${got.has(d)?' · counted':''}">${n}</span>`)}
+  return `<h3 class="sec-h" style="margin-top:14px">Your Days <span class="muted small">${got.size} of ${c.target||tot}</span></h3><div class="cc-h" aria-hidden="true">${['M','T','W','T','F','S','S'].map(x=>`<span>${x}</span>`).join('')}</div><div class="cc-g">${cells.join('')}</div>`}
+function chWall(c){if(c.type==='days'||c.type==='goaldays')return chCal(c);if(c.mode==='comp'||!(c.type==='books'||c.type==='list'))return '';const it=chCovers(c),p=chProg(c);
   if(c.type==='list'){const done=new Set(it.map(i=>i.titleId));if(!(c.titleIds||[]).length)return '';
-    return `<h3 class="sec-h" style="margin-top:14px">The List ${compactList?'':`<span class="muted small">${done.size} of ${c.titleIds.length} finished</span>`}</h3><div class="cw">${c.titleIds.map(id=>{
-      const t=titleById(id)||{title:'Book'},finished=done.has(id),reading=readings.find(b=>b.titleId===id);
-      const progress=!finished&&reading&&hasLen(reading)?pct(reading):null;
-      const label=finished?', finished':reading?`, ${reading.status==='paused'?'paused':'in progress'}${progress==null?'':`, ${progress}% read`}`:'';
-      return `<button type="button" class="cw-b ${finished||reading?'':'cw-faded'}" data-act="openTitle" data-id="${esc(id)}" aria-label="${esc(t.title+label)}">${libCover(t,74)}${progress==null?'':`<span class="cw-progress" aria-hidden="true">${progress}%</span>`}</button>`;
-    }).join('')}</div>`}
-  if(!it.length&&!p.t)return '';const empty=Math.max(0,(p.t||0)-it.length),show=Math.min(empty,3);
-  return `<h3 class="sec-h" style="margin-top:14px">Your Books <span class="muted small">${p.v} of ${p.t}</span></h3><div class="cw">${it.map(i=>`<button type="button" class="cw-b" data-act="openTitle" data-id="${i.titleId}" aria-label="${esc(i.label)}">${libCover(titleById(i.titleId)||{title:i.label},74)}</button>`).join('')}${Array.from({length:show},(_,k)=>`<div class="cw-slot" aria-hidden="true">${it.length+k+1}</div>`).join('')}</div>${empty>show?`<p class="small muted" style="margin:-8px 0 12px">${empty} to go</p>`:''}`}
-function contribSection(c,compactList=false,readings=[]){
-  const C=contrib(c),open=chStatus(c,chProg(c)).k!=='ended',wall=chWall(c,compactList,readings),shown=cv.all?C.live:C.live.slice(0,8);
-  const add=open?`<button class="btn btn-ghost sm" data-act="cbAdd">${ic('plus')}Add Progress</button>`:'';
+    const rd=id=>S.books.some(b=>b.titleId===id&&(b.status==='reading'||b.status==='paused')),ids=listOrder(c),ord=[...ids.filter(id=>done.has(id)),...ids.filter(id=>!done.has(id)&&rd(id)),...ids.filter(id=>!done.has(id)&&!rd(id))];   // finished, then reading, then the rest (Nov 24)
+    return `<h3 class="sec-h" style="margin-top:14px">The List</h3><div class="cw">${ord.map(id=>{const t=titleById(id)||{title:'Book'};const rb=!done.has(id)&&S.books.find(b=>b.titleId===id&&(b.status==='reading'||b.status==='paused')),tag=done.has(id)?'<span class="cw-tag">✓</span>':rb?`<span class="cw-tag">${hasLen(rb)?pct(rb)+'%':'Reading'}</span>`:'';
+      return `<button type="button" class="cw-b ${done.has(id)||rb?'':'cw-faded'}" data-act="openTitle" data-id="${id}" aria-label="${esc(t.title)}${done.has(id)?', finished':rb?', reading':''}">${libCover(t,74)}${tag}</button>`}).join('')}</div>`}
+  if(!it.length&&!p.t)return '';const empty=Math.max(0,(p.t||0)-it.length),show=Math.min(empty,12);
+  return `<h3 class="sec-h" style="margin-top:14px">Your Books <span class="muted small">${p.v} of ${p.t}</span></h3><div class="cw">${it.map(i=>`<button type="button" class="cw-b" data-act="openTitle" data-id="${i.titleId}" aria-label="${esc(i.label)}">${libCover(titleById(i.titleId)||{title:i.label},74)}</button>`).join('')}${Array.from({length:show},(_,k)=>`<div class="cw-slot" aria-hidden="true">${it.length+k+1}</div>`).join('')}${empty>show?`<div class="cw-slot cw-rest">+${empty-show} to go</div>`:''}</div>`}
+function contribSection(c){
+  const C=contrib(c),open=chStatus(c,chProg(c)).k!=='ended',shown=cv.all?C.live:C.live.slice(0,8);
   const row=i=>`<div class="b-row">${i.kind==='books'?libCover(titleById(i.titleId)||{title:i.label,author:'',c:0}):`<span class="chc-ic sm">${ic(i.kind==='days'?'cal':'book')}</span>`}<div class="cp-main"><div class="small"><b>${esc(i.label)}</b> <span class="cb-tag ${i.auto?'':'man'}">${i.auto?'Automatic':'Added'}</span></div><div class="xs muted">${i.sub}</div></div><button class="link-btn sm" data-act="cbRemove" data-k="${i.kind}" data-id="${i.key}" data-auto="${i.auto}">Remove</button></div>`;
-  const heading=`${wall}${wall?`<div class="chc-row" style="margin-top:14px"><h3 class="sec-h" style="margin:0">What Counts</h3>${add}</div>`:`<h3 class="sec-h" style="margin-top:14px">What Counts</h3>`}<p class="xs muted" style="margin:0 0 8px">${ruleText(c)} Adding or removing something here never changes your reading history.</p>`;
-  const uncounted=compactList&&!open?c.titleIds.map(id=>listMissB(c,id,C)).filter(m=>m&&!m.removed):[];
-  if(compactList&&!C.items.length&&!uncounted.length)return heading;
-  return `${heading}
-  ${wall?`<details class="cw-manage"${cv.manage?' open':''}><summary>Manage Counted Books (${C.live.length})</summary>`:`<div class="chc-row"><span class="small"><b>Counted</b> <span class="muted">(${C.live.length} ${KIND_L[c.type==='list'||c.type==='books'?'books':c.type==='days'?'days':'sessions']})</span></span>${add}</div>`}
-  ${C.live.length?shown.map(row).join(''):compactList?'':`<p class="small muted">Nothing counted yet.</p>`}
+  const wallUp=!!chWall(c);
+  return `${chWall(c)}${wallUp?`<div class="chc-row" style="margin-top:14px"><h3 class="sec-h" style="margin:0">What Counts</h3>${open?`<button class="btn btn-ghost sm" data-act="cbAdd">${ic('plus')}Add Progress</button>`:''}</div>`:`<h3 class="sec-h" style="margin-top:14px">What Counts</h3>`}<p class="xs muted" style="margin:0 0 8px">${ruleText(c)} Adding or removing something here never changes your reading history.</p>
+  ${(()=>{const n=`${C.live.length} ${KIND_L[c.type==='list'||c.type==='books'?'books':c.type==='days'?'days':'sessions']}`,add=open?`<button class="btn btn-ghost sm" data-act="cbAdd">${ic('plus')}Add Progress</button>`:'';
+    const rows=`${C.live.length?shown.map(row).join(''):`<p class="small muted">Nothing counted yet.</p>`}
   ${C.live.length>8?`<button class="link-btn sm" data-act="cbAll">${cv.all?'Show Fewer':`Show All ${C.live.length}`}</button>`:''}
-  ${C.removed.length?`<div class="xs muted" style="margin-top:8px">Removed from this challenge: ${C.removed.map(i=>`${esc(i.label)}${i.kind!=='books'?` (${i.kind==='days'?'day':fmtDateY(i.date)})`:''} <button class="link-btn sm" data-act="cbRestore" data-k="${i.kind}" data-id="${i.key}">Restore</button>`).join(' · ')}</div>`:''}
-  ${uncounted.map(({r})=>`<div class="b-row"><div class="cp-main"><b>${esc(r.title)}</b><div class="xs muted">Finished ${r.finished?fmtDateY(r.finished):'on an unknown date'} · not counted</div></div><button class="btn btn-ghost sm" data-act="chCount" data-k="books" data-id="${esc(r.id)}">${ic('plus')}Count It</button></div>`).join('')}${wall?'</details>':''}`;
+  ${C.removed.length?`<div class="xs muted" style="margin-top:8px">Removed from this challenge: ${C.removed.map(i=>`${esc(i.label)}${i.kind!=='books'?` (${i.kind==='days'?'day':fmtDateY(i.date)})`:''} <button class="link-btn sm" data-act="cbRestore" data-k="${i.kind}" data-id="${i.key}">Restore</button>`).join(' · ')}</div>`:''}`;
+    /* With a cover wall above (Books and Book List challenges), the counted rows repeat it, so they fold into "Edit What Counts" (Nov 24). */
+    if(chWall(c))return C.live.length||C.removed.length?`<details class="cw-edit" ${cv.edit?'open':''} ontoggle="cv.edit=this.open"><summary class="small"><b>Manage Counted ${c.type==='days'||c.type==='goaldays'?'Days':c.type==='books'||c.type==='list'?'Books':'Sessions'}</b> <span class="muted">(${C.live.length})</span></summary>${rows}</details>`:'';
+    return `<div class="chc-row"><span class="small"><b>Counted</b> <span class="muted">(${n})</span></span>${add}</div>${rows}`})()}`;
 }
 function cbPicker(c,q){
   q=(q||'').trim().toLowerCase();const C=contrib(c),counted=new Set(C.items.map(i=>i.key)),T=today();let rows=[];
@@ -5164,17 +5259,39 @@ function renderCbPicker(){
 }
 document.addEventListener('input',e=>{if(e.target.id==='cbQ'){const c=S.challenges.find(x=>x.id===cv.id);document.getElementById('cbRes').innerHTML=cbPicker(c,e.target.value)}});
 /* A list book you finished that this challenge doesn't count (finished before it started, or removed): say so, and offer Count It. */
-function listMissB(c,id,C=contrib(c)){const r=S.books.filter(b=>b.titleId===id&&b.status==='finished').sort((a,b)=>(b.finished||'').localeCompare(a.finished||''))[0];if(!r)return null;
-  return C.live.some(i=>i.titleId===id)?null:{r,removed:C.removed.some(i=>i.titleId===id)}}
+function listMissB(c,id){const r=S.books.filter(b=>b.titleId===id&&b.status==='finished').sort((a,b)=>(b.finished||'').localeCompare(a.finished||''))[0];if(!r)return null;
+  const C=contrib(c);return C.live.some(i=>i.titleId===id)?null:{r,removed:C.removed.some(i=>i.titleId===id)}}
 function listMiss(c,id){const m=c.mode!=='comp'&&listMissB(c,id);if(!m)return '';
   return `<div class="xs muted">${m.r.finished?`Finished ${fmtDateY(m.r.finished)}`:'Finished, date unknown'} · ${m.removed?'removed from this challenge':c.start&&m.r.finished&&m.r.finished<c.start?'before this challenge started':'not counted'}</div>`}
+/* After adding a book, the search keeps its words and results (the added book leaves the results), the window keeps its
+   place, and the cursor goes back to the end of the search. The X clears it. (James, Nov 25) */
+function cfKeepSearch(){const q=document.getElementById('cfQ'),sc=q&&cfScroller(q),top=sc?.scrollTop;renderChForm();
+  if(sc!=null&&top!=null){const sc2=cfScroller(document.getElementById('cfQ')||document.body);if(sc2)sc2.scrollTop=top}
+  setTimeout(()=>{const n=document.getElementById('cfQ');if(n){n.focus({preventScroll:true});const l=n.value.length;try{n.setSelectionRange(l,l)}catch(e){}}},30)}
+let cfDrag=null;
+const cfScroller=el=>{for(let x=el;x&&x!==document.body;x=x.parentElement){const o=getComputedStyle(x).overflowY;if((o==='auto'||o==='scroll')&&x.scrollHeight>x.clientHeight)return x}return null};
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches?.('[data-isbn]')){e.preventDefault();e.target.closest('.isbn-look')?.querySelector('[data-act=isbnGo]')?.click()}});
+document.addEventListener('pointerdown',e=>{const g=e.target.closest?.('.cf-order .cf-grip');if(!g||e.button>0)return;const li=g.closest('li'),ol=li.parentElement;e.preventDefault();
+  try{g.setPointerCapture(e.pointerId)}catch(_){}cfDrag={li,ol,id:e.pointerId,start:[...ol.children].indexOf(li),sc:cfScroller(ol),y:e.clientY};li.classList.add('cf-drag');document.body.classList.add('cf-dragging')});
+document.addEventListener('pointermove',e=>{if(!cfDrag||e.pointerId!==cfDrag.id)return;const {li,ol,sc}=cfDrag;let before=null;
+  for(const x of ol.children){if(x===li)continue;const r=x.getBoundingClientRect();if(e.clientY<r.top+r.height/2){before=x;break}}
+  if(before!==li.nextElementSibling&&before!==li)ol.insertBefore(li,before);
+  // scroll only toward the edge you're moving to, so starting a drag near an edge doesn't move the list under your finger
+  const dy=e.clientY-cfDrag.y;cfDrag.y=e.clientY;if(sc&&dy){const r=sc.getBoundingClientRect();if(dy<0&&e.clientY<r.top+48)sc.scrollTop-=14;else if(dy>0&&e.clientY>r.bottom-48)sc.scrollTop+=14}});
+const cfDrop=e=>{if(!cfDrag||e.pointerId!==cfDrag.id)return;const {li,ol,start}=cfDrag;cfDrag=null;li.classList.remove('cf-drag');document.body.classList.remove('cf-dragging');
+  if([...ol.children].indexOf(li)===start)return;const ids=[...ol.children].map(x=>x.dataset.id);captureCf();cf.titleIds=ids;cf.ordered=true;renderChForm()};
+document.addEventListener('pointerup',cfDrop);document.addEventListener('pointercancel',cfDrop);
+function seriesOrder(ids){if((ids||[]).length<2)return null;const ts=ids.map(titleById);if(ts.some(t=>!t||!String(t.series||'').trim()))return null;
+  const k=t=>String(t.series).trim().toLowerCase();if(ts.some(t=>k(t)!==k(ts[0])))return null;
+  return ids.map((id,i)=>({id,i,n:ts[i].seriesNo})).sort((a,b)=>(a.n==null)-(b.n==null)||(a.n??0)-(b.n??0)||a.i-b.i).map(x=>x.id)}
+function listOrder(c){const ids=c.titleIds||[];return c.ordered?ids:(seriesOrder(ids)||ids)}
 function listMissR(c,id){const m=c.mode!=='comp'&&(c.mode==='personal'||(c.participants||[]).includes('me'))&&listMissB(c,id);return m?`<button class="btn btn-ghost sm" data-act="chCount" data-k="books" data-id="${m.r.id}">${ic('plus')}Count It</button>`:''}
 function bookAct(id){const r=myReading(id);
   if(r&&(r.status==='reading'||r.status==='paused'))return `<button class="btn btn-primary sm" data-act="bdLog" data-id="${r.id}">${ic('book')}Log Reading</button>`;
   if(r&&r.status==='finished')return `<span class="st st-finished">${ic('check')}Finished</span>`;
   if(r&&r.status==='want')return `<button class="btn btn-ghost sm" data-act="bdLog" data-id="${r.id}">${ic('play')}Start Reading</button>`;
   return `<button class="btn btn-ghost sm" data-act="startTitle" data-id="${id}">${ic('play')}Start Reading</button>`}
-function bookChip(id){const r=myReading(id);if(!r)return `<button class="btn btn-ghost sm" data-act="toggleWant" data-id="${id}">${ic('plus')}To Read</button>`;return `<span class="st st-${r.status}">${r.status==='want'?'On To Read':STATUS[r.status]}</span>`}
+function bookChip(id){const r=myReading(id);if(!r)return `<button class="btn btn-ghost sm" data-act="toggleWant" data-id="${id}">${ic('plus')}To Read</button>`;return `<span class="st st-${r.status}">${r.status==='want'?'To Read':STATUS[r.status]}</span>`}
 /* create / edit challenge */
 /* Duplicate: a month in the name moves to the next month (December also moves the year), a year moves to the next year.
    A challenge that covered a whole calendar month covers the next one (or this month, if that one is already over);
@@ -5192,8 +5309,8 @@ function dupPlan(name,start,end){
   return {name:n,start:ns,end:ne,sel:!changed}}
 function openChForm(id,mode,copy){
   const c=id?S.challenges.find(x=>x.id===id):null;
-  cf=c?{who:c.inviteOnly?'invite':'all',invite:[...(c.invited||[])],id:c.id,mode:c.mode,type:c.type,titleIds:[...(c.titleIds||[])],name:c.name,desc:c.desc||'',target:c.type==='minutes'?Math.round(c.target/60):c.target,start:c.start||'',end:c.end||'',q:'',countPrior:!!c.countPrior,rule:c.rule||'all',ruleVal:c.ruleVal||''}
-    :{who:'all',invite:[],id:null,dup:false,mode:mode||'personal',type:mode==='comp'?'days':'books',titleIds:[],name:'',desc:'',target:'',start:today(),end:'',q:'',countPrior:false,rule:'all',ruleVal:''};
+  cf=c?{who:c.inviteOnly?'invite':'all',invite:[...(c.invited||[])],id:c.id,mode:c.mode,type:c.type,titleIds:[...listOrder(c)],ordered:!!c.ordered,name:c.name,desc:c.desc||'',target:c.type==='minutes'?Math.round(c.target/60):c.target,start:c.start||'',end:c.end||'',q:'',countPrior:!!c.countPrior,rule:c.rule||'all',ruleVal:c.ruleVal||''}
+    :{who:'all',invite:[],id:null,dup:false,mode:mode||'personal',type:mode==='comp'?'days':'books',titleIds:[],ordered:false,name:'',desc:'',target:'',start:today(),end:'',q:'',countPrior:false,rule:'all',ruleVal:''};
   let sel=false;
   if(copy){const d=dupPlan(c.name,c.start,c.end);cf.id=null;cf.dup=true;cf.name=d.name;cf.start=d.start;cf.end=d.end||'';sel=d.sel;
     if(c.mode!=='personal'&&c.inviteOnly)cf.invite=[...new Set([c.creator,...(c.invited||[]),...(c.participants||[])])].filter(w=>w&&w!=='me'&&S.members[w])}
@@ -5201,10 +5318,11 @@ function openChForm(id,mode,copy){
 }
 function captureCf(){const v=id=>document.getElementById(id);if(!v('cfName'))return;cf.name=v('cfName').value;cf.desc=v('cfDesc').value;cf.start=v('cfStart').value;cf.end=v('cfEnd').value;if(v('cfTarget'))cf.target=v('cfTarget').value;if(v('cfPrior'))cf.countPrior=v('cfPrior').checked;if(v('cfRule'))cf.rule=v('cfRule').value;if(v('cfRuleVal'))cf.ruleVal=v('cfRuleVal').value;if(cf.who==='invite'&&document.querySelector('[name=cfInv]'))cf.invite=[...document.querySelectorAll('[name=cfInv]:checked')].map(x=>x.value)}
 function renderChForm(){
-  const types=cf.mode==='comp'?['days','goaldays']:['books','pages','minutes','days','list'];
+  const types=cf.mode==='comp'?['days','goaldays']:cf.mode==='personal'?['books','pages','minutes','days','goaldays','list']:['books','pages','minutes','days','list'];   // Personal gets Goal Days too (James, Nov 27)
   if(!types.includes(cf.type))cf.type=types[0];
-  const unit={books:'books',pages:'pages',minutes:'hours',days:'days'}[cf.type];
-  const listPick=cf.type==='list'?`<div class="f"><span class="fl" style="margin:0">Books</span><div class="chips">${cf.titleIds.map(id=>`<span class="chip-x">${esc(titleById(id)?.title||'')}<button class="icon-btn" style="padding:2px" data-act="cfRm" data-id="${id}" aria-label="Remove">${ic('x')}</button></span>`).join('')||'<span class="xs muted">No books yet.</span>'}</div>
+  const unit={books:'books',pages:'pages',minutes:'hours',days:'days',goaldays:'days'}[cf.type];
+  const so=cf.type==='list'&&seriesOrder(cf.titleIds),inSo=so&&!cf.ordered;if(inSo)cf.titleIds=so;
+  const listPick=cf.type==='list'?`<div class="f"><span class="fl" style="margin:0">Books <span class="sub">${cf.titleIds.length>1?'(in reading order)':''}</span></span>${cf.titleIds.length?`<ol class="cf-order">${cf.titleIds.map((id,i,a)=>`<li data-id="${id}">${a.length>1?'<span class="cf-grip" aria-hidden="true" title="Drag to reorder">⋮⋮</span>':''}<span class="cf-n">${i+1}.</span><span class="cf-t">${esc(titleById(id)?.title||'')}${titleById(id)?.seriesNo!=null&&so?` <span class="xs muted">#${titleById(id).seriesNo}</span>`:''}</span>${a.length>1?`<button type="button" class="icon-btn cf-mv" data-act="cfMove" data-i="${i}" data-d="-1" ${i===0?'disabled':''} aria-label="Move ${esc(titleById(id)?.title||'')} up">↑</button><button type="button" class="icon-btn cf-mv" data-act="cfMove" data-i="${i}" data-d="1" ${i===a.length-1?'disabled':''} aria-label="Move ${esc(titleById(id)?.title||'')} down">↓</button>`:''}<button class="icon-btn" style="padding:2px" data-act="cfRm" data-id="${id}" aria-label="Remove ${esc(titleById(id)?.title||'')}">${ic('x')}</button></li>`).join('')}</ol>`:'<span class="xs muted">No books yet.</span>'}${inSo?'<span class="xs muted">In series order, by book number. Move a book to set your own order.</span>':so&&cf.ordered?'<span class="xs muted">Your own order. <button type="button" class="link-btn sm" data-act="cfSeries">Use Series Order</button></span>':''}
     <label class="search" style="margin-top:6px">${ic('search')}<input id="cfQ" type="search" placeholder="Add a book by title or author" value="${esc(cf.q)}" autocomplete="off" aria-label="Add a book"></label><div id="cfRes" class="pick-list" style="margin-top:6px">${cfResults()}</div><span class="xs muted">Books that aren’t in My Books yet are added to your To Read list${cf.mode==='personal'?'':', and to each person’s who joins'}.</span></div>`:'';
   chBody.innerHTML=`<div class="dlg-h"><h2 id="chTitle" style="flex:1">${cf.id?'Edit Challenge':cf.dup?'Duplicate Challenge':'Create a Challenge'}</h2><button type="button" class="icon-btn x" data-act="closeCh" aria-label="Close">${ic('x')}</button></div>
   <div class="form">
@@ -5215,9 +5333,9 @@ function renderChForm(){
     <label class="f"><span>Description <span class="sub">(optional)</span></span><textarea class="inp" id="cfDesc" rows="2" maxlength="200">${esc(cf.desc)}</textarea></label>
     ${cf.mode!=='comp'&&cf.type!=='list'?`<label class="f">Goal (${unit})<input class="inp" id="cfTarget" inputmode="numeric" value="${esc(cf.target)}"></label>`:''}
     ${listPick}
-    ${cf.mode!=='comp'&&cf.type!=='list'?`<div class="f"><label class="fl" for="cfRule" style="margin:0">Count Automatically</label><select class="inp" id="cfRule" data-cfrule>${[['all',{books:'All books I finish',pages:'Pages from all my reading',minutes:'Minutes from all my reading',days:'Every day I read'}[cf.type]],['author','Only books by an author'],['genre','Only books in a genre'],['none','Nothing. I’ll add progress myself.']].map(([v,l])=>`<option value="${v}" ${cf.rule===v?'selected':''}>${l}</option>`).join('')}</select>
+    ${cf.mode!=='comp'&&cf.type!=='list'?`<div class="f"><label class="fl" for="cfRule" style="margin:0">Count Automatically</label><select class="inp" id="cfRule" data-cfrule>${[['all',{books:'All books I finish',pages:'Pages from all my reading',minutes:'Minutes from all my reading',days:'Every day I read',goaldays:'Every day I meet my daily goal'}[cf.type]],...(cf.type==='goaldays'?[]:[['author','Only books by an author'],['genre','Only books in a genre']]),['none','Nothing. I’ll add progress myself.']].map(([v,l])=>`<option value="${v}" ${cf.rule===v?'selected':''}>${l}</option>`).join('')}</select>
       ${cf.rule==='author'?`<input class="inp" id="cfRuleVal" placeholder="Author name, for example Stephen King" value="${esc(cf.ruleVal)}" autocomplete="off" aria-label="Author">`:cf.rule==='genre'?`<select class="inp" id="cfRuleVal" aria-label="Genre"><option value="">Choose a Genre</option>${[...new Set(S.titles.map(t=>t.genre).filter(Boolean))].sort().map(g=>`<option ${cf.ruleVal===g?'selected':''}>${esc(g)}</option>`).join('')}</select>`:''}
-      <span class="xs muted">${cf.rule==='none'?'Good for things only you know, like books by women or reading on vacation. Use Add Progress on the challenge to choose them.':'You can still add or remove individual items later with Add Progress.'}</span></div>`:''}
+      <span class="xs muted">${cf.type==='goaldays'&&cf.rule!=='none'?'A goal day is a day you reach your daily reading goal (Edit Goal on the Dashboard). ':''}${cf.rule==='none'?'Good for things only you know, like books by women or reading on vacation. Use Add Progress on the challenge to choose them.':'You can still add or remove individual items later with Add Progress.'}</span></div>`:''}
     ${cf.mode!=='comp'&&cf.type==='list'?`<label class="chk"><input type="checkbox" id="cfPrior" ${cf.countPrior?'checked':''}> Also count books finished before the start date</label>`:''}
     ${cf.mode!=='personal'&&!cf.id?`<div class="f"><span class="fl" style="margin:0">Who Can Join</span><div class="vseg addb-tabs" role="group" aria-label="Who can join">${[['all',`Anyone in ${esc(GN())}`],['invite','Only People I Invite']].map(([k,l])=>`<button aria-pressed="${cf.who===k}" data-act="cfWho" data-v="${k}">${l}</button>`).join('')}</div>
       ${cf.who==='invite'?`<div class="chips">${Object.entries(S.members).map(([k,m])=>`<label class="chk"><input type="checkbox" name="cfInv" value="${k}" ${cf.invite.includes(k)?'checked':''}> ${esc(m.name)}</label>`).join('')}</div><span class="xs muted">Only the people you invite see this challenge. Each gets a notification and can accept or decline.</span>`:`<span class="xs muted">Everyone in the group gets a notification and can join.</span>`}</div>`:''}
@@ -5235,8 +5353,15 @@ function cfWarn(){if(cf.mode==='comp'||!cf.start||(cf.type==='list'&&cf.countPri
 document.addEventListener('input',e=>{if(chMode==='form'&&['cfStart','cfPrior','cfEnd'].includes(e.target.id)){captureCf();const w=document.getElementById('cfWarn');if(w)w.innerHTML=cfWarn()}});
 /* Putting a book on a list you mean to read is the same intent as To Read: books that aren't in My Books yet (no
    reading, no copy of mine) go on To Read. Returns how many were added. */
-function tbrAdd(ids){let n=0;[...new Set(ids)].forEach(id=>{const t=titleById(id);if(!t||myReading(id)||copiesOf(id).some(c=>c.owner==='me'))return;
-  S.books.push({id:'r'+uid(),titleId:t.id,title:t.title,author:t.author,format:'unknown',total:0,pos:0,status:'want',c:t.c,wantSince:today()});n++});return n}
+function tbrAdd(ids,chId){let n=0;[...new Set(ids)].forEach(id=>{const t=titleById(id);if(!t||myReading(id)||copiesOf(id).some(c=>c.owner==='me'))return;
+  const rid='r'+uid();S.books.push({id:rid,titleId:t.id,title:t.title,author:t.author,format:'unknown',total:0,pos:0,status:'want',c:t.c,wantSince:today()});n++;
+  if(chId)((S.chTbr=S.chTbr||{})[chId]=S.chTbr[chId]||[]).push(rid)});return n}   // chTbr: which To Read readings each challenge created (Nov 25)
+/* Deleting a challenge takes back the To Read readings it created, only while untouched: still To Read, no reading
+   logged, not in the Reading Queue, not on another challenge's or battle's list, not owned, not a favorite, no book note. */
+function chTbrTakeBack(c){const ids=(S.chTbr||{})[c.id]||[];delete (S.chTbr||{})[c.id];
+  const gone=ids.map(book).filter(b=>b&&b.status==='want'&&!S.sessions.some(x=>x.bookId===b.id)&&!(S.upNext||[]).includes(b.id)&&!S.challenges.some(o=>o!==c&&(o.titleIds||[]).includes(b.titleId))
+    &&!(S.battles||[]).some(bt=>{try{return bList(bt).some(x=>x.id===b.titleId)}catch(e){return false}})&&!S.copies.some(cp=>cp.titleId===b.titleId&&cp.owner==='me')&&!isFav(b.titleId)&&!(S.notes||{})[b.titleId]&&S.books.filter(x=>x.titleId===b.titleId).length===1);
+  S.books=S.books.filter(b=>!gone.includes(b));return gone.length}
 const tbrMissing=ids=>[...new Set(ids)].filter(id=>titleById(id)&&!myReading(id)&&!copiesOf(id).some(c=>c.owner==='me'));
 const tbrSaid=n=>n?`${n===1?'1 book':`${n} books`} added to your To Read list.`:'';
 /* The Book List search: books already here first, then Open Library, so any book can go on the list. */
@@ -5271,11 +5396,11 @@ function saveCf(){
   if(cf.mode==='comp'&&(!cf.start||!cf.end))return er('Competitions need a start and end date.');
   if(cf.start&&cf.end&&cf.end<cf.start)return er('The end date must be after the start date.');
   if(cf.mode!=='personal'&&!cf.id&&cf.who==='invite'&&!cf.invite.length)return er('Choose at least one person to invite.');
-  const data={name:cf.name.trim(),desc:cf.desc.trim(),type:cf.type,target,titleIds:cf.type==='list'?cf.titleIds:undefined,start:cf.start||null,end:cf.end||null,countPrior:cf.type==='list'&&!!cf.countPrior,rule:cf.type==='list'?'all':cf.rule,ruleVal:cf.ruleVal};
-  if(cf.id){const ex=S.challenges.find(x=>x.id===cf.id);Object.assign(ex,data);const n=data.titleIds&&(ex.participants||[]).includes('me')?tbrAdd(data.titleIds):0;save();openCh(cf.id);toast('Challenge updated.',null,tbrSaid(n));return}
+  const data={name:cf.name.trim(),desc:cf.desc.trim(),type:cf.type,target,titleIds:cf.type==='list'?cf.titleIds:undefined,ordered:cf.type==='list'&&!!cf.ordered||undefined,start:cf.start||null,end:cf.end||null,countPrior:cf.type==='list'&&!!cf.countPrior,rule:cf.type==='list'?'all':cf.rule,ruleVal:cf.ruleVal};
+  if(cf.id){const ex=S.challenges.find(x=>x.id===cf.id);Object.assign(ex,data);const n=data.titleIds&&(ex.participants||[]).includes('me')?tbrAdd(data.titleIds,ex.id):0;save();openCh(cf.id);toast('Challenge updated.',null,tbrSaid(n));return}
   const c={id:'ch'+uid(),mode:cf.mode,creator:'me',participants:['me'],sample:{},...data};
   if(c.mode!=='personal'&&cf.who==='invite'){c.inviteOnly=true;c.invited=[...cf.invite]}
-  S.challenges.push(c);const tbrN=c.type==='list'?tbrAdd(c.titleIds):0;
+  S.challenges.push(c);const tbrN=c.type==='list'?tbrAdd(c.titleIds,c.id):0;
   if(c.mode!=='personal'){if(c.inviteOnly)post('invite',`invited ${c.invited.map(nameOf).join(' and ')} to a challenge:`,c.name,null,c.id);else post('challenge','started a group challenge:',c.name)}
   chTab=c.mode==='personal'?'mine':'family';save();chDlg.close();view='challenges';render();toast(`Created ${c.name}.`,null,[c.inviteOnly?`Invitations sent to ${c.invited.map(nameOf).join(' and ')}.`:c.mode!=='personal'?`Everyone in ${GN()} was notified.`:'',tbrSaid(tbrN)].filter(Boolean).join(' '));
 }
@@ -5596,7 +5721,7 @@ function drawLog(b,focus,preMin,moveTo){
       <label class="f">${audio?'End':isPct(b)?'End %':'End Page'}<span class="sr-only opt-sr"></span><input class="inp" name="end" inputmode="${audio?'text':'numeric'}" placeholder="${audio?'h:mm':''}" data-ph="${audio?'h:mm':''}"></label>
       <label class="f">Minutes<span class="sr-only opt-sr"></span><input class="inp" name="minutes" inputmode="text" autocomplete="off" value="${preMin||''}" placeholder="" data-ph="" aria-describedby="minHint"><span class="xs muted min-hint" id="minHint" aria-live="polite"></span></label>
     </div>
-    <div class="calc" id="calc"></div>
+    <div class="calc" id="calc"></div><div class="xs one-start-fix" hidden></div>
     <div class="xs muted" style="margin-top:-8px" ${!audio&&!isNew&&!isPct(b)?'hidden':''}>${isPct(b)?'Enter the percent your e-reader shows, for example 45. Add minutes for the time you read.':audio?`${hasLen(b)?`Total length ${fmtPos(b.total)}. `:''}Enter positions as h:mm. Add minutes for the time you actually spent listening; otherwise the change in position counts as estimated time.`:(isNew?`New book: the starting page is 0, so reading pages 1–20 counts as 20 pages. Saving starts the book even if you don’t log pages yet.`:`The starting page is where you left off. Enter pages, minutes, or both.`)}</div>
     <details class="rt reading-together"><summary class="link-btn sm">Read with someone?</summary><div class="chips" style="margin-top:8px">${Object.entries(S.members).map(([k,m])=>`<label class="tog"><input type="checkbox" name="with" value="${k}"><span>${esc(m.name)}</span></label>`).join('')}</div><span class="xs muted">Reading aloud or side by side? Everyone you choose gets credit for this session too.</span></details>
     <div class="f lg-when"><div class="f2 cu-dates"><label class="f cu-from" hidden>From<input class="inp" type="date" name="from" max="${today()}"></label><label class="f"><span class="cu-to">Date</span><input class="inp" type="date" name="date" value="${today()}" max="${today()}"></label></div>
@@ -5704,7 +5829,7 @@ function calcLog(){
     else if(isPct(b))parts.push(`Progress <b>${+span.toFixed(1)}%</b>${minutes&&!isNaN(minutes)?'':' (add minutes to count time)'}`);
     else{
       parts.push(`Pages read <b>${span}</b>`);
-      if(minutes&&!isNaN(minutes)&&minutes>0)parts.push(`Speed <b>${Math.round(span/minutes*60)} pages/hr</b>`);
+      if(minutes&&!isNaN(minutes)&&minutes>0)parts.push(`<b>${Math.round(span/minutes*60)} pages/hr</b>`);
       else if(g.estimate&&span>0){const p=pace(b.id);if(p)parts.push(`About <b>${Math.round(span/p)} min</b> (estimated)`)}
     }
     if(hasLen(b)&&end>=b.total)parts.push(isPct(b)?`<b>That’s 100%.</b> Choose Finished if you’re done.`:`<b>That’s the end of the book!</b>`);
@@ -5780,12 +5905,13 @@ logForm.addEventListener('submit',e=>{
   saveReadingEdition(b,readEdition(logForm,'logReading'));
   commitStartCopy(b);
   if(wasWant&&!b.started)b.started=fromD||f.date;
+  let newSid=null;
   if(range||minutes!=null){
     let est=null;
     const pages=audio?0:isPct(b)?pctPages(b,span):span;
     if(minutes==null&&S.settings.estimate){if(audio&&span>0)est=span;else if(pages>0){const p=pace(b.id);if(p)est=Math.round(pages/p)}}
     const withIds=[...logForm.querySelectorAll('[name=with]:checked')].map(x=>x.value);
-    S.sessions.push({id:uid(),bookId:b.id,date:f.date,from:fromD||undefined,start:range?start:null,end:range?end:null,unit:isPct(b)?'pct':undefined,pages,minutes,est,note:f.note||'',with:withIds.length?withIds:undefined});
+    newSid=uid();S.sessions.push({id:newSid,bookId:b.id,date:f.date,from:fromD||undefined,start:range?start:null,end:range?end:null,unit:isPct(b)?'pct':undefined,pages,minutes,est,note:f.note||'',with:withIds.length?withIds:undefined});
     if(withIds.length){extraSub=`Also counted for ${withIds.map(nameOf).join(' and ')}.`;if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'together',text:`read together with ${withIds.map(nameOf).join(' and ')}`,book:b.title,titleId:b.titleId,ts:Date.now(),r:{}})}
   }
   if(range){if(!['reading','paused'].includes(b.status))b.pos=end;else syncPos(b)}
@@ -5799,7 +5925,7 @@ logForm.addEventListener('submit',e=>{
   if(finished){const c=logForm.querySelector('[name=noSug]');if(c)noSugSet(b.titleId,c.checked)}   // whether or not activity is shared
   if(S.settings.share){
     if(finished&&!wasFinished)S.activity.push({id:uid(),who:'me',kind:'finished',text:'finished',book:b.title,titleId:b.titleId,ts:Date.now(),r:{}});
-    else if(range||minutes!=null)S.activity.push({id:uid(),who:'me',kind:'session',text:'logged a reading session',book:b.title,titleId:b.titleId,extra:minutes!=null?fmtMin(minutes):(audio?`${fmtMin(span)} of audio`:isPct(b)?`${+span.toFixed(1)}% of the book`:`${span} pages`),ts:Date.now(),r:{}});
+    else if(range||minutes!=null)S.activity.push({id:uid(),who:'me',kind:'session',sid:newSid||undefined,text:'logged a reading session',book:b.title,titleId:b.titleId,extra:minutes!=null?fmtMin(minutes):(audio?`${fmtMin(span)} of audio`:isPct(b)?`${+span.toFixed(1)}% of the book`:`${span} pages`),ts:Date.now(),r:{}});
   }
   if(range&&!audio&&b.total&&!finished){const half=Math.ceil(b.total/2);if(start<half&&end>=half)postBook('halfway','reached the halfway point of',b)}
   {const aft=goalState(f.date),sk2=streak();if(f.date===today()){if(!before.both&&aft.both)post('goal','met both daily goals');else if(!before.met&&aft.met)post('goal','met today’s reading goal')}
@@ -5808,16 +5934,18 @@ logForm.addEventListener('submit',e=>{
   if(S.timer?.bookId===b.id){if(logForm.dataset.timerStart===String(S.timer.start)&&S.timer.stop&&minutes!=null)S.timer=null;else if(finished&&!S.timer.stop)S.timer.stop=Date.now();}
   logForm.dataset.done='1';draftClear(logForm.dataset.dkey);save();logDlg.close();render();
   const after=goalState(f.date),sk=streak(),g=S.settings,isToday=f.date===today(),logged=range||minutes!=null;
-  if(finished){const un=restoreTo(logSnap),undo=()=>{const ok=un();if(ok)render();return ok};if(!openNextDlg(b,undo))toast(`🎉 You finished ${b.title}!`,()=>{if(undo())toast('Undone.')},`That’s ${yearFinished()} book${yearFinished()===1?'':'s'} this year.`,true)}
+  /* Undo after any save (James, Nov 24): a typo noticed right away is one tap to take back */
+  const unAll=restoreTo(logSnap),undoT=()=>{if(unAll()){render();toast('Undone.')}};
+  if(finished){const un=unAll,undo=()=>{const ok=un();if(ok)render();return ok};if(!openNextDlg(b,undo))toast(`🎉 You finished ${b.title}!`,()=>{if(undo())toast('Undone.')},`That’s ${yearFinished()} book${yearFinished()===1?'':'s'} this year.`,true)}
   else if(started){const g=S.settings,left=[];if(g.goalType!=='pages')left.push(`${Math.max(1,Math.ceil(g.goalMinutes-after.mins))} more minutes`);if(g.goalType!=='minutes')left.push(`${Math.max(1,g.goalPages-after.pages)} more pages`);
     const sub=!logged?'Happy reading!':!before.met&&after.met&&isToday?`Goal met for today, too. 🔥 ${sk} day streak`:after.met||!isToday?`🔥 ${sk} day streak. Happy reading!`:`${left.join(' or ')} to reach today’s goal.`;
-    toast(`📖 You started ${b.title}!`,null,sub,true);if(!before.met&&after.met&&isToday)document.querySelector('.rings')?.classList.add('pop')}
-  else if(f.status==='dnf')openDnf(b);
-  else if(!logged)toast('Saved.');
-  else if(!isToday)toast(`Saved for ${fmtDate(f.date)}.`,null,sk>skBefore?`🔥 Your streak is now ${sk} days.`:'');
-  else if(!before.met&&after.met){toast(after.both?'🎉 Both goals met today!':'🎉 Goal met for today!',null,`🔥 ${sk} day streak. Keep it going!`,true);document.querySelector('.rings')?.classList.add('pop')}
-  else if(after.met)toast(`Nice! ${Math.round(after.mins)} minutes${after.pages?` and ${after.pages} pages`:''} today.`,null,`🔥 ${sk} day streak`);
-  else{const left=[];if(g.goalType!=='pages')left.push(`${Math.max(1,Math.ceil(g.goalMinutes-after.mins))} more minutes`);if(g.goalType!=='minutes')left.push(`${Math.max(1,g.goalPages-after.pages)} more pages`);toast('Reading saved.',null,`${left.join(' or ')} to reach today’s goal.`)}
+    toast(`📖 You started ${b.title}!`,undoT,sub,true);if(!before.met&&after.met&&isToday)document.querySelector('.rings')?.classList.add('pop')}
+  else if(f.status==='dnf')openDnf(b,()=>{if(unAll())render()});   // Undo here too (James, Nov 25: the reading window's DNF had none)
+  else if(!logged)toast('Saved.',undoT);
+  else if(!isToday)toast(`Saved for ${fmtDate(f.date)}.`,undoT,sk>skBefore?`🔥 Your streak is now ${sk} days.`:'');
+  else if(!before.met&&after.met){toast(after.both?'🎉 Both goals met today!':'🎉 Goal met for today!',undoT,`🔥 ${sk} day streak. Keep it going!`,true);document.querySelector('.rings')?.classList.add('pop')}
+  else if(after.met)toast(`Nice! ${Math.round(after.mins)} minutes${after.pages?` and ${after.pages} pages`:''} today.`,undoT,`🔥 ${sk} day streak`);
+  else{const left=[];if(g.goalType!=='pages')left.push(`${Math.max(1,Math.ceil(g.goalMinutes-after.mins))} more minutes`);if(g.goalType!=='minutes')left.push(`${Math.max(1,g.goalPages-after.pages)} more pages`);toast('Reading saved.',undoT,`${left.join(' or ')} to reach today’s goal.`)}
 });
 
 /* ---------- goal settings ---------- */
@@ -6102,7 +6230,7 @@ document.addEventListener('click',e=>{
     case 'dataCancel':dataPick=null;document.getElementById('dataDlg')?.close();break;
     case 'dataGo':dataApply();break;
     case 'downloadConflict':{const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='Reading-Room-unsaved-copy.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);conflictDownloaded=true;showSaveFailure();break;}
-    case 'loadLatest':if(saveConflict&&conflictDownloaded)location.reload();break;
+    case 'loadLatest':if(!saveConflict)break;if(conflictDownloaded||conflictAsk)location.reload();else{conflictAsk=true;showSaveFailure()}break;
     case 'retrySave':if(save())toast('Changes saved.');break;
     case 'log':openLog(id,a.dataset.focus);break;
     case 'setStatus':{if(a.closest('#editForm')){editForm.dataset.nextStatus=a.dataset.v;editForm.querySelectorAll('[data-act=setStatus]').forEach(x=>{x.disabled=false;x.setAttribute('aria-pressed',String(x===a))});editForm.querySelector('[data-edit-finish]').hidden=a.dataset.v!=='finished';break;}const b=book(a.dataset.book),v=a.dataset.v,snap=snapshot(),has=S.sessions.some(x=>x.bookId===b.id&&(x.pages||x.minutes||x.est)),prev=b.status;
@@ -6145,7 +6273,7 @@ document.addEventListener('click',e=>{
     case 'sessEdit':openSess(a.dataset.id);break;
     case 'closeSess':sessDlg.close();break;
     case 'cancelSess':{const id=sessForm.dataset.id;draftCancel(sessForm,sessDlg,()=>openSess(id),'changes');break}
-    case 'sessDel':{sessForm.dataset.done='1';draftClear(sessForm.dataset.dkey);const snap=snapshot(),x=S.sessions.find(y=>y.id===sessForm.dataset.id);ensureProgressBase(book(x.bookId));S.sessions=S.sessions.filter(y=>y!==x);trashPut('session',x,book(x.bookId)?.title);syncPos(book(x.bookId));save();sessDlg.close();render();toast('Session deleted.',restoreTo(snap),'Kept in History → Recently Deleted for 30 days.');break}
+    case 'sessDel':{sessForm.dataset.done='1';draftClear(sessForm.dataset.dkey);const snap=snapshot(),x=S.sessions.find(y=>y.id===sessForm.dataset.id);ensureProgressBase(book(x.bookId));S.sessions=S.sessions.filter(y=>y!==x);sessPostsSync(x,book(x.bookId),true);trashPut('session',x,book(x.bookId)?.title);syncPos(book(x.bookId));save();sessDlg.close();render();toast('Session deleted.',restoreTo(snap),'Kept in History → Recently Deleted for 30 days.');break}
     case 'upAdd':{S.upNext=S.upNext||[];if(upList().length>=10){toast('Your Reading Queue holds 10 books. Remove one first.');break}if(!S.upNext.includes(a.dataset.id))S.upNext.push(a.dataset.id);save();refreshLib();toast(`Added ${book(a.dataset.id).title} to your Reading Queue.`);break}
     case 'upRm':{S.upNext=(S.upNext||[]).filter(x=>x!==a.dataset.id);save();refreshLib();break}
     case 'upMove':{const L=upList().map(b=>b.id),i=L.indexOf(a.dataset.id),j=i+(+a.dataset.v);if(j<0||j>=L.length)break;[L[i],L[j]]=[L[j],L[i]];S.upNext=L;save();refreshLib();break}
@@ -6170,9 +6298,9 @@ document.addEventListener('click',e=>{
     case 'chTab':chTab=a.dataset.v;render();break;
     case 'openCh':openCh(a.dataset.id);break;
     case 'closeCh':chDlg.close();break;
-    case 'chLog':{const id=chBody.querySelector('#chListReading')?.value||a.dataset.id||currentSel()?.id;chDlg.close();if(id)openLog(id);else{drawNew();logDlg.showModal()}break}
-    case 'chJoin':{const c=S.challenges.find(x=>x.id===a.dataset.id);if(!c.participants.includes('me'))c.participants.push('me');if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'challenge',text:(c.inviteOnly&&(c.invited||[]).includes('me'))?'accepted a challenge:':'joined',book:c.name,ch:c.id,ts:Date.now(),r:{}});const tn=c.type==='list'?tbrAdd(c.titleIds||[]):0;save();if(chDlg.open&&chMode==='ch')renderCh();else{const y=window.scrollY;render();window.scrollTo(0,y)}toast(`Joined ${c.name}.`,null,tbrSaid(tn));break}
-    case 'chLeave':{const snap=snapshot(),c=S.challenges.find(x=>x.id===a.dataset.id);c.participants=c.participants.filter(w=>w!=='me');save();renderCh();toast(`Left ${c.name}.`,restoreTo(snap));break}
+    case 'chLog':{chDlg.close();const c=currentSel();if(c)openLog(c.id);else{drawNew();logDlg.showModal()}break}
+    case 'chJoin':{const c=S.challenges.find(x=>x.id===a.dataset.id);if(!c.participants.includes('me'))c.participants.push('me');if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'challenge',text:(c.inviteOnly&&(c.invited||[]).includes('me'))?'accepted a challenge:':'joined',book:c.name,ch:c.id,ts:Date.now(),r:{}});const tn=c.type==='list'?tbrAdd(c.titleIds||[],c.id):0;save();if(chDlg.open&&chMode==='ch')renderCh();else{const y=window.scrollY;render();window.scrollTo(0,y)}toast(`Joined ${c.name}.`,null,tbrSaid(tn));break}
+    case 'chLeave':{const snap=snapshot(),c=S.challenges.find(x=>x.id===a.dataset.id);c.participants=c.participants.filter(w=>w!=='me');const nTb=chTbrTakeBack(c);save();renderCh();if(nTb)render();toast(`Left ${c.name}${nTb?` and removed the ${nTb===1?'book':nTb+' books'} it added to your To Read`:''}.`,restoreTo(snap));break}   // leaving mirrors joining (James, Nov 27)
     case 'chInv':cv.inv=!cv.inv;renderCh();if(cv.inv)setTimeout(()=>chBody.querySelector('[name=invTo]:not([disabled])')?.focus(),30);break;
     case 'chInvGo':{const c=S.challenges.find(x=>x.id===cv.id),to=invPicked();if(!c)break;if(!to.length){document.getElementById('invErr').textContent='Choose at least one person.';break}
       c.invited=[...new Set([...(c.invited||[]),...to])];c.invitedBy={...(c.invitedBy||{}),...Object.fromEntries(to.map(w=>[w,'me']))};
@@ -6184,14 +6312,16 @@ document.addEventListener('click',e=>{
     case 'chDelAsk':cv.del=!cv.del;renderCh();break;
     case 'chHide':{const c=S.challenges.find(x=>x.id===cv.id),h=hiddenC();if(a.dataset.v==='1'){if(!h.includes(c.id))h.push(c.id)}else S.settings.hiddenCh=h.filter(x=>x!==c.id);save();renderCh();render();toast(a.dataset.v==='1'?`Hid ${c.name} from your lists. Its trophies stay on the Trophy Wall.`:`${c.name} is back in your lists.`);break}
     case 'chShowHidden':showHiddenC=!showHiddenC;render();break;
-    case 'chDel':{const snap=snapshot(),c=S.challenges.find(x=>x.id===a.dataset.id);if(c.mode!=='personal'){const k=chStatus(c,chProg(c)).k;if(c.creator!=='me'||k==='done'||k==='ended')break;S.notifs=S.notifs.filter(n=>!(n.link&&n.link.type==='ch'&&n.link.id===c.id))}S.challenges=S.challenges.filter(x=>x!==c);save();chDlg.close();toast(`Deleted ${c.name}.`,restoreTo(snap));break}
+    case 'chDel':{const snap=snapshot(),c=S.challenges.find(x=>x.id===a.dataset.id);if(c.mode!=='personal'){const k=chStatus(c,chProg(c)).k;if(c.creator!=='me'||k==='done'||k==='ended')break;S.notifs=S.notifs.filter(n=>!(n.link&&n.link.type==='ch'&&n.link.id===c.id))}S.challenges=S.challenges.filter(x=>x!==c);const nTb=chTbrTakeBack(c);save();chDlg.close();render();toast(`Deleted ${c.name}${nTb?` and the ${nTb===1?'book':nTb+' books'} it added to your To Read`:''}.`,restoreTo(snap));break}
     case 'chNew':openChForm(null,a.dataset.mode);break;
     case 'chEdit':openChForm(a.dataset.id);break;
     case 'cfMode':captureCf();cf.mode=a.dataset.v;renderChForm();break;
     case 'cfType':captureCf();cf.type=a.dataset.v;renderChForm();break;
-    case 'cfAddOL':{const x=cf.ol?.items[+a.dataset.i];if(!x)break;captureCf();const t=olTitleFrom(x);if(!cf.titleIds.includes(t.id))cf.titleIds.push(t.id);cf.q='';cf.ol=null;save();renderChForm();setTimeout(()=>document.getElementById('cfQ')?.focus(),30);break}
-    case 'cfAdd':captureCf();cf.titleIds.push(a.dataset.id);cf.q='';cf.ol=null;renderChForm();setTimeout(()=>document.getElementById('cfQ')?.focus(),30);break;
+    case 'cfAddOL':{const x=cf.ol?.items[+a.dataset.i];if(!x)break;captureCf();const t=olTitleFrom(x);if(!cf.titleIds.includes(t.id))cf.titleIds.push(t.id);save();cfKeepSearch();break}
+    case 'cfAdd':captureCf();cf.titleIds.push(a.dataset.id);cfKeepSearch();break;
     case 'cfRm':captureCf();cf.titleIds=cf.titleIds.filter(x=>x!==a.dataset.id);renderChForm();break;
+    case 'cfMove':{captureCf();const i=+a.dataset.i,j=i+(+a.dataset.d),t=cf.titleIds;if(j<0||j>=t.length)break;[t[i],t[j]]=[t[j],t[i]];cf.ordered=true;renderChForm();setTimeout(()=>document.querySelector(`[data-act=cfMove][data-i="${j}"][data-d="${a.dataset.d}"]:not([disabled])`)?.focus()||document.querySelector(`[data-act=cfMove][data-i="${j}"]`)?.focus(),20);break}
+    case 'cfSeries':{captureCf();cf.ordered=false;renderChForm();break}
     case 'cfSave':saveCf();break;
     case 'openBattle':openBattle(a.dataset.id);break;
     case 'bTab':bv.tab=a.dataset.v;renderBattle();break;
@@ -6244,7 +6374,7 @@ document.addEventListener('click',e=>{
     case 'awSave':{const n=document.getElementById('awName').value.trim(),to=document.getElementById('awTo').value,note=document.getElementById('awNote').value.trim();if(!n){document.getElementById('awErr').textContent='Give the award a name.';break}
       if(to==='me'){S.trophies.push({id:'aw'+uid(),name:n,desc:note||'Special award',date:today(),tier:'trophy',icon:'trophy',hue:'purple'});post('award','added an award to their Trophy Wall:',n)}else{S.awardsGiven.push({id:uid(),to,name:n,note,date:today()});if(S.settings.share)S.activity.push({id:uid(),who:'me',kind:'award',text:`gave ${nameOf(to)} an award:`,book:n,ts:Date.now(),r:{}})}
       save();chDlg.close();toast(to==='me'?`Added ${n} to your Trophy Wall.`:`Gave ${nameOf(to)} the award ${n}.`);break}
-    case 'libTab':lib.tab=a.dataset.v;if(lib.tab==='discover')lib.rv='disc';if(lib.tab!=='mybooks'){if(lib.sort==='finished')lib.sort='title';if(['year','month','week'].includes(lib.group))lib.group='alpha'}if(lib.tab==='mybooks'&&lib.group==='alpha')lib.group='status';if(lib.tab!=='mybooks'&&lib.group==='status')lib.group='alpha';render();break;
+    case 'libTab':lib.tab=a.dataset.v;if(lib.tab==='discover')lib.rv='disc';if(lib.tab!=='mybooks'){if(lib.sort==='finished'||lib.sort==='rating')lib.sort='title';if(['year','month','week'].includes(lib.group))lib.group='alpha'}if(lib.tab==='mybooks'&&lib.group==='alpha')lib.group='status';if(lib.tab!=='mybooks'&&lib.group==='status')lib.group='alpha';render();break;
     case 'mbChip':lib.mb=lib.mb===a.dataset.v&&a.dataset.v!=='all'?'all':a.dataset.v;   // clicking the chip that's on turns it off (back to All)
       if(lib.mb==='finished'){if(lib.sort==='title')lib.sort='finished';if(lib.group==='status')lib.group='year'}else{if(lib.sort==='finished')lib.sort='title';if(['year','month','week'].includes(lib.group))lib.group='status'}refreshLib();break;
     case 'recView':lib.rv=a.dataset.v;render();window.scrollTo(0,0);break;
@@ -6330,11 +6460,24 @@ document.addEventListener('click',e=>{
     case 'surpriseClear':surprise=null;refreshLib();document.querySelector('[data-act=surprise]')?.focus();break;
     case 'nextClose':nextAfter();nextDlg.close();break;
     case 'dnfWhy':{dnfSel.note=document.getElementById('dnfNote').value;dnfSel.why=dnfSel.why.includes(a.dataset.v)?dnfSel.why.filter(x=>x!==a.dataset.v):[...dnfSel.why,a.dataset.v];renderDnf();dnfBody.querySelector(`[data-act=dnfWhy][data-v="${a.dataset.v}"]`)?.focus();break}
-    case 'dnfSave':{const b=book(dnfSel.id),note=document.getElementById('dnfNote').value.trim(),had=!!(b.dnfWhy||b.dnfNote);
+    case 'dnfSave':{const b=book(dnfSel.id),note=document.getElementById('dnfNote').value.trim(),had=!!(b.dnfWhy||b.dnfNote),u=!dnfSel.edit&&dnfSel.undo,nAct=S.activity.length;
       if(dnfSel.why.length)b.dnfWhy=DNF_WHY.map(x=>x[0]).filter(k=>dnfSel.why.includes(k));else delete b.dnfWhy;if(note)b.dnfNote=note;else delete b.dnfNote;
       if(!had&&(b.dnfWhy||b.dnfNote))postBook('dnf','stopped reading',b,`at ${stopAt(b)}${b.dnfWhy?` · ${dnfWhyL(b.dnfWhy,true)}`:''}${b.dnfNote?`: “${b.dnfNote}”`:''}`);
-      save();dnfDlg.close();render();if(bookDlg.open)renderBD(true);toast(b.dnfWhy||b.dnfNote?'Reason saved.':'Saved.');break}
-    case 'dnfClose':dnfDlg.close();break;
+      save();dnfDlg.close();render();if(bookDlg.open)renderBD(true);
+      if(u){const posts=S.activity.slice(nAct).filter(a=>a.who==='me');toast(`Moved ${b.title} to Did Not Finish.`,()=>{const x=book(b.id);if(x){delete x.dnfWhy;delete x.dnfNote}   // take back the reason and its post first, so Undo can restore the rest
+        if(posts.length){S.activity=S.activity.filter(a=>!posts.includes(a));S.actGone=(S.actGone||[]).concat(posts.map(a=>({id:a.id,ts:Date.now()})))}save();u();render();toast('Undone.')},b.dnfWhy||b.dnfNote?'Reason saved.':'')}
+      else toast(b.dnfWhy||b.dnfNote?'Reason saved.':'Saved.');break}
+    case 'isbnGo':{const w=a.closest('.isbn-look'),box=a.closest('.inline-copy')||a.closest('form')||a.closest('dialog'),msg=w.querySelector('.isbn-msg'),raw=w.querySelector('[data-isbn]').value.replace(/[\s-]/g,'').toUpperCase();
+      if(!/^(\d{9}[\dX]|\d{13})$/.test(raw)){msg.textContent='Enter the 10- or 13-digit ISBN from the back of the book or the copyright page.';break}
+      msg.textContent='Looking it up…';a.disabled=true;
+      fetchRetry(`https://openlibrary.org/isbn/${raw}.json`).then(r=>r.ok?r.json():null).then(d=>{a.disabled=false;
+        if(!d){msg.textContent='Open Library doesn’t know that ISBN. You can type the edition yourself.';return}
+        const ed=box.querySelector('[data-copy-edition],[name=copyEdition],#acEdition'),txt=isbnEdition(d);if(!txt){msg.textContent='Open Library has that ISBN but no edition details. You can type them yourself.';return}
+        if(ed){ed.value=txt;ed.dispatchEvent(new Event('input',{bubbles:true}))}
+        const fm=box.querySelector('[data-copy-format],[name=copyFormat],#acFmt'),pf=String(d.physical_format||'').toLowerCase(),want=/ebook|e-book|kindle|electronic/.test(pf)?'ebook':/audio|cd|mp3/.test(pf)?'audio':pf?'physical':'';
+        if(fm&&want&&!fm.disabled&&fm.value!==want){fm.value=want;fm.dispatchEvent(new Event('change',{bubbles:true}))}
+        msg.textContent=`Filled in from Open Library${d.title?` (${d.title})`:''}. Change it if you like.`}).catch(()=>{a.disabled=false;msg.textContent='Couldn’t reach Open Library. Try again in a moment.'});break}
+    case 'dnfClose':{const u=dnfSel?.undo,b=dnfSel&&book(dnfSel.id);dnfDlg.close();if(u&&b&&!dnfSel.edit)toast(`Moved ${b.title} to Did Not Finish.`,()=>{u();render();toast('Undone.')});break}
     case 'dnfUndo':{const u=dnfSel?.undo;dnfDlg.close();if(u){u();toast('Undone.')}break}
     case 'dnfEdit':{const b=book(a.dataset.book);if(b)openDnf(b);break}
     case 'nextUndo':{const u=nextDone?.undo;nextDlg.close();if(u&&u()!==false){render();toast('Undone.')}break}
@@ -6513,6 +6656,312 @@ document.addEventListener('keydown',e=>{
 let tx=null;
 document.addEventListener('touchstart',e=>{tx=e.target.closest('#detail')?e.touches[0].clientX:null},{passive:true});
 document.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50)stepBook(dx<0?1:-1)});
+/* One reading window (Nov 24, James): Log Reading and Edit Reading in one window. It is the real Log Reading
+   window, regrouped into closed sections, with Edit Reading's fields moved in. Saving runs the real Log Reading save
+   for sessions and status, then applies the reading details the way Edit Reading does. */
+(function(){
+const css=document.createElement('style');
+css.textContent=`
+.one-sec{border-top:1px solid var(--border);margin:0!important;padding:2px 0}
+.one-sec>summary{cursor:pointer;padding:12px 0;list-style:none;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.one-sec>summary::-webkit-details-marker{display:none}
+.one-sec>summary::before{content:'▸';color:var(--text-2);width:12px;flex:none}
+.one-sec[open]>summary::before{content:'▾'}
+.one-sec>summary .one-sum{color:var(--text-2);font-weight:400;min-width:0}
+.one-sec>.one-body{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:0 0 14px}
+.one-sess{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.one-secs{display:grid;margin-top:4px}
+.one-secs .rm-box{margin-top:0}
+.one-h3{font-size:13px;font-weight:600;margin:0}
+.tw .tw-w{display:inline-grid}.tw .tw-w>span{grid-area:1/1;text-align:center}.tw .tw-h,.tw:hover .tw-l,.tw:focus-visible .tw-l,.tw:active .tw-l{visibility:hidden}.tw:hover .tw-h,.tw:focus-visible .tw-h,.tw:active .tw-h{visibility:visible}   /* both words share one cell, so the button keeps its width */
+.isbn-look{display:grid;gap:4px;justify-items:start;flex-basis:100%;width:100%;grid-column:1/-1}.isbn-l{margin:0;font-size:13px;font-weight:600}.isbn-look [hidden]{display:none!important}.isbn-row{display:flex;gap:8px;align-items:center;width:100%}.isbn-row .inp{flex:1;min-width:0;max-width:300px;box-sizing:border-box}
+.cf-order{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}
+.cf-order li{display:flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:10px;padding:4px 6px 4px 10px;background:var(--surface)}
+.cf-order .cf-n{color:var(--text-2);font-size:13px;min-width:1.6em}.cf-order .cf-t{flex:1;min-width:0;font-size:14px}
+.cf-order .cf-mv{width:32px;height:32px;font-size:16px}.cf-order .cf-mv[disabled]{opacity:.3}
+.cf-order .cf-grip{cursor:grab;touch-action:none;user-select:none;color:var(--text-2);letter-spacing:-3px;padding:8px 8px 8px 2px;margin-left:-6px;font-size:15px;line-height:1}
+.cf-order li.cf-drag{box-shadow:0 6px 18px rgba(0,0,0,.18);border-color:var(--primary);position:relative;z-index:2}
+body.cf-dragging,body.cf-dragging *{cursor:grabbing!important;user-select:none}
+.bd-sessions{margin-top:14px;padding-top:10px;border-top:1px solid var(--border)}
+.bd-sess{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0;border-bottom:1px solid color-mix(in srgb,var(--border) 60%,transparent)}
+.bd-sess .small{min-width:0}
+.bd-fold-b{margin-top:6px}
+#bookDlg .bd-sess[hidden],#bookDlg .act-top[hidden]{display:none!important}
+.bd-more>summary{list-style:none;cursor:pointer;margin-top:6px}.bd-more>summary::-webkit-details-marker{display:none}
+.bd-more[open]>summary{display:none}
+.one-pos-fix,.one-start-fix{color:var(--orange-ink);margin-top:2px;line-height:1.45}
+.one-start-fix{margin-top:-6px}
+.one-start-fix .link-btn{display:inline;padding:0;min-height:0;font-size:inherit;vertical-align:baseline}
+.one-pos-fix .link-btn{display:inline;padding:0;min-height:0;font-size:inherit;vertical-align:baseline}
+.one-details{border-top:1px solid var(--border);padding-top:12px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.one-details .st-btns{gap:10px 6px}
+.one-details .st-btns .one-stc{border:0;cursor:pointer;position:relative;font-family:inherit}
+.one-details .st-btns .one-stc::after{content:'';position:absolute;inset:-5px -3px}
+.one-details .st-btns .one-stc[aria-pressed=false]{background:transparent;color:var(--text-2);box-shadow:inset 0 0 0 1px var(--border)}
+.one-details .st-btns .one-stc[aria-pressed=false]:hover{color:var(--text);box-shadow:inset 0 0 0 1px var(--text-2)}
+.one-rr{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)}
+.one-secs .inp,.one-sess .inp{box-sizing:border-box;max-width:100%}
+`;
+document.head.appendChild(css);
+
+const css2=document.createElement('style');
+css2.textContent=`#crCard .rn-info>.d-title{margin-top:-0.2em}
+/* Status buttons under the cover at every width (James, Nov 24); the link row under the buttons is gone */
+#crCard .rn-grid .rn-links{display:none!important}
+#crCard .rn-side{display:grid!important;gap:4px;margin-top:8px}
+@media(max-width:719px){#crCard .rn-side .sa{white-space:normal;font-size:11.5px;padding:3px 6px;min-height:24px}#crCard .rn-side .sa svg{display:none}}
+/* 1 of 7 never breaks; when the heading and arrows don't fit on one line, the arrows move under the heading */
+#crCard .card-h{flex-wrap:wrap;row-gap:6px}
+#crCard .rn-nav{flex:none}
+#crCard .rn-nav .pos{white-space:nowrap}
+/* The summary box keeps two fixed lines (Nov 24): what this session adds, then Today after saving with Edit Goal at the right */
+#logForm .calc{display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
+#logForm .calc .one-c1{display:flex;flex-wrap:wrap;gap:2px 12px}
+#logForm .calc .one-c2{display:flex;align-items:center;gap:10px}
+#logForm .calc .one-c2>span{flex:1;min-width:0}
+#logForm .calc .one-c2 .edit-goal{flex:none;margin-left:auto}`;
+document.head.appendChild(css2);
+const _calcLog=calcLog;
+calcLog=function(...a){const r=_calcLog(...a);const el=document.getElementById('calc');if(!el||!logForm.dataset.one)return r;
+  const parts=[...el.children];if(!parts.length)return r;const last=parts.pop(),btn=last.querySelector('.edit-goal');
+  const c1=document.createElement('div');c1.className='one-c1';c1.append(...parts);
+  const c2=document.createElement('div');c2.className='one-c2';if(btn)btn.remove();c2.append(last);if(btn)c2.append(btn);
+  el.replaceChildren(c1,c2);return r};
+let oneFrom='log';
+const _openLog=openLog,_drawLog=drawLog;
+openLog=function(...a){oneFrom='log';return _openLog(...a)};
+openEdit=function(id){
+  const b=book(id);if(!b)return;
+  oneFrom='edit';startSetupDone.add(b);
+  if(b.format==='unknown')b.format='print',b._fmtWasUnknown=true;
+  drawLog(b);logDlg.showModal();
+  if(b._fmtWasUnknown){b.format='unknown';delete b._fmtWasUnknown}
+};
+drawLog=function(b,focus,preMin,moveTo){
+  _drawLog(b,focus,preMin,moveTo);
+  if(logForm.dataset.mode==='log')restructure(b);
+};
+
+const tog=(name,members,checked)=>`<div class="chips">${members.map(([k,m])=>`<label class="tog"><input type="checkbox" name="${name}" value="${k}" ${checked.includes(k)?'checked':''}><span>${esc(m.name)}</span></label>`).join('')}</div>`;
+const sec=(key,title,body,open)=>`<details class="one-sec" data-one="${key}" ${open?'open':''}><summary><b>${title}</b><span class="one-sum" data-sum="${key}"></span></summary><div class="one-body">${body}</div></details>`;
+
+function restructure(b){
+  const F=logForm,form=F.querySelector('.form'),edit=oneFrom==='edit',audio=b.format==='audio',pc=isPct(b);
+  F.dataset.one=oneFrom;F.dataset.done='';
+  const q=s=>F.querySelector(s);
+  // Header: the title says where you came from; Edit shows the book's title instead of the book list.
+  q('#logTitle').textContent=edit?'Edit Reading':'Log Reading';
+  if(edit){const l=F.book.closest('label');l.hidden=true;l.insertAdjacentHTML('afterend',`<div class="muted small one-booktitle">${esc(b.title)}</div>`)}
+  // Status: the chips under Reading Details drive the (now hidden) status list the save already reads.
+  const sel=F.status,cur=b.status==='want'?((S.upNext||[]).includes(b.id)?'queue':'want'):b.status;
+  sel.innerHTML=[['reading','Currently Reading'],['paused','Paused'],['want','To Read'],['queue','Reading Queue'],['finished','Finished'],['dnf','Did Not Finish']].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');
+  sel.value=edit?cur:(b.status==='finished'||b.status==='dnf'?b.status:'reading');
+  const statusLabel=sel.closest('label');statusLabel.hidden=true;
+  // Pieces of the real Log Reading window
+  const edDet=q('.reading-edition-details'),sw=q('.sw-copy'),progH=q('.lg-prog-h'),f3=progH.nextElementSibling,calc=q('#calc'),sf0=q('.one-start-fix'),hint=sf0.nextElementSibling,
+    togD=q('.reading-together'),when=q('.lg-when'),note=q('[name=note]').closest('label'),np=q('.lg-np'),ns=q('.lg-ns'),fin=q('[name=finished]'),err=q('#logErr'),ask=q('#logAsk');
+  fin.hidden=false;fin.removeAttribute('tabindex');fin.removeAttribute('aria-hidden');fin.checked=sel.value==='finished';
+  const sess=document.createElement('div');sess.className='one-sess';sess.append(progH,f3,calc,sf0,hint,when,note);
+  // Reading Details (from Edit Reading). One Pages/% switch: the one beside Reading Progress.
+  const hasSessions=S.sessions.some(x=>x.bookId===b.id);
+  const fmt0=b._fmtWasUnknown?'unknown':b.format;   // a book with no format yet opens with a stand-in format; the list shows Not Specified
+  const details=`${statusPicker(b).replace(/ disabled/g,'')}
+    <div class="f2 one-pos-row"><label class="f"><span class="one-posL">${audio?'Current Position (h:mm)':pc?'Current Percent':'Current Page'}</span><input class="inp" name="pos" value="${audio?fmtPos(b.pos):b.pos}"><span class="xs muted one-pos-note" hidden>Set by this session’s end</span><span class="xs one-pos-fix" hidden></span></label>
+    <label class="f">Started On<input class="inp" type="date" name="started" value="${b.started||''}" max="${today()}"></label></div>
+    <div data-one-finish ${cur==='finished'?'':'hidden'}><label class="f"><span>Finished On <span class="sub">(optional)</span></span><input class="inp" type="date" name="finDate" value="${b.finished||''}" max="${today()}"></label><p class="xs muted">Leave blank if the finish date is unknown.</p></div>`;
+  // Copy, Edition and Format: the edition fields (no longer behind a link), format and length, and Switched to a different copy?
+  const copyBody=`<div class="one-ed"></div>
+    <div class="f2"><label class="f">Format<select class="inp" name="fmtE" ${hasSessions?'disabled':''}>${!hasSessions&&['want','finished','dnf'].includes(b.status)?`<option value="unknown" ${fmt0==='unknown'?'selected':''}>Not Specified</option>`:''}<option value="print" ${fmt0==='print'||fmt0==='ebook'?'selected':''}>Book or Ebook</option><option value="audio" ${audio?'selected':''}>Audiobook</option></select></label>
+    <label class="f" ${pc?'hidden':''}><span>${audio?'Length (h:mm)':'Number of Pages'}</span><input class="inp" name="total" value="${hasLen(b)&&!pc?(audio?fmtPos(b.total):b.total):''}" placeholder="Optional"></label></div>
+    ${hasSessions?`<p class="xs muted">Format is fixed because this reading has logged sessions. This protects the page or audio positions in your history.${['reading','paused'].includes(b.status)?' To change it from here on, use Switched to a different copy?':''}</p>`:''}
+    ${['finished','dnf'].includes(b.status)&&!audio?`<label class="f">Track Progress By<select class="inp" name="unitE"><option value="pages">Pages</option><option value="pct" ${pc?'selected':''}>Percent (what your e-reader shows)</option></select></label>`:''}
+    <div class="one-sw"></div>`;
+  const members=Object.entries(S.members||{}),solo=S.settings.solo||!members.length;
+  // Read Together (Nov 24): one row for this session; ticking a name also adds them to the read-through, which shows
+  // as a line with Change (for buddy reads, or to take someone off). From Edit, the session's picker stays with the
+  // session ("Read with someone?") and this section is the read-through list.
+  const rtList=`<div class="f one-rt-list" hidden><span class="one-h3">The Whole Read-Through</span>${tog('readWith',members,b.with||[])}<span class="xs muted">Shows on the book and counts as reading together. It doesn’t give credit for any session.</span></div>`;
+  const togBody=solo?'':`<div class="f"><span class="one-h3">This Session</span>${tog('with',members,[])}<span class="xs muted">Reading aloud or side by side? Everyone you choose gets credit for this session too, and is added to the read-through.</span></div>
+    <p class="small one-rt-line" style="margin:0"><span class="muted one-rt-names"></span> <button type="button" class="link-btn sm" data-one-rt>Change</button></p>${rtList}`;
+  const finishedBook=['finished','dnf'].includes(b.status);
+  const wrap=document.createElement('div');wrap.className='one-secs';
+  wrap.innerHTML=`${edit&&!finishedBook?sec('sess','Log a Session','',false):''}
+    <div class="one-details">${details}</div>
+    ${sec('copy','Copy, Edition and Format',copyBody,false)}
+    ${solo?'':sec('together','Read Together',togBody,false)}
+    ${sec('privacy','Privacy and Suggestions','',false)}
+    <p class="small" style="margin:12px 0 0"><span class="muted">Title, author, series, cover, your copies, and removing:</span> <button type="button" class="link-btn sm" data-one-editbook>Edit Book</button></p>`;
+  // Place everything: session first (open in Log, a closed section in Edit), then the sections, then errors and buttons.
+  form.insertBefore(wrap,err);
+  if(edit){if(!finishedBook)wrap.querySelector('[data-one=sess] .one-body').append(sess)}else form.insertBefore(sess,wrap);
+  fin.hidden=true;fin.tabIndex=-1;fin.setAttribute('aria-hidden','true');form.append(fin);
+  // Move To uses the Library card chips: short names, the card's size and colors (Nov 24)
+  const CHIP={reading:['Reading','reading'],paused:['Paused','paused'],want:['To Read','want'],queue:['Queued','want'],finished:['Finished','finished'],dnf:['DNF','dnf']};
+  F.querySelectorAll('.st-btns [data-act=setStatus]').forEach(x=>{const [t,c]=CHIP[x.dataset.v];x.setAttribute('aria-label',x.textContent.trim());x.textContent=t;x.className=`st st-${c} one-stc`});
+  if(finishedBook&&edit){sess.hidden=true;form.append(sess)}
+  const ed=edDet.querySelector('.reading-edition');wrap.querySelector('.one-ed').replaceWith(ed);edDet.remove();
+  if(['reading','paused'].includes(b.status))wrap.querySelector('.one-sw').replaceWith(sw);else{sw.hidden=true;wrap.querySelector('.one-sw').remove()}
+  if(togD)togD.remove();
+  const pv=wrap.querySelector('[data-one=privacy] .one-body');if(np)pv.append(np);ns.classList.remove('lg-ns');ns.hidden=false;pv.append(ns);
+  statusLabel.hidden=true;form.append(statusLabel);
+  q('.dlg-f [type=submit]').textContent=edit?'Save Changes':'Save Reading';
+  // an unsaved Log Reading entry for this book shows itself instead of saving unseen
+  if(edit&&!finishedBook&&(F.end.value.trim()||F.minutes.value.trim()))wrap.querySelector('[data-one=sess]').open=true;
+  // Last session, so a mistake is fixed where people look for it (Nov 24)
+  const ls=oneLastSess(b);if(ls)F.querySelector('.one-details').insertAdjacentHTML('beforeend',`<p class="small one-last" style="margin:0"><span class="muted">Last session: ${oneSessText(ls,b)}</span> <button type="button" class="link-btn sm" data-act="sessEdit" data-id="${ls.id}">Edit</button></p>`);
+  F.dataset.prev=sel.value;sync();
+}
+
+// Section summaries and the links between the session and Reading Details
+function oneLastSess(b){return S.sessions.filter(x=>x.bookId===b.id).reduce((a,x)=>!a||x.date>=a.date?x:a,null)}
+function oneSessText(x,b){return sessLine(x,b)}
+function sync(){
+  const F=logForm;if(F.dataset.mode!=='log'||!F.dataset.one)return;
+  const b=findB(F.dataset.book);if(!b)return;
+  const v=F.status.value,end=F.end?.value.trim(),audio=b.format==='audio',pc=isPct(b),E=F.elements;
+  if(v==='finished'&&F.dataset.prev!=='finished'&&F.finDate&&!F.finDate.value)F.finDate.value=F.date.value||today();F.dataset.prev=v;
+  F.querySelectorAll('[data-act=setStatus]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===v)));
+  const fd=F.querySelector('[data-one-finish]');if(fd)fd.hidden=v!=='finished';
+  const pos=F.pos,pn=F.querySelector('.one-pos-note');
+  if(pos){if(end){pos.dataset.was=pos.dataset.was??pos.value;pos.value=end;pos.readOnly=true;pn.hidden=false}else if(pos.readOnly){pos.value=pos.dataset.was??pos.value;delete pos.dataset.was;pos.readOnly=false;pn.hidden=true}}
+  const row=F.querySelector('.one-pos-row');if(row)row.hidden=v==='want'||v==='queue';
+  {const sf=F.querySelector('.one-start-fix'),ls=oneLastSess(b),r0=readLog();if(sf){const show=ls&&ls.end!=null&&!isCU(ls)&&r0.start!=null&&!isNaN(r0.start)&&r0.start<ls.end&&(ls.unit==='pct')===pc;
+    const at=n=>audio?fmtPos(n):pc?n+'%':'page '+n;sf.hidden=!show;
+    if(show)sf.innerHTML=`Your last session ended at ${at(ls.end)}, so this would count ${audio?'that listening':pc?'that part':'pages '+(r0.start+1)+'–'+ls.end} again. <button type="button" class="link-btn sm" data-one-start="${audio?fmtPos(ls.end):ls.end}">Start at ${at(ls.end).replace('page ','page ')}</button>`}}
+  {const fx=F.querySelector('.one-pos-fix'),ls=oneLastSess(b);if(fx){const num=t=>audio?parsePos(t):pc?pctNum(t):(/^\d+$/.test(String(t).trim())?+t:NaN);
+    const show=pos&&!pos.readOnly&&pos.value!==pos.defaultValue&&ls&&ls.end!=null&&num(pos.value)!==ls.end&&!isNaN(num(pos.value));
+    fx.hidden=!show;if(show)fx.innerHTML=`Your last session ended ${audio?'at '+fmtPos(ls.end):pc?'at '+ls.end+'%':'on page '+ls.end}. If that was a mistake, <button type="button" class="link-btn sm" data-act="sessEdit" data-id="${ls.id}">edit the session</button> instead.`}}
+  const set=(k,t)=>{const el=F.querySelector(`[data-sum="${k}"]`);if(el)el.textContent=t?'· '+t:''};
+  const r=readLog();
+  set('sess',[r.end!=null&&!isNaN(r.end)&&r.start!=null?(audio?`${fmtPos(r.start)}–${fmtPos(r.end)}`:pc?`${r.start}–${r.end}%`:`p. ${r.start}–${r.end}`):'',r.minutes&&!isNaN(r.minutes)?fmtMin(r.minutes):''].filter(Boolean).join(' · ')||'optional');
+  const lbl={reading:'Currently Reading',paused:'Paused',want:'To Read',queue:'Reading Queue',finished:'Finished',dnf:'Did Not Finish'}[v];
+  const copySel=F.querySelector('[data-edition-copy]'),edI=F.querySelector('[id$=Edition]');
+  set('copy',[copySel&&copySel.value?copySel.selectedOptions[0].textContent.split(' · ')[0]:'',edI?.value.trim(),audio?'Audiobook':pc?'Percent':'Pages'].filter(Boolean).join(' · '));
+  const names=n=>[...F.querySelectorAll(`[name=${n}]:checked`)].map(x=>S.members[x.value]?.name||x.value);
+  const sw=names('with'),bw=names('readWith');
+  const rl=F.querySelector('.one-rt-names');if(rl)rl.textContent=bw.length?`Read-through with ${bw.join(', ')} ·`:'Read-through: just you ·';
+  set('together',sw.length||bw.length?[sw.length?'this session: '+sw.join(', '):'',bw.length?'read-through: '+bw.join(', '):''].filter(Boolean).join(' · '):'just you');
+  set('privacy',[F.noPost?(F.noPost.checked?'not posted':'posts to your group'):'',F.noSug?.checked?'left out of suggestions':'in suggestions'].filter(Boolean).join(' · '));
+}
+['input','change'].forEach(ev=>logForm.addEventListener(ev,()=>setTimeout(sync,0)));
+logForm.addEventListener('change',e=>{if(!logForm.dataset.one||e.target.name!=='with'||!e.target.checked)return;const r=logForm.querySelector(`[name=readWith][value="${e.target.value}"]`);if(r)r.checked=true});
+document.addEventListener('click',e=>{const a=e.target.closest?.('#logForm [data-one-start]');if(!a)return;logForm.start.value=a.dataset.oneStart;logForm.start.dispatchEvent(new Event('input',{bubbles:true}));calcLog();setTimeout(sync,0)});
+document.addEventListener('click',e=>{const a=e.target.closest?.('#logForm [data-one-editbook]');if(!a)return;const b=findB(logForm.dataset.book);if(b?.titleId)openTitleEdit(b.titleId)});
+document.addEventListener('click',e=>{const c=e.target.closest?.('#logForm [data-one-rt]');if(!c)return;const l=logForm.querySelector('.one-rt-list');l.hidden=!l.hidden;c.textContent=l.hidden?'Change':'Done';setTimeout(sync,0)});
+
+// Move To chips inside this window
+document.addEventListener('click',e=>{
+  const a=e.target.closest?.('#logForm [data-act=setStatus]');if(!a||!logForm.dataset.one)return;
+  e.stopPropagation();e.preventDefault();
+  logForm.status.value=a.dataset.v;logForm.status.dispatchEvent(new Event('input',{bubbles:true}));setTimeout(sync,0);
+},true);
+
+// Saving: check the reading details first; then either save details only, or let the real Log Reading save run and
+// apply the details once it has succeeded.
+let pend=null;
+document.addEventListener('submit',e=>{
+  if(e.target!==logForm||logForm.dataset.mode!=='log'||!logForm.dataset.one)return;
+  const F=logForm,b=findB(F.dataset.book),er=m=>{document.getElementById('logErr').textContent=m;e.preventDefault();e.stopImmediatePropagation()};
+  pend=null;const p=readDetails(F,b);if(p.err)return er(p.err);
+  const r=readLog(),range=r.end!=null&&!isNaN(r.end),mins=r.minutes!=null;
+  const v=F.status.value,base=b.status==='want'&&(S.upNext||[]).includes(b.id)?'queue':b.status;
+  if(['want','queue'].includes(v)){p.status=v;if(!range&&!mins)return finishDetails(e,b,p)}
+  const logRuns=range||mins||(F.finished.checked&&b.status!=='finished')||(['reading','paused','dnf','finished'].includes(v)&&v!==base);
+  if(!logRuns)return finishDetails(e,b,p);
+  if(p.status)F.status.value=b.status==='want'?'reading':b.status;
+  pend={b,p};F.dataset.done='';
+},true);
+document.addEventListener('submit',e=>{
+  if(e.target!==logForm||!pend)return;const {b,p}=pend;pend=null;
+  if(logForm.dataset.done!=='1')return;     // the Log Reading save stopped (an error or "Is that right?")
+  applyDetails(b,p,true);save();render();if(bookDlg?.open)renderBD(true);
+});
+function finishDetails(e,b,p){
+  e.preventDefault();e.stopImmediatePropagation();
+  applyDetails(b,p,false);saveReadingEdition(b,readEdition(logForm,'logReading'));
+  if(logForm.noPost)noPostSet(b.titleId,logForm.noPost.checked);
+  logForm.dataset.done='1';draftClear(logForm.dataset.dkey);if(!save())return;logDlg.close();render();if(bookDlg?.open)renderBD(true);toast(`Saved changes to ${b.title}.`);
+}
+function readDetails(F,b){
+  const audio=b.format==='audio',pc=isPct(b),p={};
+  const num=v=>audio?parsePos(v):(/^\d+$/.test(String(v).trim())?+v:NaN);
+  const E=F.elements;
+  const tv=String(F.total?.value??'').trim();
+  if(!pc&&tv!==''){const t=num(tv);if(!t||isNaN(t)||t<=0)return {err:audio?'Enter the length as h:mm, for example 6:45, or leave it blank.':'Enter the number of pages, or leave it blank.'};p.total=t}else if(!pc)p.total=0;
+  const fe=F.fmtE;if(fe&&!fe.disabled)p.format=fe.value;
+  if(F.pos&&!F.pos.readOnly&&!['want','queue'].includes(F.status.value)){const v=pc?pctNum(F.pos.value):num(F.pos.value);if(v==null||isNaN(v)||v<0)return {err:audio?'Enter the position as h:mm.':pc?'Enter the current percent, from 0 to 100.':'Enter the current page.'};
+    const T=pc?100:(p.total||0);if(T&&v>T)return {err:audio?'The position can’t be past the end.':pc?'The percent can’t be over 100.':'The current page can’t be past the last page.'};p.pos=v}
+  p.started=F.started?.value||'';p.finDate=F.finDate?.value||'';
+  // only what you changed here overrides what the session save sets
+  p.startedCh=!!F.started&&F.started.value!==F.started.defaultValue;p.finCh=!!F.finDate&&F.finDate.value!==F.finDate.defaultValue;
+  if(!validReadingDate(p.started)||!validReadingDate(p.finDate))return {err:'Choose valid dates that are not in the future.'};
+  if(p.started&&p.finDate&&F.status.value==='finished'&&p.finDate<p.started)return {err:'The finish date cannot be before the start date.'};
+  if(F.status.value==='queue'&&!(S.upNext||[]).includes(b.id)&&upList().length>=10)return {err:'Your Reading Queue holds 10 books. Remove one first.'};
+  if(F.status.value==='want'&&b.status!=='want'&&S.timer?.bookId===b.id)return {err:'Log or discard this book’s timer before moving it to To Read.'};
+  p.readWith=F.querySelector('[name=readWith]')?[...F.querySelectorAll('[name=readWith]:checked')].map(x=>x.value):null;
+  p.noSug=!!F.noSug?.checked;
+  if(F.unitE)p.unit=F.unitE.value;
+  return p;
+}
+function applyDetails(b,p,afterLog){
+  const tt=titleById(b.titleId);
+  if(p.format&&p.format!==b.format&&!S.sessions.some(x=>x.bookId===b.id))b.format=p.format;
+  if(p.total!==undefined&&!isPct(b)&&p.total!==(hasLen(b)?b.total:0)){b.total=p.total;if(tt&&b.format!=='audio'&&p.total)tt.pages=p.total}
+  if(!afterLog&&p.pos!==undefined&&p.pos!==b.pos){b.progressBase={pos:p.pos,date:today(),excluded:S.sessions.filter(x=>x.bookId===b.id).map(x=>x.id)};b.pos=p.pos}
+  if(p.startedCh||(!afterLog&&p.started!==(b.started||'')))b.started=p.started||undefined;
+  if(p.status){const next=p.status,ns=next==='queue'?'want':next,had=S.sessions.some(x=>x.bookId===b.id),wasQ=(S.upNext||[]).includes(b.id);
+    S.upNext=(S.upNext||[]).filter(id=>id!==b.id);if(next==='queue')S.upNext.push(b.id);
+    if(ns!==b.status){delete b.finished;delete b.readIt;delete b.markedOn;delete b.pausedOn;delete b.dnfOn;b.status=ns;
+      if(ns==='want'){b.wantSince=b.wantSince||today();if(!had){delete b.started;b.pos=0}}
+      if(ns==='reading'){if(wasQ)b.fromQueue=true;if(!b.started)b.started=today()}}}
+  if(b.status==='finished'&&(!afterLog||p.finCh)){if(p.finDate){b.finished=p.finDate;delete b.readIt;delete b.markedOn}else if(!afterLog){delete b.finished;b.readIt=true;b.markedOn=b.markedOn||today()}}
+  if(p.readWith){const added=p.readWith.filter(x=>!(b.with||[]).includes(x));if(p.readWith.length)b.with=p.readWith;else delete b.with;
+    if(added.length&&S.settings.share&&!S.settings.solo)S.activity.push({id:uid(),who:'me',kind:'together',text:`read together with ${added.map(nameOf).join(' and ')}`,book:b.title,titleId:b.titleId,ts:Date.now(),r:{}})}
+  if(p.unit&&(p.unit==='pct')!==isPct(b)){const t=titleById(b.titleId);if(p.unit==='pct'){b.unit='pct';b.total=100;b.pos=100}else{delete b.unit;const n=p.total||t?.pages||0;b.total=n;b.pos=n}}
+  noSugSet(b.titleId,p.noSug);
+}
+
+// Back from Edit Book: close the reading window if its book was removed, or show the book's new title
+/* Errors clear as soon as you change something in the same window (James, Nov 24) */
+document.addEventListener('input',e=>{const f=e.target.closest?.('form');if(!f)return;f.querySelectorAll('.err[role=alert]').forEach(x=>{if(x.textContent)x.textContent=''})});
+sessDlg.addEventListener('close',()=>{if(bookDlg?.open)renderBD(true)});
+/* Book window lists (Your Sessions, Activity) fold at the window's full height (its normal maximum), instead of
+   scrolling on and on. At least three rows show; Show all N opens the rest, Show fewer folds them again. */
+let bdOpenAll={};
+function oneFilled(root){if(!root)return;const quiet=sel=>root.querySelectorAll(sel).forEach(b=>{b.classList.remove('btn-primary');b.classList.add('btn-ghost')});
+  if(root.querySelector('.fl-card'))quiet('.hero2-acts .btn-primary');                                  // Start Here leads
+  if(root.querySelector('[data-act=shareGo]'))quiet('[data-act=addBook].btn-primary');                   // sharing books: Share in Library leads
+  if(root.querySelector('[data-act=bdAddCopyGo],[data-act=bdRecGo]'))root.querySelectorAll('.btn-primary').forEach(b=>{if(!/^(bdAddCopyGo|bdRecGo)$/.test(b.dataset.act||'')){b.classList.remove('btn-primary');b.classList.add('btn-ghost')}})}
+{const _rnd=render;render=function(...a){const r=_rnd(...a);try{oneFilled(document.querySelector('main'))}catch(e){}return r}}
+function bdFold(){const d=bookDlg;if(!d?.open)return;try{oneFilled(d)}catch(e){}const box=d.querySelector('.dlg')||d,BD_STD=(parseFloat(getComputedStyle(d).maxHeight)||innerHeight*.9)-40;   // room for Show all
+  const sets=[[d.querySelectorAll('.bd-sess'),'sess'],[d.querySelectorAll('.act-top'),'act']].filter(([r])=>r.length>3);
+  d.querySelectorAll('.bd-fold-b').forEach(b=>b.remove());
+  for(const [rows,k] of sets){const all=[...rows];all.forEach(r=>r.hidden=false);
+    if(!bdOpenAll[k]){let n=all.length;while(n>3&&box.scrollHeight>BD_STD){all[--n].hidden=true}}
+    const hid=all.filter(r=>r.hidden).length;if(!hid&&!bdOpenAll[k])continue;
+    all[all.length-1].insertAdjacentHTML('afterend',`<button type="button" class="link-btn sm bd-fold-b" data-bd-fold="${k}">${bdOpenAll[k]?'Show fewer':`Show all ${all.length}`}</button>`)}}
+document.addEventListener('click',e=>{const b=e.target.closest?.('[data-bd-fold]');if(!b)return;const k=b.dataset.bdFold;bdOpenAll[k]=!bdOpenAll[k];bdFold();if(!bdOpenAll[k])bookDlg.querySelector('.dlg')?.scrollTo?.({top:0})});
+bookDlg.addEventListener('close',()=>{bdOpenAll={}});
+{const _rbd=renderBD;renderBD=function(...a){const r=_rbd(...a);try{bdFold()}catch(e){}return r}}
+sessDlg.addEventListener('close',()=>{if(!logDlg.open||!logForm.dataset.one||logForm.dataset.mode!=='log')return;const b=findB(logForm.dataset.book);if(b)drawLog(b)});
+titleDlg.addEventListener('close',()=>{if(!logDlg.open||!logForm.dataset.one)return;const id=logForm.dataset.book,b=book(id);
+  if(!b){logForm.dataset.done='1';logDlg.close();return}
+  const t=logForm.querySelector('.one-booktitle');if(t)t.textContent=b.title;
+  const o=logForm.book?.querySelector(`option[value="${id}"]`);if(o)o.textContent=b.title+(b.format==='audio'?' (audiobook)':'');});
+const _openTitleEdit=openTitleEdit;
+openTitleEdit=function(id){
+  _openTitleEdit(id);if(!titleDlg.open)return;
+  const rs=S.books.filter(x=>x.titleId===id);if(rs.length<2)return;
+  const k=x=>x.started||x.finished||(['reading','paused','want'].includes(x.status)?'9999':'0000');
+  const rows=[...rs].sort((a,b)=>k(a).localeCompare(k(b))).map((b,i)=>`<div class="one-rr"><span class="small">Read-through ${i+1}: ${b.started?`started ${fmtDateY(b.started)}`:'start date unknown'}${b.finished?`, finished ${fmtDateY(b.finished)}`:b.status==='finished'?', finished, date unknown':''} <span class="st st-${b.status}">${STATUS[b.status]}</span></span><button type="button" class="btn btn-ghost sm rm-go" data-one-rmread="${b.id}">Remove This Read-Through</button></div>`).join('');
+  const box=titleForm.querySelector('.rm-box');if(!box)return;
+  box.querySelector('summary').insertAdjacentHTML('afterend',`<div class="one-rrs"><p class="small muted" style="margin:6px 0 4px">Remove one read-through with its sessions and rating. The others stay.</p>${rows}<p class="small muted" style="margin:12px 0 0"><b>Or remove everything:</b></p></div>`);
+};
+document.addEventListener('click',e=>{const a=e.target.closest?.('#titleForm [data-one-rmread]');if(!a)return;e.preventDefault();e.stopPropagation();
+  const id=a.dataset.oneRmread,tid=book(id)?.titleId,m=removeReadings([id]);if(m){document.getElementById('teErr').textContent=m;return}
+  render();if(bookDlg?.open)renderBD(true);if(logDlg.open&&logForm.dataset.book===id)logDlg.close();titleDlg.close();if(tid)openTitleEdit(tid);
+},true);
+})();
 paintIcons();
 readRoute();
 render();
